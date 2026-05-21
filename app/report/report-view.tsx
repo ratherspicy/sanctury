@@ -6,8 +6,19 @@ import { useEffect, useState } from "react";
 import type { HealthCheckReport } from "@/lib/calculations/report";
 import type { TrafficLightStatus } from "@/lib/calculations/report";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { generateLoanBalanceCurve } from "@/lib/calculations/loan-curves";
+import { getMaintenanceMilestones } from "@/lib/calculations/maintenance-timeline";
 import { loadHealthCheckReport } from "@/lib/storage/health-check";
 import type { HealthCheckFormData } from "@/lib/types/health-check";
+import {
+  InsuranceCoverBarChart,
+  InsuranceHouseVisual,
+} from "./charts/insurance-charts";
+import {
+  MortgageBalanceChart,
+  MortgagePayoffTimeline,
+} from "./charts/mortgage-charts";
+import { MaintenanceTimelineChart } from "./charts/maintenance-chart";
 
 const statusConfig: Record<
   TrafficLightStatus,
@@ -118,6 +129,11 @@ export function ReportView() {
   }
 
   const { insurance, mortgage, maintenance } = report;
+  const loanAmount = Number(formData.loanAmount) || 0;
+  const interestRate = Number(formData.interestRate) || 0;
+  const loanCurves = generateLoanBalanceCurve(loanAmount, interestRate);
+  const maintenanceMilestones = getMaintenanceMilestones(maintenance.homeAge);
+
   const gapDisplay =
     insurance.insuranceGap > 0
       ? formatCurrency(insurance.insuranceGap)
@@ -133,6 +149,12 @@ export function ReportView() {
         cta={{ label: "Review your sum insured", href: "#insurance" }}
       >
         <TrafficLight status={insurance.status} />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="rounded-xl border border-border bg-background p-5 sm:p-6">
+            <InsuranceCoverBarChart insurance={insurance} />
+          </div>
+          <InsuranceHouseVisual insurance={insurance} />
+        </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <MetricCard
             label="Estimated rebuild cost"
@@ -169,6 +191,13 @@ export function ReportView() {
         description="Timely prompts based on your refix date, loan structure, and income."
         cta={{ label: "Explore mortgage options", href: "#mortgage" }}
       >
+        <div className="space-y-6 rounded-xl border border-border bg-background p-5 sm:p-6">
+          <MortgageBalanceChart points={loanCurves.points} />
+          <MortgagePayoffTimeline
+            currentPayoffYears={loanCurves.currentPayoffYears}
+            restructuredPayoffYears={loanCurves.restructuredPayoffYears}
+          />
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <MetricCard
             label="Days until refix"
@@ -218,6 +247,12 @@ export function ReportView() {
         description={`Built in ${maintenance.yearBuilt} — here's one thing worth your attention.`}
         cta={{ label: "Build your maintenance plan", href: "#maintenance" }}
       >
+        <div className="rounded-xl border border-border bg-background p-5 sm:p-6">
+          <MaintenanceTimelineChart
+            homeAge={maintenance.homeAge}
+            milestones={maintenanceMilestones}
+          />
+        </div>
         <div className="rounded-xl border border-border bg-accent-soft/40 p-6">
           <h3 className="text-lg font-semibold text-foreground">
             {maintenance.alertTitle}
