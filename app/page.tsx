@@ -1,4 +1,4 @@
-function SuncturyLogo({ className = "" }: { className?: string }) {
+function SancturyLogo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-white shadow-sm">
@@ -25,7 +25,7 @@ function SuncturyLogo({ className = "" }: { className?: string }) {
         </svg>
       </span>
       <span className="text-xl font-semibold tracking-tight text-foreground">
-        Sunctury
+        Sanctury
       </span>
     </div>
   );
@@ -104,8 +104,8 @@ export default function Home() {
       {/* Navigation */}
       <header className="sticky top-0 z-50 border-b border-border/80 bg-surface/80 backdrop-blur-md">
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
-          <a href="/" aria-label="Sunctury home">
-            <SuncturyLogo />
+          <a href="/" aria-label="Sanctury home">
+            <SancturyLogo />
           </a>
           <div className="hidden items-center gap-8 md:flex">
             <a
@@ -152,7 +152,7 @@ export default function Home() {
                 <span className="text-brand">in order</span> — for free
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                Sunctury helps Kiwi homeowners understand their insurance
+                Sanctury helps Kiwi homeowners understand their insurance
                 coverage, mortgage structure, and property maintenance — so you
                 can protect what matters most with clarity and confidence.
               </p>
@@ -254,7 +254,7 @@ export default function Home() {
                 <br className="hidden sm:block" /> Treat it that way.
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">
-                Sunctury brings insurance, mortgage, and property insights
+                Sanctury brings insurance, mortgage, and property insights
                 together — so you can make smarter decisions without paying for
                 advice you don&apos;t need.
               </p>
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-12 lg:px-8">
           <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
             <div>
-              <SuncturyLogo />
+              <SancturyLogo />
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
                 Financial health for New Zealand homeowners. Free, clear, and
                 built for Kiwi homes.
@@ -324,7 +324,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} Sunctury. Made in Aotearoa New Zealand.</p>
+            <p>© {new Date().getFullYear()} Sanctury. Made in Aotearoa New Zealand.</p>
             <p>Not financial advice. For educational purposes only.</p>
           </div>
         </div>

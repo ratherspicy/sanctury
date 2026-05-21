@@ -9,7 +9,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Sunctury — Home finances in order, for free",
+  title: "Sanctury — Home finances in order, for free",
   description:
     "Free financial health platform for New Zealand homeowners. Understand your insurance, mortgage, and property maintenance in one place.",
 };
