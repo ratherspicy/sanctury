@@ -6,25 +6,7 @@ import { useState } from "react";
 import { saveHealthCheckAndReport } from "@/lib/storage/health-check";
 import type { FeatureKey, HealthCheckFormData } from "@/lib/types/health-check";
 import { PROPERTY_FEATURES } from "@/lib/types/health-check";
-
-const NZ_REGIONS = [
-  "Northland",
-  "Auckland",
-  "Waikato",
-  "Bay of Plenty",
-  "Gisborne",
-  "Hawke's Bay",
-  "Taranaki",
-  "Manawatū-Whanganui",
-  "Wellington",
-  "Tasman",
-  "Nelson",
-  "Marlborough",
-  "West Coast",
-  "Canterbury",
-  "Otago",
-  "Southland",
-] as const;
+import { AddressAutocomplete } from "./address-autocomplete";
 
 const BUILD_QUALITY_OPTIONS = ["Standard", "Above Standard", "High Spec"] as const;
 
@@ -74,6 +56,7 @@ export function HomeHealthCheckForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<HealthCheckFormData>(initialFormData);
   const [loanSplitError, setLoanSplitError] = useState("");
+  const [regionAutoSet, setRegionAutoSet] = useState(false);
 
   const update = <K extends keyof HealthCheckFormData>(
     key: K,
@@ -175,43 +158,14 @@ export function HomeHealthCheckForm() {
               </p>
             </div>
 
-            <div>
-              <label htmlFor="address" className={labelClassName}>
-                Property address
-              </label>
-              <input
-                id="address"
-                type="text"
-                required
-                autoComplete="street-address"
-                placeholder="e.g. 42 Karori Road, Wellington"
-                className={inputClassName}
-                value={formData.address}
-                onChange={(e) => update("address", e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="region" className={labelClassName}>
-                NZ region
-              </label>
-              <select
-                id="region"
-                required
-                className={inputClassName}
-                value={formData.region}
-                onChange={(e) => update("region", e.target.value)}
-              >
-                <option value="" disabled>
-                  Select your region
-                </option>
-                {NZ_REGIONS.map((region) => (
-                  <option key={region} value={region}>
-                    {region}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <AddressAutocomplete
+              address={formData.address}
+              region={formData.region}
+              regionAutoSet={regionAutoSet}
+              onAddressChange={(address) => update("address", address)}
+              onRegionChange={(region) => update("region", region)}
+              onRegionAutoSet={setRegionAutoSet}
+            />
 
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
