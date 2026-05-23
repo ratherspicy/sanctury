@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AdviserLeadNotification } from "@/app/marketplace/insurance/components/adviser-lead-notification";
+import { RequestTimeline } from "@/app/marketplace/insurance/components/request-timeline";
 import { getAdviserById } from "@/lib/marketplace/advisers";
+import { initFollowupState, loadFollowupState } from "@/lib/marketplace/followup-storage";
 import {
   loadInsuranceJobPosting,
   loadSelectedAdviser,
+  type InsuranceJobPosting,
 } from "@/lib/marketplace/insurance-storage";
+import {
+  buildRequestTimelineSteps,
+  getAdviserFirstName,
+} from "@/lib/marketplace/request-timeline";
 import { loadHomeownerContact } from "@/lib/storage/homeowner";
-
-const NEXT_STEPS = [
-  "Your chosen adviser will review your job brief and prepare options tailored to your coverage gap.",
-  "They'll contact you within 2 hours to discuss your cover and answer any questions.",
-  "You decide whether to proceed — there's no obligation and no cost to you.",
-];
 
 export function InsuranceConfirmedView() {
   const router = useRouter();
@@ -22,17 +24,20 @@ export function InsuranceConfirmedView() {
   const [contact, setContact] = useState<{ name: string; email: string } | null>(
     null
   );
+  const [posting, setPosting] = useState<InsuranceJobPosting | null>(null);
 
   useEffect(() => {
     const selected = loadSelectedAdviser();
-    const posting = loadInsuranceJobPosting();
+    const jobPosting = loadInsuranceJobPosting();
 
-    if (!selected || !posting) {
+    if (!selected || !jobPosting) {
       router.replace("/marketplace/insurance");
       return;
     }
 
+    initFollowupState();
     setAdviserId(selected);
+    setPosting(jobPosting);
     setContact(
       loadHomeownerContact() ?? {
         name: "Your name on file",
@@ -42,10 +47,14 @@ export function InsuranceConfirmedView() {
   }, [router]);
 
   const adviser = adviserId ? getAdviserById(adviserId) : null;
+  const followup = loadFollowupState();
+  const adviserFirstName = adviser ? getAdviserFirstName(adviser.name) : "";
 
-  if (!adviser || !contact) {
+  if (!adviser || !contact || !posting) {
     return <p className="text-muted">Confirming your selection…</p>;
   }
+
+  const timelineSteps = buildRequestTimelineSteps(adviserFirstName, followup);
 
   return (
     <div className="space-y-8">
@@ -83,22 +92,20 @@ export function InsuranceConfirmedView() {
 
       <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">
-          What happens next
+          Your request timeline
         </h2>
-        <ol className="mt-4 space-y-4">
-          {NEXT_STEPS.map((step, i) => (
-            <li
-              key={i}
-              className="flex gap-3 text-sm leading-relaxed text-muted"
-            >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">
-                {i + 1}
-              </span>
-              {step}
-            </li>
-          ))}
-        </ol>
+        <p className="mt-1 text-sm text-muted">
+          Track what happens next from here.
+        </p>
+        <RequestTimeline steps={timelineSteps} className="mt-6" />
       </div>
+
+      <AdviserLeadNotification
+        adviserFirstName={adviserFirstName}
+        adviserInitials={adviser.initials}
+        homeownerName={contact.name}
+        posting={posting}
+      />
 
       <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">
@@ -127,6 +134,16 @@ export function InsuranceConfirmedView() {
           follow up on your behalf to make sure you&apos;re taken care of.
         </p>
       </div>
+
+      <p className="text-sm text-muted">
+        <Link
+          href="/marketplace/insurance/followup"
+          className="font-medium text-brand underline-offset-2 hover:underline"
+        >
+          Come back here after {adviserFirstName} contacts you to complete your
+          review.
+        </Link>
+      </p>
 
       <Link
         href="/report"

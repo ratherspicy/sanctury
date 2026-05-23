@@ -119,6 +119,15 @@ export function HomeHealthCheckForm() {
         return;
       }
 
+      await fetch("/api/auth/magic-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          fullName,
+        }),
+      });
+
       saveHomeownerContact(fullName, email);
       router.push("/report");
     } catch {
@@ -498,7 +507,8 @@ export function HomeHealthCheckForm() {
             </button>
             {step === 4 && (
               <p className="text-center text-xs text-muted sm:text-right">
-                No spam. No sales calls. Unsubscribe anytime.
+                We&apos;ll email a magic link for My Sanctury — no password
+                needed. No spam. Unsubscribe anytime.
               </p>
             )}
           </div>
