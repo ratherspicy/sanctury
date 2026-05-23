@@ -4,9 +4,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { saveHealthCheckAndReport } from "@/lib/storage/health-check";
+import { saveHomeownerContact } from "@/lib/storage/homeowner";
 import type { FeatureKey, HealthCheckFormData } from "@/lib/types/health-check";
 import { PROPERTY_FEATURES } from "@/lib/types/health-check";
 import { AddressAutocomplete } from "./address-autocomplete";
+import { FormattedNumberInput } from "./formatted-number-input";
+import {
+  LoanStructureAmounts,
+  loanAmountsExceedTotal,
+} from "./loan-structure-amounts";
 
 const BUILD_QUALITY_OPTIONS = ["Standard", "Above Standard", "High Spec"] as const;
 
@@ -14,6 +20,7 @@ const STEPS = [
   { id: 1, label: "Property Details" },
   { id: 2, label: "Insurance Details" },
   { id: 3, label: "Mortgage Details" },
+  { id: 4, label: "Your report" },
 ] as const;
 
 const inputClassName =
@@ -37,19 +44,10 @@ const initialFormData: HealthCheckFormData = {
   refixDate: "",
   loanAmount: "",
   interestRate: "",
-  fixedPercent: "",
-  floatingPercent: "",
-  revolvingPercent: "",
+  fixedLoanAmount: "",
+  revolvingCreditAmount: "",
   monthlyIncome: "",
 };
-
-function loanSplitTotal(data: HealthCheckFormData): number {
-  return (
-    (Number(data.fixedPercent) || 0) +
-    (Number(data.floatingPercent) || 0) +
-    (Number(data.revolvingPercent) || 0)
-  );
-}
 
 export function HomeHealthCheckForm() {
   const router = useRouter();
@@ -57,13 +55,21 @@ export function HomeHealthCheckForm() {
   const [formData, setFormData] = useState<HealthCheckFormData>(initialFormData);
   const [loanSplitError, setLoanSplitError] = useState("");
   const [regionAutoSet, setRegionAutoSet] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [leadError, setLeadError] = useState("");
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const update = <K extends keyof HealthCheckFormData>(
     key: K,
     value: HealthCheckFormData[K]
   ) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
-    if (key === "fixedPercent" || key === "floatingPercent" || key === "revolvingPercent") {
+    if (
+      key === "fixedLoanAmount" ||
+      key === "revolvingCreditAmount" ||
+      key === "loanAmount"
+    ) {
       setLoanSplitError("");
     }
   };
@@ -77,26 +83,55 @@ export function HomeHealthCheckForm() {
 
   const goNext = () => {
     if (step === 3) {
-      const total = loanSplitTotal(formData);
-      if (total !== 100) {
-        setLoanSplitError(
-          `Your loan split must add up to 100%. Currently: ${total}%.`
-        );
+      if (
+        loanAmountsExceedTotal(
+          formData.loanAmount,
+          formData.fixedLoanAmount,
+          formData.revolvingCreditAmount
+        )
+      ) {
+        setLoanSplitError("Amount exceeds your total loan");
         return;
       }
       saveHealthCheckAndReport(formData);
-      router.push("/report");
+      setStep(4);
       return;
     }
     setStep((s) => s + 1);
+  };
+
+  const submitLeadAndViewReport = async () => {
+    setLeadError("");
+    setIsSubmittingLead(true);
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: fullName, email }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setLeadError(
+          data.error ?? "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      saveHomeownerContact(fullName, email);
+      router.push("/report");
+    } catch {
+      setLeadError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmittingLead(false);
+    }
   };
 
   const goBack = () => {
     setLoanSplitError("");
     setStep((s) => Math.max(1, s - 1));
   };
-
-  const loanTotal = loanSplitTotal(formData);
 
   return (
     <div>
@@ -142,7 +177,11 @@ export function HomeHealthCheckForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          goNext();
+          if (step === 4) {
+            submitLeadAndViewReport();
+          } else {
+            goNext();
+          }
         }}
         className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-10"
       >
@@ -262,22 +301,13 @@ export function HomeHealthCheckForm() {
               </p>
             </div>
 
-            <div>
-              <label htmlFor="sumInsured" className={labelClassName}>
-                Current sum insured ($)
-              </label>
-              <input
-                id="sumInsured"
-                type="number"
-                required
-                min={0}
-                step={1000}
-                placeholder="e.g. 650000"
-                className={inputClassName}
-                value={formData.sumInsured}
-                onChange={(e) => update("sumInsured", e.target.value)}
-              />
-            </div>
+            <FormattedNumberInput
+              id="sumInsured"
+              label="Current sum insured ($)"
+              placeholder="e.g. 650,000"
+              value={formData.sumInsured}
+              onChange={(v) => update("sumInsured", v)}
+            />
 
             <div>
               <label htmlFor="sumInsuredYear" className={labelClassName}>
@@ -328,137 +358,109 @@ export function HomeHealthCheckForm() {
               />
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="loanAmount" className={labelClassName}>
-                  Current loan amount ($)
-                </label>
-                <input
-                  id="loanAmount"
-                  type="number"
-                  required
-                  min={0}
-                  step={1000}
-                  placeholder="e.g. 480000"
-                  className={inputClassName}
-                  value={formData.loanAmount}
-                  onChange={(e) => update("loanAmount", e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="interestRate" className={labelClassName}>
-                  Current interest rate (%)
-                </label>
-                <input
-                  id="interestRate"
-                  type="number"
-                  required
-                  min={0}
-                  max={30}
-                  step={0.01}
-                  placeholder="e.g. 6.45"
-                  className={inputClassName}
-                  value={formData.interestRate}
-                  onChange={(e) => update("interestRate", e.target.value)}
-                />
-              </div>
-            </div>
+            <FormattedNumberInput
+              id="loanAmount"
+              label="Current loan amount ($)"
+              placeholder="e.g. 480,000"
+              value={formData.loanAmount}
+              onChange={(v) => update("loanAmount", v)}
+            />
 
-            <fieldset>
-              <legend className={labelClassName}>Loan structure (%)</legend>
-              <p className="mt-1 text-sm text-muted">
-                Split between fixed, floating, and revolving credit — must total
-                100%.
+            <LoanStructureAmounts
+              loanAmount={formData.loanAmount}
+              fixedLoanAmount={formData.fixedLoanAmount}
+              revolvingCreditAmount={formData.revolvingCreditAmount}
+              onFixedChange={(v) => update("fixedLoanAmount", v)}
+              onRevolvingChange={(v) => update("revolvingCreditAmount", v)}
+            />
+
+            {loanSplitError && (
+              <p className="text-sm font-medium text-accent" role="alert">
+                {loanSplitError}
               </p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-3">
-                <div>
-                  <label htmlFor="fixedPercent" className="text-sm text-muted">
-                    Fixed
-                  </label>
-                  <input
-                    id="fixedPercent"
-                    type="number"
-                    required
-                    min={0}
-                    max={100}
-                    placeholder="0"
-                    className={inputClassName}
-                    value={formData.fixedPercent}
-                    onChange={(e) => update("fixedPercent", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="floatingPercent" className="text-sm text-muted">
-                    Floating
-                  </label>
-                  <input
-                    id="floatingPercent"
-                    type="number"
-                    required
-                    min={0}
-                    max={100}
-                    placeholder="0"
-                    className={inputClassName}
-                    value={formData.floatingPercent}
-                    onChange={(e) => update("floatingPercent", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="revolvingPercent" className="text-sm text-muted">
-                    Revolving credit
-                  </label>
-                  <input
-                    id="revolvingPercent"
-                    type="number"
-                    required
-                    min={0}
-                    max={100}
-                    placeholder="0"
-                    className={inputClassName}
-                    value={formData.revolvingPercent}
-                    onChange={(e) =>
-                      update("revolvingPercent", e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-              <p
-                className={`mt-3 text-sm font-medium ${
-                  loanTotal === 100
-                    ? "text-brand"
-                    : loanTotal > 100
-                      ? "text-accent"
-                      : "text-muted"
-                }`}
-              >
-                Total: {loanTotal}% {loanTotal === 100 && "✓"}
-              </p>
-              {loanSplitError && (
-                <p className="mt-2 text-sm font-medium text-accent" role="alert">
-                  {loanSplitError}
-                </p>
-              )}
-            </fieldset>
+            )}
 
             <div>
-              <label htmlFor="monthlyIncome" className={labelClassName}>
-                Monthly take-home income ($)
+              <label htmlFor="interestRate" className={labelClassName}>
+                Current interest rate (%)
               </label>
               <input
-                id="monthlyIncome"
+                id="interestRate"
                 type="number"
                 required
                 min={0}
-                step={100}
-                placeholder="e.g. 6500"
+                max={30}
+                step={0.01}
+                placeholder="e.g. 6.45"
                 className={inputClassName}
-                value={formData.monthlyIncome}
-                onChange={(e) => update("monthlyIncome", e.target.value)}
+                value={formData.interestRate}
+                onChange={(e) => update("interestRate", e.target.value)}
               />
-              <p className="mt-2 text-sm text-muted">
-                Your household&apos;s combined monthly income after tax.
+            </div>
+
+            <FormattedNumberInput
+              id="monthlyIncome"
+              label="Monthly take-home income ($)"
+              placeholder="e.g. 6,500"
+              value={formData.monthlyIncome}
+              onChange={(v) => update("monthlyIncome", v)}
+              hint="Your household's combined monthly income after tax."
+            />
+          </fieldset>
+        )}
+
+        {step === 4 && (
+          <fieldset className="space-y-6">
+            <legend className="sr-only">Your report</legend>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
+                Your report is ready
+              </h2>
+              <p className="mt-2 text-muted">
+                Enter your details to see your personalised home health report.
+                We&apos;ll also send you a copy to keep.
               </p>
             </div>
+
+            <div>
+              <label htmlFor="fullName" className={labelClassName}>
+                Full name
+              </label>
+              <input
+                id="fullName"
+                type="text"
+                required
+                autoComplete="name"
+                placeholder="e.g. Jane Smith"
+                className={inputClassName}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                disabled={isSubmittingLead}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className={labelClassName}>
+                Email address
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="e.g. jane@example.com"
+                className={inputClassName}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmittingLead}
+              />
+            </div>
+
+            {leadError && (
+              <p className="text-sm font-medium text-accent" role="alert">
+                {leadError}
+              </p>
+            )}
           </fieldset>
         )}
 
@@ -467,7 +469,8 @@ export function HomeHealthCheckForm() {
             <button
               type="button"
               onClick={goBack}
-              className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-8 text-base font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50"
+              disabled={isSubmittingLead}
+              className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-8 text-base font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50 disabled:opacity-50"
             >
               Back
             </button>
@@ -479,12 +482,26 @@ export function HomeHealthCheckForm() {
               Cancel
             </Link>
           )}
-          <button
-            type="submit"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark sm:ml-auto"
-          >
-            {step === 3 ? "Complete check" : "Next"}
-          </button>
+          <div className="flex flex-col items-stretch gap-3 sm:ml-auto sm:items-end">
+            <button
+              type="submit"
+              disabled={isSubmittingLead}
+              className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark disabled:opacity-50"
+            >
+              {step === 4
+                ? isSubmittingLead
+                  ? "Saving…"
+                  : "See my report"
+                : step === 3
+                  ? "Complete check"
+                  : "Next"}
+            </button>
+            {step === 4 && (
+              <p className="text-center text-xs text-muted sm:text-right">
+                No spam. No sales calls. Unsubscribe anytime.
+              </p>
+            )}
+          </div>
         </div>
       </form>
     </div>

@@ -1,0 +1,139 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getAdviserById } from "@/lib/marketplace/advisers";
+import {
+  loadInsuranceJobPosting,
+  loadSelectedAdviser,
+} from "@/lib/marketplace/insurance-storage";
+import { loadHomeownerContact } from "@/lib/storage/homeowner";
+
+const NEXT_STEPS = [
+  "Your chosen adviser will review your job brief and prepare options tailored to your coverage gap.",
+  "They'll contact you within 2 hours to discuss your cover and answer any questions.",
+  "You decide whether to proceed — there's no obligation and no cost to you.",
+];
+
+export function InsuranceConfirmedView() {
+  const router = useRouter();
+  const [adviserId, setAdviserId] = useState<string | null>(null);
+  const [contact, setContact] = useState<{ name: string; email: string } | null>(
+    null
+  );
+
+  useEffect(() => {
+    const selected = loadSelectedAdviser();
+    const posting = loadInsuranceJobPosting();
+
+    if (!selected || !posting) {
+      router.replace("/marketplace/insurance");
+      return;
+    }
+
+    setAdviserId(selected);
+    setContact(
+      loadHomeownerContact() ?? {
+        name: "Your name on file",
+        email: "your@email.com",
+      }
+    );
+  }, [router]);
+
+  const adviser = adviserId ? getAdviserById(adviserId) : null;
+
+  if (!adviser || !contact) {
+    return <p className="text-muted">Confirming your selection…</p>;
+  }
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+          Request confirmed
+        </p>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          You&apos;re all set — {adviser.name} will be in touch
+        </h1>
+        <p className="mt-3 text-lg text-muted">
+          Your adviser will contact you within{" "}
+          <span className="font-semibold text-foreground">2 hours</span>.
+        </p>
+      </div>
+
+      <article className="rounded-2xl border border-brand/30 bg-brand/5 p-6 sm:p-8">
+        <div className="flex items-start gap-4">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-bold text-white">
+            {adviser.initials}
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-foreground">
+              {adviser.name}
+            </h2>
+            <p className="text-sm text-muted">{adviser.title}</p>
+            <p className="mt-1 text-sm text-brand">{adviser.region}</p>
+            <span className="mt-3 inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
+              {adviser.responseTime}
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+        <h2 className="text-lg font-semibold text-foreground">
+          What happens next
+        </h2>
+        <ol className="mt-4 space-y-4">
+          {NEXT_STEPS.map((step, i) => (
+            <li
+              key={i}
+              className="flex gap-3 text-sm leading-relaxed text-muted"
+            >
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">
+                {i + 1}
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+        <h2 className="text-lg font-semibold text-foreground">
+          Details shared with {adviser.name}
+        </h2>
+        <dl className="mt-4 space-y-3 text-sm">
+          <div>
+            <dt className="text-muted">Name</dt>
+            <dd className="font-medium text-foreground">{contact.name}</dd>
+          </div>
+          <div>
+            <dt className="text-muted">Email</dt>
+            <dd className="font-medium text-foreground">{contact.email}</dd>
+          </div>
+        </dl>
+        <p className="mt-4 text-sm text-muted">
+          Only {adviser.name} receives your contact details. No other advisers
+          on Sanctury can see your information.
+        </p>
+      </div>
+
+      <div className="rounded-xl border border-border bg-accent-soft/40 px-5 py-4">
+        <p className="text-sm leading-relaxed text-foreground">
+          <span className="font-semibold">The Sanctury promise:</span> if you
+          haven&apos;t heard from {adviser.name} within 24 hours, we&apos;ll
+          follow up on your behalf to make sure you&apos;re taken care of.
+        </p>
+      </div>
+
+      <Link
+        href="/report"
+        className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+      >
+        Back to your report
+      </Link>
+    </div>
+  );
+}

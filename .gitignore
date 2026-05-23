@@ -22,6 +22,9 @@
 
 # misc
 .DS_Store
+
+# lead capture (contains PII)
+/data/leads.json
 *.pem
 
 # debug

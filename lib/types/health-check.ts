@@ -20,9 +20,8 @@ export type HealthCheckFormData = {
   refixDate: string;
   loanAmount: string;
   interestRate: string;
-  fixedPercent: string;
-  floatingPercent: string;
-  revolvingPercent: string;
+  fixedLoanAmount: string;
+  revolvingCreditAmount: string;
   monthlyIncome: string;
 };
 

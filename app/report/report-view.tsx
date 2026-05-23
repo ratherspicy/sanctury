@@ -95,12 +95,21 @@ function ReportSection({
       <h2 className="text-2xl font-bold text-foreground">{title}</h2>
       <p className="mt-2 text-muted">{description}</p>
       <div className="mt-6 space-y-6">{children}</div>
-      <a
-        href={cta.href}
-        className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
-      >
-        {cta.label}
-      </a>
+      {cta.href.startsWith("/") ? (
+        <Link
+          href={cta.href}
+          className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+        >
+          {cta.label}
+        </Link>
+      ) : (
+        <a
+          href={cta.href}
+          className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+        >
+          {cta.label}
+        </a>
+      )}
     </section>
   );
 }
@@ -146,7 +155,7 @@ export function ReportView() {
         id="insurance"
         title="Insurance Health"
         description="How your current cover compares to what a full rebuild could cost."
-        cta={{ label: "Review your sum insured", href: "#insurance" }}
+        cta={{ label: "Review your sum insured", href: "/marketplace/insurance" }}
       >
         <TrafficLight status={insurance.status} />
         <div className="grid gap-6 lg:grid-cols-2">
@@ -211,7 +220,7 @@ export function ReportView() {
           <MetricCard
             label="Revolving credit opportunity"
             value={formatCurrency(mortgage.revolvingCreditSavings)}
-            sub="Est. interest saved over loan term if 30% moved to revolving with income offset"
+            sub="Est. interest saved over loan term with income flowing through revolving credit"
           />
           <MetricCard
             label="Extra $500/month"
@@ -221,8 +230,8 @@ export function ReportView() {
         </div>
         <p className="rounded-xl bg-background p-5 text-base leading-relaxed text-muted">
           With {mortgage.daysUntilRefix} days until your refix, it&apos;s a good
-          time to compare structures. Routing income through revolving credit
-          could save around{" "}
+          time to compare structures. Routing income through your revolving
+          credit facility could save around{" "}
           <span className="font-medium text-foreground">
             {formatCurrency(mortgage.revolvingCreditSavings)}
           </span>{" "}

@@ -173,12 +173,12 @@ export function calculateRemainingLoanMonths(
 }
 
 export function calculateRevolvingCreditSavings(
-  loanAmount: number,
+  revolvingPortion: number,
   annualRatePercent: number,
   monthlyIncome: number,
   remainingMonths: number
 ): number {
-  const revolvingPortion = loanAmount * 0.3;
+  if (revolvingPortion <= 0) return 0;
   const monthlyOffset = monthlyIncome * 0.8;
   const monthlyRate = annualRatePercent / 100 / 12;
 
@@ -246,8 +246,10 @@ export function calculateMortgageReport(
     interestRate
   );
 
+  const revolvingPortion = Number(data.revolvingCreditAmount) || 0;
+
   const revolvingCreditSavings = calculateRevolvingCreditSavings(
-    loanAmount,
+    revolvingPortion,
     interestRate,
     monthlyIncome,
     remainingLoanMonths
