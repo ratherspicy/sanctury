@@ -169,6 +169,10 @@ export const ADVISER_PROFILES: Record<string, AdviserProfile> = {
   },
 };
 
+export function formatYearsExperience(years: number): string {
+  return `${years} years' experience`;
+}
+
 export function getAdviserProfile(id: string): AdviserProfile | undefined {
   return ADVISER_PROFILES[id];
 }

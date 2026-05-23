@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
-import type { AdviserProfile } from "@/lib/marketplace/adviser-profiles";
+import {
+  formatYearsExperience,
+  type AdviserProfile,
+} from "@/lib/marketplace/adviser-profiles";
 
 function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
   const iconClass = size === "lg" ? "h-5 w-5" : "h-3.5 w-3.5";
@@ -100,7 +103,7 @@ export function AdviserProfileModal({
               <VerifiedBadge />
             </div>
             <p className="mt-3 text-sm text-muted">
-              {profile.yearsExperience} years&apos; experience
+              {formatYearsExperience(profile.yearsExperience)}
             </p>
           </div>
 
