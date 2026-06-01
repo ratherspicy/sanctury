@@ -1,46 +1,71 @@
-import { createServerClient } from "@supabase/ssr";
+import type { EmailOtpType } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { syncHomeownerProfile } from "@/lib/supabase/sync-homeowner";
+import { createCallbackClient } from "@/lib/supabase/route-handler-client";
+
+function redirectToLogin(origin: string, params: Record<string, string>) {
+  const url = new URL("/my-sanctury/login", origin);
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, value);
+  }
+  return NextResponse.redirect(url);
+}
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get("code");
 
-  if (!code) {
-    return NextResponse.redirect(
-      `${origin}/my-sanctury/login?error=missing_code`
-    );
+  const oauthError = searchParams.get("error");
+  const oauthDescription = searchParams.get("error_description");
+  if (oauthError) {
+    return redirectToLogin(origin, {
+      error: "auth",
+      message: oauthDescription ?? oauthError,
+    });
+  }
+
+  const code = searchParams.get("code");
+  const tokenHash = searchParams.get("token_hash");
+  const type = searchParams.get("type");
+
+  if (!code && !(tokenHash && type)) {
+    return redirectToLogin(origin, {
+      error: "missing_code",
+      message: "No authentication code was received. Please request a new link.",
+    });
   }
 
   const cookieStore = await cookies();
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const response = NextResponse.redirect(new URL("/my-sanctury", origin));
 
-  if (!supabaseUrl || !supabaseKey) {
-    return NextResponse.redirect(`${origin}/my-sanctury/login?error=auth`);
+  let supabase;
+  try {
+    supabase = createCallbackClient(cookieStore, response);
+  } catch {
+    return redirectToLogin(origin, {
+      error: "auth",
+      message: "Authentication is not configured on the server.",
+    });
   }
 
-  const response = NextResponse.redirect(`${origin}/my-sanctury`);
+  let authError: Error | null = null;
 
-  const supabase = createServerClient(supabaseUrl, supabaseKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll();
-      },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => {
-          cookieStore.set(name, value, options);
-          response.cookies.set(name, value, options);
-        });
-      },
-    },
-  });
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    authError = error;
+  } else if (tokenHash && type) {
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash: tokenHash,
+      type: type as EmailOtpType,
+    });
+    authError = error;
+  }
 
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-  if (error) {
-    return NextResponse.redirect(`${origin}/my-sanctury/login?error=auth`);
+  if (authError) {
+    return redirectToLogin(origin, {
+      error: "auth",
+      message: authError.message,
+    });
   }
 
   const {

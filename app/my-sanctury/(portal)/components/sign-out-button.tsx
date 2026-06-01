@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function SignOutButton() {
   const router = useRouter();
@@ -10,7 +10,7 @@ export function SignOutButton() {
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
-    await supabase.auth.signOut();
+    await getSupabaseBrowserClient().auth.signOut();
     router.push("/my-sanctury/login");
     router.refresh();
   };

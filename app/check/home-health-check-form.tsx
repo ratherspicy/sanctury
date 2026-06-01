@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { saveHealthCheckAndReport } from "@/lib/storage/health-check";
 import { saveHomeownerContact } from "@/lib/storage/homeowner";
+import { getAuthCallbackUrl } from "@/lib/auth/auth-callback-url";
 import type { FeatureKey, HealthCheckFormData } from "@/lib/types/health-check";
 import { PROPERTY_FEATURES } from "@/lib/types/health-check";
 import { AddressAutocomplete } from "./address-autocomplete";
@@ -123,8 +124,9 @@ export function HomeHealthCheckForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
+          email: email.trim().toLowerCase(),
           fullName,
+          redirectTo: getAuthCallbackUrl(window.location.origin),
         }),
       });
 

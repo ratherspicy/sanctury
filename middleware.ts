@@ -1,8 +1,15 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/my-sanctury")) {
+  const { pathname } = request.nextUrl;
+
+  // Never intercept the auth callback — it must exchange the code and set cookies first.
+  if (pathname.startsWith("/my-sanctury/auth/callback")) {
+    return NextResponse.next();
+  }
+
+  if (pathname.startsWith("/my-sanctury")) {
     return updateSession(request);
   }
 }

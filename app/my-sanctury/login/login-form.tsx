@@ -3,22 +3,35 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { getAuthCallbackUrl } from "@/lib/auth/auth-callback-url";
 
 const inputClassName =
   "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
 
+function getInitialError(
+  authError: string | null,
+  message: string | null
+): string | null {
+  if (message) return message;
+  if (authError === "auth") {
+    return "Your link has expired or could not be verified. Please request a new access link.";
+  }
+  if (authError === "missing_code") {
+    return "No sign-in code was received. Please request a new access link.";
+  }
+  if (authError) return "Something went wrong. Please try again.";
+  return null;
+}
+
 export function MySancturyLoginForm() {
   const searchParams = useSearchParams();
   const authError = searchParams.get("error");
+  const authMessage = searchParams.get("message");
 
   const [email, setEmail] = useState("");
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(
-    authError === "auth"
-      ? "Your link has expired. Please request a new access link below."
-      : authError
-        ? "Something went wrong. Please try again."
-        : null
+    getInitialError(authError, authMessage)
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,18 +40,20 @@ export function MySancturyLoginForm() {
     setError(null);
     setIsSubmitting(true);
 
-    const trimmed = email.trim();
+    const trimmed = email.trim().toLowerCase();
 
     try {
+      const redirectTo = getAuthCallbackUrl(window.location.origin);
+
       const res = await fetch("/api/auth/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: trimmed,
-        }),
+        body: JSON.stringify({ email: trimmed, redirectTo }),
       });
 
-      const data = await res.json().catch(() => ({}));
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+      };
 
       if (!res.ok) {
         setError(data.error ?? "Unable to send access link.");
@@ -46,8 +61,12 @@ export function MySancturyLoginForm() {
       }
 
       setSubmittedEmail(trimmed);
-    } catch {
-      setError("Unable to send access link. Please try again.");
+    } catch (err) {
+      const message =
+        err instanceof Error && err.message === "Failed to fetch"
+          ? "Could not reach the server. Check your connection and try again."
+          : "Unable to send access link. Please try again.";
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }

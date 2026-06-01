@@ -1,4 +1,7 @@
 import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+let browserClient: SupabaseClient | undefined;
 
 export function createClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -13,5 +16,17 @@ export function createClient() {
   return createBrowserClient(url, key);
 }
 
-/** Browser Supabase client (singleton). */
-export const supabase = createClient();
+/** Lazy browser singleton — avoids throwing at module import time. */
+export function getSupabaseBrowserClient() {
+  if (!browserClient) {
+    browserClient = createClient();
+  }
+  return browserClient;
+}
+
+/** @deprecated Use getSupabaseBrowserClient() */
+export const supabase = {
+  get auth() {
+    return getSupabaseBrowserClient().auth;
+  },
+};
