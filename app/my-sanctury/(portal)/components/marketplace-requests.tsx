@@ -5,9 +5,9 @@ import type {
 import { formatDate } from "@/lib/format";
 
 const STATUS_STYLES: Record<MarketplaceRequestStatus, string> = {
-  Pending: "bg-accent-soft text-accent",
-  "Quotes received": "bg-brand/10 text-brand",
-  "Adviser chosen": "bg-brand/15 text-brand-dark",
+  Pending: "bg-bg-secondary text-muted",
+  "Quotes received": "bg-violet-light text-violet",
+  "Adviser chosen": "bg-bg-secondary text-muted",
   Completed: "bg-background text-muted border border-border",
 };
 
@@ -19,7 +19,7 @@ export function MarketplaceRequestsSection({
   requests,
 }: MarketplaceRequestsProps) {
   return (
-    <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+    <section className="card p-6 sm:p-8">
       <h2 className="text-lg font-semibold text-foreground">
         My marketplace requests
       </h2>

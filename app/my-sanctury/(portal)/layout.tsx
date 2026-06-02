@@ -8,8 +8,8 @@ export default function MySancturyPortalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-full flex-col bg-background">
-      <header className="sticky top-0 z-50 border-b border-border/80 bg-surface/90 backdrop-blur-md">
+    <div className="flex min-h-full flex-col bg-bg-secondary">
+      <header className="sticky top-0 z-50 border-b border-border bg-surface">
         <nav className="mx-auto flex h-16 max-w-4xl items-center justify-between gap-4 px-6">
           <Link
             href="/my-sanctury"
@@ -17,7 +17,7 @@ export default function MySancturyPortalLayout({
             aria-label="My Sanctury dashboard"
           >
             <SancturyLogo />
-            <span className="hidden border-l border-border pl-3 text-sm font-semibold text-brand sm:inline">
+            <span className="hidden border-l border-border pl-3 text-sm font-semibold text-foreground sm:inline">
               My Sanctury
             </span>
           </Link>

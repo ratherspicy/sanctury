@@ -15,8 +15,8 @@ export function PropertySnapshotSection({ data }: PropertySnapshotProps) {
   );
 
   return (
-    <section className="rounded-2xl border border-brand/20 bg-gradient-to-br from-brand/8 via-surface to-accent-soft/30 p-6 shadow-sm sm:p-8">
-      <p className="text-sm font-medium text-brand">Your property</p>
+    <section className="card p-6 sm:p-8">
+      <p className="text-sm font-medium text-muted">Your property</p>
       <h2 className="mt-1 text-lg font-semibold text-foreground sm:text-xl">
         {data.address}
       </h2>
@@ -36,7 +36,7 @@ export function PropertySnapshotSection({ data }: PropertySnapshotProps) {
         </div>
         <div>
           <p className="text-sm text-muted">Equity built</p>
-          <p className="mt-1 text-xl font-semibold text-brand">
+          <p className="mt-1 text-xl font-semibold text-foreground">
             {formatCurrency(data.equityAmount)}
           </p>
           <p className="mt-0.5 text-sm text-muted">{equityPercent}% of value</p>
@@ -44,9 +44,9 @@ export function PropertySnapshotSection({ data }: PropertySnapshotProps) {
         <div className="sm:col-span-2 lg:col-span-1">
           <p className="text-sm text-muted">Ownership progress</p>
           <div className="mt-3">
-            <div className="h-3 overflow-hidden rounded-full bg-border">
+            <div className="h-2 overflow-hidden rounded-lg bg-border">
               <div
-                className="h-full rounded-full bg-brand transition-all"
+                className="h-full rounded-lg bg-brand transition-all"
                 style={{ width: `${equityPercent}%` }}
                 role="progressbar"
                 aria-valuenow={equityPercent}

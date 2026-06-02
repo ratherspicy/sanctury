@@ -78,21 +78,21 @@ export function LoanStructureAmounts({
         />
       </div>
       {exceeds && (
-        <p className="text-sm font-medium text-accent" role="alert">
+        <p className="text-sm font-medium text-danger" role="alert">
           Amount exceeds your total loan
         </p>
       )}
       <div
         className={`rounded-xl border px-4 py-3 ${
           exceeds
-            ? "border-accent/40 bg-accent/5"
+            ? "border-violet/40 bg-violet-light/50"
             : "border-border bg-background"
         }`}
       >
         <p className="text-sm text-muted">Calculated automatically</p>
         <p
           className={`mt-1 text-lg font-semibold ${
-            exceeds ? "text-accent" : "text-foreground"
+            exceeds ? "text-danger" : "text-foreground"
           }`}
         >
           Floating / offset: {formatCurrency(Math.max(0, floating))}

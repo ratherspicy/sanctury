@@ -7,7 +7,7 @@ type PropertyDetailsCardProps = {
 
 export function PropertyDetailsSection({ details }: PropertyDetailsCardProps) {
   return (
-    <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+    <section className="card p-6 sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold text-foreground">
@@ -19,7 +19,7 @@ export function PropertyDetailsSection({ details }: PropertyDetailsCardProps) {
         </div>
         <Link
           href="/check"
-          className="inline-flex h-10 shrink-0 items-center justify-center rounded-full border border-border bg-background px-5 text-sm font-semibold text-foreground transition-colors hover:border-brand/30"
+          className="btn-ghost h-10 shrink-0 px-5 text-sm"
         >
           Edit
         </Link>

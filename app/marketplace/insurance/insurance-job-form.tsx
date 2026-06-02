@@ -12,7 +12,7 @@ import type { FeatureKey } from "@/lib/types/health-check";
 import { PROPERTY_FEATURES } from "@/lib/types/health-check";
 
 const inputClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 const labelClassName = "block text-sm font-medium text-foreground";
 
@@ -74,8 +74,8 @@ export function InsuranceJobForm() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+        <p className="badge-violet gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-violet-light" />
           Insurance marketplace
         </p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -88,7 +88,7 @@ export function InsuranceJobForm() {
       </div>
 
       {/* Coverage gap summary */}
-      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">
           Your coverage summary
         </h2>
@@ -107,16 +107,16 @@ export function InsuranceJobForm() {
           </div>
           <div className="rounded-xl bg-background p-4">
             <p className="text-sm text-muted">Coverage gap</p>
-            <p className="mt-1 text-xl font-bold text-foreground">
+            <p className="mt-1 text-xl font-bold text-danger">
               {gap > 0 ? formatCurrency(gap) : "None identified"}
             </p>
           </div>
         </div>
         {gap > 0 && (
-          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 text-amber-950">
-            <p className="text-sm leading-relaxed">
+          <div className="urgency-box mt-4">
+            <p className="leading-relaxed">
               You may be underinsured by{" "}
-              <span className="font-semibold">{formatCurrency(gap)}</span>.
+              <span className="font-semibold text-danger">{formatCurrency(gap)}</span>.
               Independent advisers on Sanctury can help you close this gap for
               free.
             </p>
@@ -127,7 +127,7 @@ export function InsuranceJobForm() {
       {/* Job brief */}
       <form
         onSubmit={handleSubmit}
-        className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8"
+        className="card p-6 sm:p-8"
       >
         <h2 className="text-xl font-bold text-foreground">
           Your job brief
@@ -239,7 +239,7 @@ export function InsuranceJobForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-8 flex w-full items-center justify-center rounded-full bg-brand px-8 py-4 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark disabled:opacity-50 sm:w-auto"
+          className="btn-violet mt-8 w-full px-8 py-4 text-base"
         >
           {isSubmitting ? "Sending…" : "Get free proposals from advisers"}
         </button>

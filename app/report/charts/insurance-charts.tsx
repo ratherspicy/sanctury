@@ -59,7 +59,7 @@ export function InsuranceCoverBarChart({
               <LabelList
                 dataKey="coverLabel"
                 position="center"
-                fill="#fff"
+                fill="#FFFFFF"
                 fontSize={12}
                 fontWeight={600}
               />
@@ -69,7 +69,7 @@ export function InsuranceCoverBarChart({
                 <LabelList
                   dataKey="gapLabel"
                   position="center"
-                  fill="#fff"
+                  fill="#FFFFFF"
                   fontSize={12}
                   fontWeight={600}
                 />
@@ -132,16 +132,16 @@ function HouseIcon({
           <rect x="0" y={100 - fillHeight} width="120" height={fillHeight} />
         </clipPath>
       </defs>
-      {/* Grey base */}
+      {/* Purple base — coverage gap */}
       <path
         d="M60 12 L108 48 V88 H12 V48 Z"
-        fill="#e8e0d4"
-        stroke="#d4cdc0"
+        fill={CHART_COLORS.gap}
+        stroke={CHART_COLORS.gap}
         strokeWidth="1.5"
       />
-      <rect x="28" y="58" width="20" height="30" rx="1" fill="#d4cdc0" />
-      <rect x="72" y="58" width="20" height="30" rx="1" fill="#d4cdc0" />
-      {/* Green fill clipped from bottom */}
+      <rect x="28" y="58" width="20" height="30" rx="1" fill={CHART_COLORS.gap} />
+      <rect x="72" y="58" width="20" height="30" rx="1" fill={CHART_COLORS.gap} />
+      {/* Green fill clipped from bottom — covered portion */}
       <g clipPath={`url(#${clipId})`}>
         <path
           d="M60 12 L108 48 V88 H12 V48 Z"
@@ -155,7 +155,7 @@ function HouseIcon({
       <path
         d="M60 12 L108 48 V88 H12 V48 Z"
         fill="none"
-        stroke="#d4cdc0"
+        stroke={CHART_COLORS.gap}
         strokeWidth="1.5"
       />
     </svg>
@@ -174,7 +174,7 @@ export function InsuranceHouseVisual({
 
   let fillColor = CHART_COLORS.cover;
   if (coveragePercent < 80) {
-    fillColor = "#94a3a8";
+    fillColor = CHART_COLORS.gap;
   } else if (coveragePercent < 95) {
     fillColor = CHART_COLORS.brandLight;
   }
@@ -187,7 +187,7 @@ export function InsuranceHouseVisual({
         : "Coverage gap";
 
   return (
-    <div className="rounded-xl border border-border bg-background px-6 py-8 text-center">
+    <div className="card px-6 py-8 text-center">
       <p className="text-sm font-medium text-muted">Visual coverage</p>
       <HouseIcon fillPercent={coveragePercent} fillColor={fillColor} />
       <p className="mt-2 text-2xl font-bold text-foreground">
@@ -195,7 +195,7 @@ export function InsuranceHouseVisual({
       </p>
       <p className="mt-1 text-sm text-muted">{label}</p>
       <p className="mt-3 text-xs text-muted">
-        Coloured area = sum insured · Grey = gap to full rebuild
+        Coloured area = sum insured · Purple = gap to full rebuild
       </p>
     </div>
   );

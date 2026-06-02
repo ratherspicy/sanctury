@@ -59,8 +59,8 @@ export function InsuranceConfirmedView() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+        <p className="badge-success gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
           Request confirmed
         </p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -72,9 +72,9 @@ export function InsuranceConfirmedView() {
         </p>
       </div>
 
-      <article className="rounded-2xl border border-brand/30 bg-brand/5 p-6 sm:p-8">
+      <article className="card p-6 sm:p-8">
         <div className="flex items-start gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-bold text-white">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1A1A1A] text-lg font-bold text-white">
             {adviser.initials}
           </div>
           <div>
@@ -82,7 +82,7 @@ export function InsuranceConfirmedView() {
               {adviser.name}
             </h2>
             <p className="text-sm text-muted">{adviser.title}</p>
-            <p className="mt-1 text-sm text-brand">{adviser.region}</p>
+            <p className="mt-1 text-sm text-muted">{adviser.region}</p>
             <span className="mt-3 inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
               {adviser.responseTime}
             </span>
@@ -90,7 +90,7 @@ export function InsuranceConfirmedView() {
         </div>
       </article>
 
-      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">
           Your request timeline
         </h2>
@@ -107,7 +107,7 @@ export function InsuranceConfirmedView() {
         posting={posting}
       />
 
-      <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+      <div className="card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-foreground">
           Details shared with {adviser.name}
         </h2>
@@ -127,7 +127,7 @@ export function InsuranceConfirmedView() {
         </p>
       </div>
 
-      <div className="rounded-xl border border-border bg-accent-soft/40 px-5 py-4">
+      <div className="rounded-xl border border-border bg-bg-secondary px-5 py-4">
         <p className="text-sm leading-relaxed text-foreground">
           <span className="font-semibold">The Sanctury promise:</span> if you
           haven&apos;t heard from {adviser.name} within 24 hours, we&apos;ll
@@ -138,7 +138,7 @@ export function InsuranceConfirmedView() {
       <p className="text-sm text-muted">
         <Link
           href="/marketplace/insurance/followup"
-          className="font-medium text-brand underline-offset-2 hover:underline"
+          className="font-medium text-violet underline-offset-2 hover:underline"
         >
           Come back here after {adviserFirstName} contacts you to complete your
           review.
@@ -147,7 +147,7 @@ export function InsuranceConfirmedView() {
 
       <Link
         href="/report"
-        className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+        className="btn-violet h-12 px-8 text-base"
       >
         Back to your report
       </Link>

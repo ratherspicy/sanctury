@@ -6,7 +6,7 @@ import { useState } from "react";
 import { getAuthCallbackUrl } from "@/lib/auth/auth-callback-url";
 
 const inputClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 function getInitialError(
   authError: string | null,
@@ -75,7 +75,7 @@ export function MySancturyLoginForm() {
   if (submittedEmail) {
     return (
       <div className="space-y-6 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand/10">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-light">
           <svg
             viewBox="0 0 24 24"
             className="h-7 w-7 text-brand"
@@ -126,7 +126,7 @@ export function MySancturyLoginForm() {
       </div>
 
       {error && (
-        <p className="text-sm font-medium text-accent" role="alert">
+        <p className="text-sm font-medium text-danger" role="alert">
           {error}
         </p>
       )}
@@ -134,13 +134,13 @@ export function MySancturyLoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex h-12 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark disabled:opacity-50"
+        className="btn-violet h-12 w-full px-8 text-base"
       >
         {isSubmitting ? "Sending…" : "Send my access link"}
       </button>
 
       <p className="text-center text-sm text-muted">
-        <Link href="/" className="font-medium text-brand hover:underline">
+        <Link href="/" className="font-medium text-violet hover:underline">
           Back to Sanctury
         </Link>
       </p>

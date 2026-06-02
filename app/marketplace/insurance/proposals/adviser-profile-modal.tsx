@@ -14,7 +14,7 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg
         <svg
           key={i}
           viewBox="0 0 16 16"
-          className={`${iconClass} ${i < Math.round(rating) ? "text-amber-500" : "text-border"}`}
+          className={`${iconClass} ${i < Math.round(rating) ? "text-violet" : "text-border"}`}
           fill="currentColor"
           aria-hidden
         >
@@ -27,7 +27,7 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg
 
 function VerifiedBadge() {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold text-brand">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-light px-3 py-1 text-xs font-semibold text-violet">
       <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden>
         <path d="M6.5 10.5l-3-3 1-1 2 2 5-5 1 1-6 6z" />
       </svg>
@@ -76,7 +76,7 @@ export function AdviserProfileModal({
         onClick={onClose}
       />
 
-      <div className="relative flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-border bg-surface shadow-xl sm:max-h-[90vh] sm:rounded-2xl">
+      <div className="relative flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-border bg-surface sm:max-h-[90vh] sm:rounded-xl">
         <button
           type="button"
           onClick={onClose}
@@ -91,14 +91,14 @@ export function AdviserProfileModal({
         <div className="overflow-y-auto overscroll-contain px-5 pb-6 pt-8 sm:px-8 sm:pb-8 sm:pt-10">
           {/* Header */}
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-brand text-2xl font-bold text-white shadow-md shadow-brand/20">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#F3F4F6] text-2xl font-bold text-foreground">
               {profile.initials}
             </div>
             <h2 id="adviser-profile-title" className="mt-4 text-2xl font-bold text-foreground">
               {profile.name}
             </h2>
             <p className="mt-1 text-muted">{profile.title}</p>
-            <p className="text-sm text-brand">{profile.region}</p>
+            <p className="text-sm text-muted">{profile.region}</p>
             <div className="mt-3">
               <VerifiedBadge />
             </div>
@@ -113,7 +113,7 @@ export function AdviserProfileModal({
             <ul className="mt-2 space-y-1.5">
               {profile.qualifications.map((q) => (
                 <li key={q} className="flex items-start gap-2 text-sm text-muted">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet" />
                   {q}
                 </li>
               ))}
@@ -203,7 +203,7 @@ export function AdviserProfileModal({
               onChoose();
               onClose();
             }}
-            className="flex w-full items-center justify-center rounded-full bg-brand py-3.5 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+            className="btn-violet w-full py-3.5 text-base"
           >
             Choose this adviser
           </button>

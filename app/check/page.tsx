@@ -5,7 +5,7 @@ import { HomeHealthCheckForm } from "./home-health-check-form";
 export default function CheckPage() {
   return (
     <div className="flex min-h-full flex-col">
-      <header className="sticky top-0 z-50 border-b border-border/80 bg-surface/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-border bg-surface">
         <nav className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <Link href="/" aria-label="Sanctury home">
             <SancturyLogo />
@@ -19,28 +19,19 @@ export default function CheckPage() {
         </nav>
       </header>
 
-      <main className="flex-1">
-        <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
-            <div className="absolute -top-24 right-0 h-[360px] w-[360px] rounded-full bg-hero-glow/50 blur-3xl" />
-          </div>
+      <main className="flex-1 bg-surface">
+        <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">
+          <p className="badge-violet">Home Health Check</p>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Let&apos;s get your home sorted.
+          </h1>
+          <p className="mt-3 max-w-xl text-base text-muted">
+            A few questions about your property and finances. Takes 5 minutes.
+            Completely free.
+          </p>
 
-          <div className="relative mx-auto max-w-3xl px-6 py-10 lg:py-14">
-            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
-              Home Health Check
-            </p>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Let&apos;s check in on your home
-            </h1>
-            <p className="mt-3 max-w-xl text-lg text-muted">
-              Answer a few straightforward questions about your property,
-              insurance, and mortgage. It only takes a few minutes.
-            </p>
-
-            <div className="mt-10">
-              <HomeHealthCheckForm />
-            </div>
+          <div className="mt-10">
+            <HomeHealthCheckForm />
           </div>
         </div>
       </main>

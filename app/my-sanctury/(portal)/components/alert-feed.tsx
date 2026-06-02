@@ -4,10 +4,11 @@ import type { AlertCategory, DashboardAlert } from "@/lib/my-sanctury/dashboard-
 
 const CATEGORY_STYLES: Record<
   AlertCategory,
-  { tag: string; icon: ReactNode }
+  { border: string; tag: string; icon: ReactNode }
 > = {
   Insurance: {
-    tag: "bg-brand/10 text-brand",
+    border: "border-l-warning",
+    tag: "text-warning",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -20,7 +21,8 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Mortgage: {
-    tag: "bg-accent-soft text-accent",
+    border: "border-l-violet",
+    tag: "text-violet",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -34,7 +36,8 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Maintenance: {
-    tag: "bg-background text-muted border border-border",
+    border: "border-l-border",
+    tag: "text-muted",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -48,7 +51,8 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Market: {
-    tag: "bg-brand/10 text-brand-light",
+    border: "border-l-warning",
+    tag: "text-warning",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -70,9 +74,11 @@ type AlertFeedProps = {
 export function AlertFeedSection({ alerts }: AlertFeedProps) {
   return (
     <section>
-      <h2 className="text-lg font-semibold text-foreground">Your alerts</h2>
+      <h2 className="text-lg font-semibold text-foreground">
+        Things worth your attention
+      </h2>
       <p className="mt-1 text-sm text-muted">
-        Personalised actions based on your property and finances.
+        We&apos;re keeping an eye on things so you don&apos;t have to.
       </p>
       <ul className="mt-4 space-y-3">
         {alerts.map((alert) => {
@@ -80,31 +86,29 @@ export function AlertFeedSection({ alerts }: AlertFeedProps) {
           return (
             <li
               key={alert.id}
-              className="flex gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors hover:border-brand/20 sm:p-6"
+              className={`alert-card ${style.border}`}
             >
-              <span
-                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${style.tag}`}
-              >
-                {style.icon}
-              </span>
-              <div className="min-w-0 flex-1">
-                <span
-                  className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${style.tag}`}
-                >
-                  {alert.category}
+              <div className="flex gap-4">
+                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-bg-secondary ${style.tag}`}>
+                  {style.icon}
                 </span>
-                <h3 className="mt-2 font-semibold text-foreground">
-                  {alert.headline}
-                </h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted">
-                  {alert.description}
-                </p>
-                <Link
-                  href={alert.actionHref}
-                  className="mt-3 inline-flex h-9 items-center rounded-full border border-brand/30 bg-brand/5 px-4 text-sm font-semibold text-brand transition-colors hover:bg-brand/10"
-                >
-                  {alert.actionLabel}
-                </Link>
+                <div className="min-w-0 flex-1">
+                  <span className={`text-xs font-semibold uppercase tracking-wide ${style.tag}`}>
+                    {alert.category}
+                  </span>
+                  <h3 className="mt-2 font-semibold text-foreground">
+                    {alert.headline}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">
+                    {alert.description}
+                  </p>
+                  <Link
+                    href={alert.actionHref}
+                    className="btn-violet mt-3 inline-flex h-9 px-4 text-sm"
+                  >
+                    {alert.actionLabel}
+                  </Link>
+                </div>
               </div>
             </li>
           );

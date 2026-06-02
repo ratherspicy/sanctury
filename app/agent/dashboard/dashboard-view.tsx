@@ -17,19 +17,15 @@ export function AgentDashboardView() {
   const activeAlert = activeAlertId ? getAlertById(activeAlertId) ?? null : null;
 
   return (
-    <div className="flex min-h-full flex-col bg-background">
+    <div className="flex min-h-full flex-col bg-bg-secondary">
       <AgentNav />
 
-      <main className="relative flex-1 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute -top-32 right-0 h-[420px] w-[420px] rounded-full bg-hero-glow/50 blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
+      <main className="relative flex-1">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <div className="mb-8">
             <p className="text-sm text-muted">Bay of Plenty · Client intelligence</p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
-              Agent dashboard
+              Your clients, sorted.
             </h1>
           </div>
 

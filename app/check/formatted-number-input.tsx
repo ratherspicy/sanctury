@@ -6,7 +6,7 @@ import {
 } from "@/lib/format/number-input";
 
 const baseClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 type FormattedNumberInputProps = {
   id: string;
@@ -43,7 +43,7 @@ export function FormattedNumberInput({
         placeholder={placeholder}
         className={`${baseClassName} ${
           hasError
-            ? "border-accent focus:border-accent focus:ring-accent/20"
+            ? "border-danger focus:border-danger focus:ring-0"
             : ""
         }`}
         value={formatNumberWithCommas(value)}

@@ -14,7 +14,7 @@ export function MarketplaceShell({
 }: MarketplaceShellProps) {
   return (
     <div className="flex min-h-full flex-col">
-      <header className="sticky top-0 z-50 border-b border-border/80 bg-surface/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-border bg-surface">
         <nav className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <Link href="/" aria-label="Sanctury home">
             <SancturyLogo />
@@ -28,15 +28,8 @@ export function MarketplaceShell({
         </nav>
       </header>
 
-      <main className="flex-1">
-        <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
-            <div className="absolute -top-24 right-0 h-[360px] w-[360px] rounded-full bg-hero-glow/50 blur-3xl" />
-          </div>
-          <div className="relative mx-auto max-w-3xl px-6 py-10 lg:py-14">
-            {children}
-          </div>
-        </div>
+      <main className="flex-1 bg-surface">
+        <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">{children}</div>
       </main>
 
       <footer className="border-t border-border py-6 text-center text-sm text-muted">

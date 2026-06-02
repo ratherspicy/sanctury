@@ -6,25 +6,21 @@ import { MySancturyLoginForm } from "./login-form";
 export default function MySancturyLoginPage() {
   return (
     <div className="flex min-h-full flex-col bg-background">
-      <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-6 py-14">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute -top-24 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-hero-glow/70 blur-3xl" />
-        </div>
-
+      <main className="relative flex flex-1 flex-col items-center justify-center px-6 py-14">
         <div className="relative w-full max-w-md text-center">
           <Link href="/" className="inline-flex justify-center" aria-label="Sanctury home">
             <SancturyLogo />
           </Link>
 
           <h1 className="mt-10 text-3xl font-bold tracking-tight text-foreground">
-            Welcome to My Sanctury
+            Good to have you back.
           </h1>
           <p className="mt-3 text-base leading-relaxed text-muted">
-            Enter your email to access your personal property dashboard.
-            We&apos;ll send you a secure link — no password needed.
+            Enter your email and we&apos;ll send you a secure link. No password
+            needed — because you have enough to remember.
           </p>
 
-          <div className="mt-8 rounded-2xl border border-border bg-surface p-6 text-left shadow-sm sm:p-8">
+          <div className="mt-8 card p-6 text-left sm:p-8">
             <Suspense fallback={<p className="text-center text-muted">Loading…</p>}>
               <MySancturyLoginForm />
             </Suspense>

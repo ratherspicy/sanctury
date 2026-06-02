@@ -32,7 +32,7 @@ function BalanceTooltip({
   if (!active || !payload?.[0]?.payload) return null;
   const d = payload[0].payload;
   return (
-    <div className="rounded-lg border border-border bg-surface px-3 py-2 text-sm shadow-md">
+    <div className="rounded-lg border border-border bg-surface px-3 py-2 text-sm">
       <p className="font-medium text-foreground">Year {d.year}</p>
       <p className="text-muted">
         Current:{" "}
@@ -182,18 +182,18 @@ export function MortgagePayoffTimeline({
           <span className="mb-1 whitespace-nowrap text-xs font-medium text-muted">
             Current · {currentPayoffYears} yrs
           </span>
-          <span className="h-5 w-5 rounded-full border-2 border-surface bg-[#94a3a8] shadow-sm" />
+          <span className="h-5 w-5 rounded-full border-2 border-surface bg-border" />
         </div>
         {/* Restructured marker */}
         <div
           className="absolute top-0 flex flex-col items-center"
           style={{ left: `${restructuredPos}%`, transform: "translateX(-50%)" }}
         >
-          <span className="mb-1 whitespace-nowrap text-xs font-semibold text-brand">
+          <span className="mb-1 whitespace-nowrap text-xs font-semibold text-violet">
             Restructured · {restructuredPayoffYears} yrs
           </span>
           <span
-            className="h-5 w-5 rounded-full border-2 border-surface shadow-sm"
+            className="h-5 w-5 rounded-full border-2 border-surface"
             style={{ backgroundColor: CHART_COLORS.restructured }}
           />
         </div>
@@ -203,9 +203,9 @@ export function MortgagePayoffTimeline({
         <span>{maxYears} years</span>
       </div>
       {yearsSaved > 0 && (
-        <p className="mt-4 rounded-lg bg-brand/5 px-4 py-3 text-sm text-foreground">
+        <p className="mt-4 rounded-lg bg-bg-secondary px-4 py-3 text-sm text-foreground">
           Restructuring could pay off your loan{" "}
-          <span className="font-semibold text-brand">{yearsSaved} years</span>{" "}
+          <span className="font-semibold text-violet">{yearsSaved} years</span>{" "}
           sooner.
         </p>
       )}

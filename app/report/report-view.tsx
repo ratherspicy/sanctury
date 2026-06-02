@@ -22,25 +22,22 @@ import { MaintenanceTimelineChart } from "./charts/maintenance-chart";
 
 const statusConfig: Record<
   TrafficLightStatus,
-  { label: string; dot: string; bg: string; border: string }
+  { label: string; dot: string; border: string }
 > = {
   green: {
     label: "Looking good",
-    dot: "bg-emerald-500",
-    bg: "bg-emerald-50",
-    border: "border-emerald-200",
+    dot: "bg-success",
+    border: "border-l-success",
   },
   amber: {
     label: "Worth a review",
-    dot: "bg-amber-500",
-    bg: "bg-amber-50",
-    border: "border-amber-200",
+    dot: "bg-warning",
+    border: "border-l-warning",
   },
   red: {
     label: "Action recommended",
-    dot: "bg-rose-500",
-    bg: "bg-rose-50",
-    border: "border-rose-200",
+    dot: "bg-success",
+    border: "border-l-danger",
   },
 };
 
@@ -48,7 +45,7 @@ function TrafficLight({ status }: { status: TrafficLightStatus }) {
   const config = statusConfig[status];
   return (
     <div
-      className={`inline-flex items-center gap-3 rounded-full border px-4 py-2 ${config.bg} ${config.border}`}
+      className={`inline-flex items-center gap-3 rounded-lg border border-border border-l-[3px] bg-surface px-4 py-2 ${config.border}`}
     >
       <span className={`h-3 w-3 rounded-full ${config.dot}`} aria-hidden />
       <span className="text-sm font-semibold text-foreground">{config.label}</span>
@@ -90,7 +87,7 @@ function ReportSection({
   return (
     <section
       id={id}
-      className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8"
+      className="card p-6 sm:p-8"
     >
       <h2 className="text-2xl font-bold text-foreground">{title}</h2>
       <p className="mt-2 text-muted">{description}</p>
@@ -98,14 +95,14 @@ function ReportSection({
       {cta.href.startsWith("/") ? (
         <Link
           href={cta.href}
-          className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+          className="btn-violet mt-8 h-11 px-6 text-sm"
         >
           {cta.label}
         </Link>
       ) : (
         <a
           href={cta.href}
-          className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+          className="btn-violet mt-8 h-11 px-6 text-sm"
         >
           {cta.label}
         </a>
@@ -262,7 +259,7 @@ export function ReportView() {
             milestones={maintenanceMilestones}
           />
         </div>
-        <div className="rounded-xl border border-border bg-accent-soft/40 p-6">
+        <div className="rounded-xl border border-border bg-bg-secondary p-6">
           <h3 className="text-lg font-semibold text-foreground">
             {maintenance.alertTitle}
           </h3>
@@ -272,7 +269,7 @@ export function ReportView() {
         </div>
       </ReportSection>
 
-      <div className="flex flex-col gap-4 rounded-2xl border border-dashed border-border bg-surface/50 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-xl border border-dashed border-border bg-surface/50 p-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted">
           This report is based on the details you provided. Figures are
           estimates for guidance — not financial advice.
@@ -280,13 +277,13 @@ export function ReportView() {
         <div className="flex gap-3">
           <Link
             href="/check"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft/50"
+            className="btn-ghost h-11 px-5 text-sm"
           >
             Edit answers
           </Link>
           <Link
             href="/"
-            className="inline-flex h-11 items-center justify-center rounded-full bg-brand px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+            className="btn-primary h-11 px-6 text-sm"
           >
             Back to home
           </Link>

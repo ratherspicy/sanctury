@@ -25,7 +25,7 @@ const STEPS = [
 ] as const;
 
 const inputClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 const labelClassName = "block text-sm font-medium text-foreground";
 
@@ -149,7 +149,7 @@ export function HomeHealthCheckForm() {
       {/* Progress */}
       <div className="mb-10">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-brand">
+          <span className="font-medium text-violet">
             Step {step} of {STEPS.length}
           </span>
           <span className="text-muted">{STEPS[step - 1].label}</span>
@@ -163,7 +163,7 @@ export function HomeHealthCheckForm() {
           aria-label={`Step ${step} of ${STEPS.length}`}
         >
           <div
-            className="h-full rounded-full bg-brand transition-all duration-300 ease-out"
+            className="h-full rounded-full bg-violet transition-all duration-300 ease-out"
             style={{ width: `${(step / STEPS.length) * 100}%` }}
           />
         </div>
@@ -173,9 +173,9 @@ export function HomeHealthCheckForm() {
               key={s.id}
               className={`flex-1 rounded-lg px-3 py-2 text-center text-xs font-medium ${
                 s.id === step
-                  ? "bg-brand/10 text-brand"
+                  ? "bg-violet-light text-violet"
                   : s.id < step
-                    ? "bg-brand/5 text-brand/70"
+                    ? "bg-violet-light text-violet/70"
                     : "bg-surface text-muted"
               }`}
             >
@@ -194,7 +194,7 @@ export function HomeHealthCheckForm() {
             goNext();
           }
         }}
-        className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-10"
+        className="card p-6 sm:p-10"
       >
         {step === 1 && (
           <fieldset className="space-y-6">
@@ -282,13 +282,13 @@ export function HomeHealthCheckForm() {
                 {PROPERTY_FEATURES.map((feature) => (
                   <label
                     key={feature}
-                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 transition-colors has-checked:border-brand has-checked:bg-brand/5"
+                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 transition-colors has-checked:border-violet has-checked:bg-violet-light"
                   >
                     <input
                       type="checkbox"
                       checked={formData.features[feature]}
                       onChange={() => toggleFeature(feature)}
-                      className="h-4 w-4 rounded border-border text-brand focus:ring-brand/30"
+                      className="h-4 w-4 rounded border-border text-violet focus:ring-violet/30"
                     />
                     <span className="text-sm font-medium text-foreground">
                       {feature}
@@ -386,7 +386,7 @@ export function HomeHealthCheckForm() {
             />
 
             {loanSplitError && (
-              <p className="text-sm font-medium text-accent" role="alert">
+              <p className="text-sm font-medium text-danger" role="alert">
                 {loanSplitError}
               </p>
             )}
@@ -468,7 +468,7 @@ export function HomeHealthCheckForm() {
             </div>
 
             {leadError && (
-              <p className="text-sm font-medium text-accent" role="alert">
+              <p className="text-sm font-medium text-danger" role="alert">
                 {leadError}
               </p>
             )}
@@ -481,14 +481,14 @@ export function HomeHealthCheckForm() {
               type="button"
               onClick={goBack}
               disabled={isSubmittingLead}
-              className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-8 text-base font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50 disabled:opacity-50"
+              className="btn-ghost h-12 px-8 text-base disabled:opacity-50"
             >
               Back
             </button>
           ) : (
             <Link
               href="/"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-background px-8 text-base font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50"
+              className="btn-ghost h-12 px-8 text-base"
             >
               Cancel
             </Link>
@@ -497,7 +497,7 @@ export function HomeHealthCheckForm() {
             <button
               type="submit"
               disabled={isSubmittingLead}
-              className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark disabled:opacity-50"
+              className="btn-violet h-12 px-8 text-base"
             >
               {step === 4
                 ? isSubmittingLead

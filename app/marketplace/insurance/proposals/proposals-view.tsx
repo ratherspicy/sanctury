@@ -17,15 +17,15 @@ function LiveStatusBanner({ quotesReceived }: { quotesReceived: number }) {
   const allReceived = quotesReceived >= TOTAL_QUOTES;
 
   return (
-    <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+    <div className="card p-5 sm:p-6">
       <div className="flex items-start gap-4">
         <span className="relative mt-1 flex h-3 w-3 shrink-0" aria-hidden>
           {!allReceived && (
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand/40 opacity-75" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet/40 opacity-75" />
           )}
           <span
             className={`relative inline-flex h-3 w-3 rounded-full ${
-              allReceived ? "bg-brand" : "bg-brand-light live-pulse"
+              allReceived ? "bg-brand" : "bg-violet-light live-pulse"
             }`}
           />
         </span>
@@ -48,7 +48,7 @@ function LiveStatusBanner({ quotesReceived }: { quotesReceived: number }) {
 function WaitingQuotePlaceholder({ index }: { index: number }) {
   return (
     <div
-      className="rounded-2xl border border-dashed border-border bg-surface/50 p-5 sm:p-6"
+      className="rounded-xl border border-dashed border-border bg-surface/50 p-5 sm:p-6"
       aria-hidden
     >
       <div className="flex items-center gap-3">
@@ -105,8 +105,8 @@ export function InsuranceProposalsView() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+        <p className="badge-violet gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-violet-light" />
           Compare quotes
         </p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

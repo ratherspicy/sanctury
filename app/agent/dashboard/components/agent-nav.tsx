@@ -15,7 +15,7 @@ export function AgentNav() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-surface/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-border bg-surface">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-6">
           <Link href="/agent/dashboard" aria-label="Agent dashboard">
@@ -43,7 +43,7 @@ export function AgentNav() {
           <button
             type="button"
             onClick={handleSignOut}
-            className="ml-2 rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-muted transition-colors hover:border-brand/30 hover:text-foreground"
+            className="btn-ghost ml-2 px-4 py-2 text-sm font-medium"
           >
             Sign out
           </button>

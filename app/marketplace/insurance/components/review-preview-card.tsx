@@ -7,7 +7,7 @@ function StarRating({ rating }: { rating: number }) {
         <svg
           key={i}
           viewBox="0 0 16 16"
-          className={`h-3.5 w-3.5 ${i < rating ? "text-amber-500" : "text-border"}`}
+          className={`h-3.5 w-3.5 ${i < rating ? "text-warning" : "text-border"}`}
           fill="currentColor"
           aria-hidden
         >

@@ -20,16 +20,16 @@ export function AdviserLeadNotification({
   const homeownerFirstName = getHomeownerFirstName(homeownerName);
 
   return (
-    <aside className="rounded-2xl border border-dashed border-brand/40 bg-background p-6 sm:p-8">
-      <p className="text-xs font-semibold uppercase tracking-wide text-brand">
+    <aside className="rounded-xl border border-dashed border-border bg-background p-6 sm:p-8">
+      <p className="text-xs font-semibold uppercase tracking-wide text-violet">
         Adviser notification
       </p>
       <h2 className="mt-1 text-lg font-semibold text-foreground">
         What {adviserFirstName} receives
       </h2>
-      <div className="mt-4 rounded-xl border border-border bg-surface p-4 shadow-sm">
+      <div className="mt-4 card p-4">
         <div className="flex items-center gap-2 border-b border-border pb-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-xs font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F3F4F6] text-xs font-bold text-foreground">
             {adviserInitials}
           </span>
           <div>
@@ -63,7 +63,7 @@ export function AdviserLeadNotification({
             </dd>
           </div>
         </dl>
-        <p className="mt-3 rounded-lg bg-brand/5 px-3 py-2 text-xs leading-relaxed text-muted">
+        <p className="mt-3 rounded-lg bg-bg-secondary px-3 py-2 text-xs leading-relaxed text-muted">
           Full contact details and property report summary are included with
           this notification.
         </p>

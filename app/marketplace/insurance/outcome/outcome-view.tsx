@@ -27,7 +27,7 @@ import {
 import { loadHomeownerContact } from "@/lib/storage/homeowner";
 
 const inputClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 const DECLINE_OPTIONS: { value: DeclineReason; label: string }[] = [
   { value: "too_expensive", label: "Too expensive" },
@@ -56,11 +56,11 @@ function StarSelector({
             aria-checked={selected}
             aria-label={`${star} star${star === 1 ? "" : "s"}`}
             onClick={() => onChange(star)}
-            className="rounded-lg p-1 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand/30"
+            className="rounded-lg p-1 transition-transform hover:scale-110 focus:outline-none focus:ring-0"
           >
             <svg
               viewBox="0 0 16 16"
-              className={`h-8 w-8 ${selected ? "text-amber-500" : "text-border"}`}
+              className={`h-8 w-8 ${selected ? "text-warning" : "text-border"}`}
               fill="currentColor"
               aria-hidden
             >
@@ -88,10 +88,10 @@ function OutcomeCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`w-full rounded-2xl border p-5 text-left transition-colors sm:p-6 ${
+      className={`w-full rounded-xl border p-5 text-left transition-colors sm:p-6 ${
         selected
-          ? "border-brand bg-brand/5 shadow-sm"
-          : "border-border bg-surface hover:border-brand/30 hover:bg-background"
+          ? "border-violet bg-violet-light"
+          : "border-border bg-surface hover:border-violet/30 hover:bg-background"
       }`}
     >
       <p className="font-semibold text-foreground">{title}</p>
@@ -186,8 +186,8 @@ export function InsuranceOutcomeView() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+        <p className="badge-violet gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-violet-light" />
           Share your outcome
         </p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -224,7 +224,7 @@ export function InsuranceOutcomeView() {
       {choice === "updated" && !reviewSubmitted && (
         <form
           onSubmit={handleReviewSubmit}
-          className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8"
+          className="card p-6 sm:p-8"
         >
           <h2 className="text-lg font-semibold text-foreground">
             Leave a review for {adviserFirstName}
@@ -258,7 +258,7 @@ export function InsuranceOutcomeView() {
 
           <button
             type="submit"
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark sm:w-auto"
+            className="btn-violet mt-6 h-12 w-full px-8 text-base sm:w-auto"
           >
             Submit review
           </button>
@@ -267,7 +267,7 @@ export function InsuranceOutcomeView() {
 
       {choice === "updated" && reviewSubmitted && submittedReview && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 sm:p-8">
+          <div className="rounded-xl border border-border bg-bg-secondary p-6 sm:p-8">
             <p className="font-semibold text-foreground">
               Thank you for sharing your experience.
             </p>
@@ -277,7 +277,7 @@ export function InsuranceOutcomeView() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <h2 className="text-lg font-semibold text-foreground">
               Preview on {adviserFirstName}&apos;s profile
             </h2>
@@ -292,7 +292,7 @@ export function InsuranceOutcomeView() {
 
           <Link
             href="/report"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+            className="btn-violet h-12 px-8 text-base"
           >
             Back to your report
           </Link>
@@ -301,7 +301,7 @@ export function InsuranceOutcomeView() {
 
       {choice === "deciding" && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <p className="font-semibold text-foreground">
               That&apos;s completely fine — take the time you need.
             </p>
@@ -327,7 +327,7 @@ export function InsuranceOutcomeView() {
 
           <Link
             href="/report"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+            className="btn-violet h-12 px-8 text-base"
           >
             Return to your report
           </Link>
@@ -337,7 +337,7 @@ export function InsuranceOutcomeView() {
       {choice === "declined" && !declineSubmitted && (
         <form
           onSubmit={handleDeclineSubmit}
-          className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8"
+          className="card p-6 sm:p-8"
         >
           <h2 className="text-lg font-semibold text-foreground">
             What put you off?
@@ -351,8 +351,8 @@ export function InsuranceOutcomeView() {
                 key={option.value}
                 className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-colors ${
                   declineReason === option.value
-                    ? "border-brand bg-brand/5"
-                    : "border-border bg-background hover:border-brand/30"
+                    ? "border-violet bg-violet-light"
+                    : "border-border bg-background hover:border-violet/30"
                 }`}
               >
                 <input
@@ -372,7 +372,7 @@ export function InsuranceOutcomeView() {
           <button
             type="submit"
             disabled={!declineReason}
-            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="btn-violet mt-6 h-12 w-full px-8 text-base disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             Submit feedback
           </button>
@@ -381,7 +381,7 @@ export function InsuranceOutcomeView() {
 
       {choice === "declined" && declineSubmitted && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <p className="font-semibold text-foreground">
               Thanks for letting us know.
             </p>
@@ -392,7 +392,7 @@ export function InsuranceOutcomeView() {
           </div>
           <Link
             href="/report"
-            className="inline-flex h-12 items-center justify-center rounded-full border border-border bg-surface px-8 text-base font-semibold text-foreground transition-colors hover:border-brand/40"
+            className="btn-ghost h-12 px-8 text-base"
           >
             Back to your report
           </Link>

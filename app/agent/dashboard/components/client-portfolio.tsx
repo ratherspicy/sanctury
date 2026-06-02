@@ -2,9 +2,9 @@ import { formatCurrency, formatDate } from "@/lib/format";
 import type { ClientRow } from "@/lib/agent/dashboard-data";
 
 const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
-  Completed: "bg-brand/10 text-brand",
-  "In progress": "bg-accent-soft text-accent",
-  "Not started": "bg-background text-muted border border-border",
+  Completed: "bg-brand-light text-brand",
+  "In progress": "bg-violet-light text-violet",
+"Not started": "bg-background text-muted border border-border",
 };
 
 type ClientPortfolioProps = {
@@ -13,7 +13,7 @@ type ClientPortfolioProps = {
 
 export function ClientPortfolio({ clients }: ClientPortfolioProps) {
   return (
-    <section id="clients" className="rounded-2xl border border-border bg-surface shadow-sm">
+    <section id="clients" className="card ">
       <div className="border-b border-border px-6 py-5">
         <h2 className="text-lg font-semibold text-foreground">Client portfolio</h2>
         <p className="mt-1 text-sm text-muted">
@@ -59,14 +59,14 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
                     <span
                       className={
                         client.daysToRefix <= 30
-                          ? "font-semibold text-red-600"
+                          ? "font-semibold text-danger"
                           : undefined
                       }
                     >
                       {client.daysToRefix} days
                     </span>
                   ) : (
-                    "—"
+"—"
                   )}
                 </td>
               </tr>

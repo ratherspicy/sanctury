@@ -4,7 +4,7 @@ function StepIndicator({ status }: { status: RequestTimelineStep["status"] }) {
   if (status === "completed") {
     return (
       <span
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/10"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-light"
         aria-hidden
       >
         <svg viewBox="0 0 16 16" className="h-4 w-4 text-brand" fill="none">
@@ -23,8 +23,8 @@ function StepIndicator({ status }: { status: RequestTimelineStep["status"] }) {
   if (status === "in_progress") {
     return (
       <span className="relative flex h-8 w-8 shrink-0 items-center justify-center" aria-hidden>
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400/40 opacity-75" />
-        <span className="relative inline-flex h-3 w-3 rounded-full bg-amber-500 live-pulse" />
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet/30 opacity-75" />
+        <span className="relative inline-flex h-3 w-3 rounded-full bg-violet live-pulse" />
       </span>
     );
   }

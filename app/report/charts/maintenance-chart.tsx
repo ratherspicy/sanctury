@@ -40,10 +40,10 @@ export function MaintenanceTimelineChart({
             style={{ left: `${agePosition}%`, transform: "translate(-50%, -50%)" }}
           >
             <div className="flex flex-col items-center">
-              <span className="mb-1 whitespace-nowrap rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white">
+              <span className="mb-1 whitespace-nowrap rounded-lg bg-violet px-2 py-0.5 text-xs font-semibold text-white">
                 Your home · {homeAge} yrs
               </span>
-              <span className="h-4 w-4 rotate-45 border-2 border-surface bg-brand shadow-sm" />
+              <span className="h-4 w-4 rotate-45 border-2 border-surface bg-violet" />
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ export function MaintenanceTimelineChart({
                 </div>
                 <div className="relative mt-2 h-1.5 rounded-full bg-border">
                   <span
-                    className="absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-surface shadow-sm"
+                    className="absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-surface"
                     style={{
                       left: `${pos}%`,
                       transform: "translate(-50%, -50%)",

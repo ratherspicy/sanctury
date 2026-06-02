@@ -70,8 +70,8 @@ export function InsuranceFollowupView() {
   return (
     <div className="space-y-8">
       <div>
-        <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-brand">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-light" />
+        <p className="badge-violet gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-violet-light" />
           24-hour check
         </p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -88,14 +88,14 @@ export function InsuranceFollowupView() {
           <button
             type="button"
             onClick={() => handleAnswer("yes")}
-            className="flex w-full items-center justify-center rounded-full bg-brand py-4 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+            className="btn-violet w-full py-4 text-base"
           >
             Yes, we have spoken
           </button>
           <button
             type="button"
             onClick={() => handleAnswer("not_yet")}
-            className="flex w-full items-center justify-center rounded-full border border-border bg-surface py-4 text-base font-semibold text-foreground transition-colors hover:border-brand/40 hover:bg-background"
+            className="btn-ghost w-full py-4 text-base"
           >
             Not yet
           </button>
@@ -104,7 +104,7 @@ export function InsuranceFollowupView() {
 
       {phase === "yes_success" && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 sm:p-8">
+          <div className="rounded-xl border border-border bg-bg-secondary p-6 sm:p-8">
             <p className="font-semibold text-foreground">
               Great — glad you connected with {adviserFirstName}.
             </p>
@@ -114,7 +114,7 @@ export function InsuranceFollowupView() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <h2 className="text-lg font-semibold text-foreground">
               Your request timeline
             </h2>
@@ -123,7 +123,7 @@ export function InsuranceFollowupView() {
 
           <Link
             href="/marketplace/insurance/outcome"
-            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-brand px-8 text-base font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark sm:w-auto"
+            className="btn-violet h-12 w-full px-8 text-base"
           >
             Leave your review
           </Link>
@@ -132,7 +132,7 @@ export function InsuranceFollowupView() {
 
       {phase === "not_yet_message" && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <p className="font-semibold text-foreground">
               No problem — we will follow up with {adviserFirstName} on your
               behalf.
@@ -141,7 +141,7 @@ export function InsuranceFollowupView() {
               You should hear from {adviserFirstName} within the next few hours.
               We&apos;ll make sure your request hasn&apos;t been missed.
             </p>
-            <p className="mt-4 rounded-xl bg-accent-soft/50 px-4 py-3 text-sm leading-relaxed text-foreground">
+            <p className="mt-4 rounded-xl bg-bg-secondary px-4 py-3 text-sm leading-relaxed text-foreground">
               <span className="font-semibold">Reassurance:</span> Sanctury only
               shares your details with the adviser you chose. If you still
               haven&apos;t heard back tomorrow, come back to this page and we&apos;ll
@@ -149,7 +149,7 @@ export function InsuranceFollowupView() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-8">
+          <div className="card p-6 sm:p-8">
             <h2 className="text-lg font-semibold text-foreground">
               Your request timeline
             </h2>
@@ -158,7 +158,7 @@ export function InsuranceFollowupView() {
 
           <Link
             href="/marketplace/insurance/confirmed"
-            className="text-sm font-medium text-brand underline-offset-2 hover:underline"
+            className="text-sm font-medium text-violet underline-offset-2 hover:underline"
           >
             Back to confirmation
           </Link>

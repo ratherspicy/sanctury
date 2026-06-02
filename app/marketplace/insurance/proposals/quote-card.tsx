@@ -9,10 +9,10 @@ import { AdviserProfileModal } from "./adviser-profile-modal";
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground">
+    <span className="inline-flex items-center gap-1 text-sm font-medium text-violet">
       <svg
         viewBox="0 0 16 16"
-        className="h-3.5 w-3.5 text-amber-500"
+        className="h-3.5 w-3.5 text-violet"
         fill="currentColor"
         aria-hidden
       >
@@ -25,7 +25,7 @@ function StarRating({ rating }: { rating: number }) {
 
 function TickIcon() {
   return (
-    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-brand" aria-hidden>
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-violet" aria-hidden>
       <path
         d="M3 8.5l3 3 7-7"
         stroke="currentColor"
@@ -83,14 +83,14 @@ export function QuoteCard({
       />
     )}
     <article
-      className={`overflow-hidden rounded-2xl border border-border bg-surface shadow-sm ${
+      className={`overflow-hidden card ${
         animateIn ? "quote-enter" : ""
       }`}
     >
       <div className="p-5 sm:p-6">
         {/* Adviser row */}
         <div className="flex flex-wrap items-start gap-4 border-b border-border pb-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand/10 text-sm font-bold text-brand">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F3F4F6] text-sm font-bold text-foreground">
             {quote.initials}
           </div>
           <div className="min-w-0 flex-1">
@@ -98,9 +98,9 @@ export function QuoteCard({
               <div>
                 <h2 className="text-lg font-bold text-foreground">{quote.name}</h2>
                 <p className="text-sm text-muted">{quote.title}</p>
-                <p className="text-sm text-brand">{quote.region}</p>
+                <p className="text-sm text-muted">{quote.region}</p>
               </div>
-              <span className="inline-flex items-center rounded-full border border-brand/20 bg-brand/5 px-2.5 py-1 text-xs font-medium text-brand">
+              <span className="inline-flex items-center rounded-full bg-[#F3F4F6] px-2.5 py-1 text-xs font-medium text-muted">
                 {quote.responseTime}
               </span>
             </div>
@@ -123,7 +123,7 @@ export function QuoteCard({
           </div>
           <div className="rounded-xl bg-background px-4 py-3">
             <p className="text-xs font-medium text-muted">Est. monthly premium</p>
-            <p className="mt-0.5 text-lg font-bold text-brand">
+            <p className="mt-0.5 text-lg font-bold text-violet">
               ${quote.monthlyPremium}/mo
             </p>
           </div>
@@ -149,7 +149,7 @@ export function QuoteCard({
               key={h.label}
               className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${
                 h.included
-                  ? "bg-brand/10 text-brand"
+                  ? "bg-violet-light text-violet"
                   : "bg-background text-muted line-through"
               }`}
             >
@@ -165,14 +165,14 @@ export function QuoteCard({
             <button
               type="button"
               onClick={() => setExpanded((e) => !e)}
-              className="inline-flex h-11 flex-1 items-center justify-center rounded-full border border-border bg-background px-6 text-sm font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50"
+              className="btn-ghost h-11 flex-1 px-6 text-sm"
             >
               {expanded ? "Collapse" : "See full quote"}
             </button>
             <button
               type="button"
               onClick={() => setProfileOpen(true)}
-              className="inline-flex h-11 flex-1 items-center justify-center rounded-full border border-border bg-background px-6 text-sm font-semibold text-foreground transition-colors hover:border-brand/30 hover:bg-accent-soft/50"
+              className="btn-ghost h-11 flex-1 px-6 text-sm"
             >
               View profile
             </button>
@@ -180,7 +180,7 @@ export function QuoteCard({
           <button
             type="button"
             onClick={() => onChoose(quote.id)}
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-brand px-6 text-sm font-semibold text-white shadow-md shadow-brand/20 transition-colors hover:bg-brand-dark"
+            className="btn-violet h-11 w-full px-6 text-sm"
           >
             Choose this adviser
           </button>
@@ -220,7 +220,7 @@ export function QuoteCard({
                     <td className="px-4 py-3 text-muted">{row.label}</td>
                     <td className="px-4 py-3">
                       {row.included ? (
-                        <span className="inline-flex items-center gap-1.5 text-brand">
+                        <span className="inline-flex items-center gap-1.5 text-violet">
                           <TickIcon />
                           Yes
                         </span>
@@ -245,7 +245,7 @@ export function QuoteCard({
               <ul className="mt-2 space-y-1.5 text-sm text-muted">
                 {quote.excessOptions.map((opt) => (
                   <li key={opt} className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand" />
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-violet" />
                     {opt}
                   </li>
                 ))}
@@ -258,7 +258,7 @@ export function QuoteCard({
               <ul className="mt-2 space-y-1.5 text-sm text-muted">
                 {quote.exclusions.map((ex) => (
                   <li key={ex} className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-muted" />
                     {ex}
                   </li>
                 ))}
@@ -266,8 +266,8 @@ export function QuoteCard({
             </div>
           </div>
 
-          <div className="mt-6 rounded-xl border border-brand/20 bg-brand/5 p-4">
-            <h4 className="text-sm font-semibold text-brand">
+          <div className="mt-6 rounded-xl border border-border bg-bg-secondary p-4">
+            <h4 className="text-sm font-semibold text-violet">
               Note from {quote.name}
             </h4>
             <p className="mt-2 text-sm leading-relaxed text-foreground">
@@ -278,7 +278,7 @@ export function QuoteCard({
           <button
             type="button"
             onClick={() => setExpanded(false)}
-            className="mt-6 text-sm font-semibold text-brand hover:text-brand-dark"
+            className="mt-6 text-sm font-semibold text-violet hover:text-violet-dark"
           >
             Collapse
           </button>

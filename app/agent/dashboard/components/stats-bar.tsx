@@ -2,12 +2,21 @@ import { formatCurrency } from "@/lib/format";
 import { AGENT_STATS } from "@/lib/agent/dashboard-data";
 
 const STATS = [
-  { label: "Total clients", value: String(AGENT_STATS.totalClients) },
-  { label: "Health checks completed", value: String(AGENT_STATS.healthChecksCompleted) },
-  { label: "Marketplace referrals generated", value: String(AGENT_STATS.marketplaceReferrals) },
+  { label: "Total clients", value: String(AGENT_STATS.totalClients), accent: false },
+  {
+    label: "Health checks completed",
+    value: String(AGENT_STATS.healthChecksCompleted),
+    accent: false,
+  },
+  {
+    label: "Marketplace referrals generated",
+    value: String(AGENT_STATS.marketplaceReferrals),
+    accent: false,
+  },
   {
     label: "Estimated referral income",
     value: formatCurrency(AGENT_STATS.estimatedReferralIncome),
+    accent: true,
   },
 ] as const;
 
@@ -17,10 +26,14 @@ export function StatsBar() {
       {STATS.map((stat) => (
         <div
           key={stat.label}
-          className="rounded-2xl border border-border bg-surface p-5 shadow-sm"
+          className="card p-5"
         >
           <p className="text-sm text-muted">{stat.label}</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+          <p
+            className={`mt-2 text-2xl font-bold tracking-tight ${
+              stat.accent ? "text-violet" : "text-foreground"
+            }`}
+          >
             {stat.value}
           </p>
         </div>

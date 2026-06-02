@@ -6,7 +6,7 @@ import { mapAddyRegionToFormRegion } from "@/lib/addy/map-region";
 import type { AddyAddressDetail, AddySearchAddress } from "@/lib/addy/types";
 
 const inputClassName =
-  "mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20";
+"mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-violet focus:outline-none focus:ring-0";
 
 type AddressAutocompleteProps = {
   address: string;
@@ -195,7 +195,7 @@ export function AddressAutocomplete({
       )}
 
       {error && (
-        <p className="mt-1.5 text-xs text-accent" role="alert">
+        <p className="mt-1.5 text-xs text-violet" role="alert">
           {error}
         </p>
       )}
@@ -204,7 +204,7 @@ export function AddressAutocomplete({
         <ul
           id={listboxId}
           role="listbox"
-          className="absolute z-20 mt-1.5 max-h-60 w-full overflow-y-auto rounded-xl border border-border bg-surface py-1 shadow-lg"
+          className="absolute z-20 mt-1.5 max-h-60 w-full overflow-y-auto card py-1 shadow-lg"
         >
           {suggestions.map((item, index) => (
             <li
@@ -217,7 +217,7 @@ export function AddressAutocomplete({
                 type="button"
                 className={`w-full px-4 py-3 text-left text-sm transition-colors ${
                   highlightIndex === index
-                    ? "bg-brand/10 text-brand"
+                    ? "bg-violet-light text-violet"
                     : "text-foreground hover:bg-background"
                 }`}
                 onMouseEnter={() => setHighlightIndex(index)}
@@ -236,14 +236,14 @@ export function AddressAutocomplete({
           NZ region
         </label>
         {regionAutoSet && region && (
-          <p className="mt-1 text-xs text-brand">
+          <p className="mt-1 text-xs text-violet">
             Detected automatically from your address
           </p>
         )}
         <select
           id="region"
           required
-          className={`${inputClassName} ${regionAutoSet ? "border-brand/40 bg-brand/5" : ""}`}
+          className={`${inputClassName} ${regionAutoSet ? "border-violet/40 bg-violet-light" : ""}`}
           value={region}
           onChange={(e) => {
             onRegionChange(e.target.value);

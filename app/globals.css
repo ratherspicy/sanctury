@@ -1,17 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf7f2;
-  --foreground: #1c2420;
-  --surface: #ffffff;
-  --muted: #5c6b64;
-  --border: #e8e0d4;
-  --brand: #1f5c4a;
-  --brand-dark: #163d32;
-  --brand-light: #2a7a63;
-  --accent: #c47b3a;
-  --accent-soft: #f5ebe0;
-  --hero-glow: #e8d5bc;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+
+  --text-primary: #0a0a0a;
+  --text-secondary: #525252;
+  --text-tertiary: #a3a3a3;
+
+  --accent: #16a34a;
+  --accent-dark: #15803d;
+  --accent-light: #dcfce7;
+
+  --violet: #6d5fd8;
+  --violet-dark: #5b4fc4;
+  --violet-light: #eeedf8;
+
+  --btn-primary: #0a0a0a;
+  --btn-primary-hover: #262626;
+
+  --warning: #d97706;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
+  --success: #16a34a;
+  --border: #e5e5e5;
+
+  /* Legacy aliases */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --surface: var(--bg-primary);
+  --muted: var(--text-secondary);
+  --brand: var(--accent);
+  --brand-dark: var(--accent-dark);
+  --brand-light: var(--accent-light);
 }
 
 @theme inline {
@@ -24,15 +45,111 @@
   --color-brand-dark: var(--brand-dark);
   --color-brand-light: var(--brand-light);
   --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
-  --color-hero-glow: var(--hero-glow);
-  --font-sans: var(--font-jakarta);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-light: var(--accent-light);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-violet: var(--violet);
+  --color-violet-dark: var(--violet-dark);
+  --color-violet-light: var(--violet-light);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-btn-primary: var(--btn-primary);
+  --font-family-sans: var(--font-inter), system-ui, sans-serif;
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+@layer components {
+  .text-hero {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .text-h2 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .text-h3 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-btn-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#262626];
+  }
+
+  .btn-violet {
+    @apply inline-flex items-center justify-center rounded-lg bg-violet px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-violet-dark;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-dark;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg border border-border bg-surface px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-bg-secondary;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-lg bg-danger px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#b91c1c];
+  }
+
+  .card {
+    @apply rounded-xl border border-border bg-surface;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-border bg-surface text-foreground transition-colors placeholder:text-text-tertiary focus:border-violet focus:outline-none focus:ring-0;
+  }
+
+  .badge-violet {
+    @apply inline-flex items-center rounded-lg bg-violet-light px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-violet;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center rounded-lg bg-brand-light px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-brand;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center rounded-lg bg-brand-light px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-brand;
+  }
+
+  .alert-card {
+    @apply rounded-xl border border-border border-l-[3px] bg-surface p-5 sm:p-6;
+  }
+
+  .urgency-box {
+    @apply rounded-lg border-l-[3px] border-l-danger bg-danger-soft px-4 py-4 text-sm text-foreground;
+  }
 }
 
 @keyframes quote-slide-up {
