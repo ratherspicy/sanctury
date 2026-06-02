@@ -1,70 +1,14 @@
 import Link from "next/link";
-import { type ReactNode } from "react";
 import { formatCurrency, formatDate } from "@/lib/format";
 import {
   PLACEHOLDER_DASHBOARD,
   getEquityPercentage,
-  type AlertCategory,
-  type DashboardAlert,
   type MarketplaceRequest,
   type MarketplaceRequestStatus,
 } from "@/lib/my-sanctury/dashboard-data";
 
 type DashboardViewProps = {
   firstName: string;
-};
-
-const ALERT_BORDER: Record<AlertCategory, string> = {
-  Insurance: "border-l-danger",
-  Mortgage: "border-l-violet",
-  Maintenance: "border-l-warning",
-  Market: "border-l-border",
-};
-
-const ALERT_ICONS: Record<AlertCategory, ReactNode> = {
-  Insurance: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="M12 3L4 7v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V7l-8-4z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  Mortgage: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="M4 10v10h16V10M2 10l10-7 10 7M9 20v-6h6v6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  Maintenance: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  Market: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="M3 17l6-6 4 4 8-10M21 21H3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
 };
 
 const REQUEST_STATUS_STYLES: Record<MarketplaceRequestStatus, string> = {
@@ -98,34 +42,6 @@ function RequestTypeIcon({ type }: { type: MarketplaceRequest["type"] }) {
         strokeLinejoin="round"
       />
     </svg>
-  );
-}
-
-function AlertCard({ alert }: { alert: DashboardAlert }) {
-  return (
-    <div className={`card border-l-4 p-4 ${ALERT_BORDER[alert.category]}`}>
-      <div className="flex gap-3">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-bg-secondary text-muted">
-          {ALERT_ICONS[alert.category]}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            {alert.category}
-          </p>
-          <p className="mt-1 text-sm font-semibold text-foreground">
-            {alert.headline}
-          </p>
-          <p className="mt-1 text-sm text-muted">{alert.description}</p>
-          <Link
-            href={alert.actionHref}
-            className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-violet hover:underline"
-          >
-            {alert.actionLabel}
-            <span aria-hidden>→</span>
-          </Link>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -176,7 +92,7 @@ function RequestCard({ request }: { request: MarketplaceRequest }) {
 
 export function DashboardView({ firstName }: DashboardViewProps) {
   const data = PLACEHOLDER_DASHBOARD;
-  const { property, alerts, marketplaceRequests, lastHealthCheckDate } = data;
+  const { property, marketplaceRequests, lastHealthCheckDate } = data;
 
   const equityPercent = getEquityPercentage(
     property.equityAmount,
@@ -246,53 +162,6 @@ export function DashboardView({ firstName }: DashboardViewProps) {
             </div>
           </div>
 
-          <section>
-            <h2 className="text-lg font-semibold text-foreground">
-              Things worth your attention
-            </h2>
-            <div className="mt-4 space-y-3">
-              {alerts.map((alert) => (
-                <AlertCard key={alert.id} alert={alert} />
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-foreground">
-              Active requests
-            </h2>
-            <div className="mt-4 space-y-4">
-              {marketplaceRequests.map((request) => (
-                <RequestCard key={request.id} request={request} />
-              ))}
-
-              <Link
-                href="/marketplace/insurance"
-                className="card flex items-center gap-4 p-5 transition-colors hover:bg-bg-secondary"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-bg-secondary text-muted">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-                    <path
-                      d="M12 5v14M5 12h14"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
-                <div>
-                  <p className="font-semibold text-foreground">
-                    Start a new request
-                  </p>
-                  <p className="mt-1 text-sm text-muted">
-                    Insurance, mortgage, or maintenance — we&apos;ll connect you
-                    with the right people.
-                  </p>
-                </div>
-              </Link>
-            </div>
-          </section>
-
           <section className="card p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
@@ -337,6 +206,42 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                   Start a new Home Health Check
                 </Link>
               </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-foreground">
+              Active requests
+            </h2>
+            <div className="mt-4 space-y-4">
+              {marketplaceRequests.map((request) => (
+                <RequestCard key={request.id} request={request} />
+              ))}
+
+              <Link
+                href="/marketplace/insurance"
+                className="card flex items-center gap-4 p-5 transition-colors hover:bg-bg-secondary"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-bg-secondary text-muted">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-foreground">
+                    Start a new request
+                  </p>
+                  <p className="mt-1 text-sm text-muted">
+                    Insurance, mortgage, or maintenance — we&apos;ll connect you
+                    with the right people.
+                  </p>
+                </div>
+              </Link>
             </div>
           </section>
         </div>
