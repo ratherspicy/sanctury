@@ -24,8 +24,11 @@ export function SancturyLogo({ className = "" }: { className?: string }) {
           />
         </svg>
       </span>
-      <span className="text-xl font-bold tracking-tight text-foreground">
-        Sanctury
+      <span
+        className="text-xl font-bold text-foreground"
+        style={{ letterSpacing: "-0.04em" }}
+      >
+        sanctury
       </span>
     </div>
   );

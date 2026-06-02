@@ -12,10 +12,18 @@ export default async function MySancturyPage() {
     redirect("/my-sanctury/login");
   }
 
+  const { data: homeowner } = await supabase
+    .from("homeowners")
+    .select("full_name")
+    .eq("email", user.email)
+    .single();
+
   const fullName =
+    homeowner?.full_name ||
     (typeof user.user_metadata?.full_name === "string"
       ? user.user_metadata.full_name
-      : null) ?? user.email?.split("@")[0] ?? "there";
+      : null) ||
+    "there";
 
   const firstName = fullName.split(" ")[0] ?? fullName;
 
