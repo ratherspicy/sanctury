@@ -20,6 +20,10 @@
 - Adviser proposal cards with selection flow
 - Confirmation and next steps page
 
+## Technical Debt
+
+- **Persist health check data to Supabase** — Currently the report and insurance proposals pages read from sessionStorage, which means they break when navigating directly from the dashboard. The health check form data and generated report need to be saved to the `health_checks` Supabase table at submission, and loaded from there on the report and marketplace pages. This will also enable the dashboard to show real data per user instead of placeholder data. Priority: high — do before real user deployment.
+
 ## Feature Requests & Ideas
 
 ### Marketplace
