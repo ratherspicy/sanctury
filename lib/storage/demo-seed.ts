@@ -10,9 +10,9 @@ export function seedDemoDataIfEmpty(): void {
   saveHealthCheckAndReport({
     address: "42 Mount Avenue, Tauranga",
     region: "Bay of Plenty",
-    floorArea: "168",
+    floorArea: "262",
     yearBuilt: "1998",
-    buildQuality: "above-standard",
+    buildQuality: "Above Standard",
     features: {
       Garage: true,
       Deck: true,
@@ -33,9 +33,9 @@ export function seedDemoDataIfEmpty(): void {
   saveInsuranceJobPosting({
     address: "42 Mount Avenue, Tauranga",
     region: "Bay of Plenty",
-    estimatedRebuildCost: 1064000,
+    estimatedRebuildCost: 1063290,
     currentSumInsured: 900000,
-    coverageGap: 164000,
+    coverageGap: 163290,
     sumInsuredYear: "2022",
     features: ["Garage", "Deck", "Heat Pump"],
     notes: "",
