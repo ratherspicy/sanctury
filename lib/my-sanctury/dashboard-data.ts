@@ -79,7 +79,7 @@ export const PLACEHOLDER_DASHBOARD: DashboardData = {
       description:
         "Your heat pump is due for its annual service. Regular maintenance keeps it efficient and extends its lifespan.",
       actionLabel: "Find a tradie",
-      actionHref: "/my-sanctury",
+      actionHref: "/report",
     },
     {
       id: "market-equity",

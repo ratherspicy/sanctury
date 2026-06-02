@@ -1,7 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { formatCurrency, formatDate } from "@/lib/format";
 import {
   PLACEHOLDER_DASHBOARD,
@@ -15,14 +13,6 @@ import {
 type DashboardViewProps = {
   firstName: string;
 };
-
-type TabId = "overview" | "requests" | "report";
-
-const TABS: { id: TabId; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "requests", label: "Active requests" },
-  { id: "report", label: "My report" },
-];
 
 const ALERT_BORDER: Record<AlertCategory, string> = {
   Insurance: "border-l-danger",
@@ -185,7 +175,6 @@ function RequestCard({ request }: { request: MarketplaceRequest }) {
 }
 
 export function DashboardView({ firstName }: DashboardViewProps) {
-  const [activeTab, setActiveTab] = useState<TabId>("overview");
   const data = PLACEHOLDER_DASHBOARD;
   const { property, alerts, marketplaceRequests, lastHealthCheckDate } = data;
 
@@ -208,116 +197,103 @@ export function DashboardView({ firstName }: DashboardViewProps) {
           </p>
         </div>
 
-        <div className="mb-8 flex gap-6 border-b border-border">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`border-b-2 pb-3 text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "border-violet text-violet"
-                  : "border-transparent text-muted hover:text-foreground"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <div className="space-y-8">
+          <div className="card p-6">
+            <h2 className="text-lg font-semibold text-foreground">
+              {property.address}
+            </h2>
 
-        {activeTab === "overview" && (
-          <div className="space-y-6">
-            <div className="card p-6">
-              <h2 className="text-lg font-semibold text-foreground">
-                {property.address}
-              </h2>
-
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-lg bg-bg-secondary p-4">
-                  <p className="text-sm text-muted">Estimated value</p>
-                  <p className="mt-1 text-lg font-semibold text-foreground">
-                    {formatCurrency(property.estimatedCurrentValue)}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-bg-secondary p-4">
-                  <p className="text-sm text-muted">Equity built</p>
-                  <p className="mt-1 text-lg font-semibold text-accent">
-                    {formatCurrency(property.equityAmount)}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-bg-secondary p-4">
-                  <p className="text-sm text-muted">Loan balance</p>
-                  <p className="mt-1 text-lg font-semibold text-violet">
-                    {formatCurrency(loanBalance)}
-                  </p>
-                </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-lg bg-bg-secondary p-4">
+                <p className="text-sm text-muted">Estimated value</p>
+                <p className="mt-1 text-lg font-semibold text-foreground">
+                  {formatCurrency(property.estimatedCurrentValue)}
+                </p>
               </div>
-
-              <div className="mt-6">
-                <p className="text-sm text-muted">Ownership progress</p>
-                <div className="mt-3">
-                  <div className="h-2 overflow-hidden rounded-lg bg-border">
-                    <div
-                      className="h-full rounded-lg bg-brand transition-all"
-                      style={{ width: `${equityPercent}%` }}
-                      role="progressbar"
-                      aria-valuenow={equityPercent}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-label={`${equityPercent}% equity`}
-                    />
-                  </div>
-                  <div className="mt-2 flex justify-between text-xs text-muted">
-                    <span>Mortgage</span>
-                    <span>{equityPercent}% owned outright</span>
-                  </div>
-                </div>
+              <div className="rounded-lg bg-bg-secondary p-4">
+                <p className="text-sm text-muted">Equity built</p>
+                <p className="mt-1 text-lg font-semibold text-accent">
+                  {formatCurrency(property.equityAmount)}
+                </p>
+              </div>
+              <div className="rounded-lg bg-bg-secondary p-4">
+                <p className="text-sm text-muted">Loan balance</p>
+                <p className="mt-1 text-lg font-semibold text-violet">
+                  {formatCurrency(loanBalance)}
+                </p>
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="mt-6">
+              <p className="text-sm text-muted">Ownership progress</p>
+              <div className="mt-3">
+                <div className="h-2 overflow-hidden rounded-lg bg-border">
+                  <div
+                    className="h-full rounded-lg bg-brand transition-all"
+                    style={{ width: `${equityPercent}%` }}
+                    role="progressbar"
+                    aria-valuenow={equityPercent}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${equityPercent}% equity`}
+                  />
+                </div>
+                <div className="mt-2 flex justify-between text-xs text-muted">
+                  <span>Mortgage</span>
+                  <span>{equityPercent}% owned outright</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section>
+            <h2 className="text-lg font-semibold text-foreground">
+              Things worth your attention
+            </h2>
+            <div className="mt-4 space-y-3">
               {alerts.map((alert) => (
                 <AlertCard key={alert.id} alert={alert} />
               ))}
             </div>
-          </div>
-        )}
+          </section>
 
-        {activeTab === "requests" && (
-          <div className="space-y-4">
-            {marketplaceRequests.map((request) => (
-              <RequestCard key={request.id} request={request} />
-            ))}
+          <section>
+            <h2 className="text-lg font-semibold text-foreground">
+              Active requests
+            </h2>
+            <div className="mt-4 space-y-4">
+              {marketplaceRequests.map((request) => (
+                <RequestCard key={request.id} request={request} />
+              ))}
 
-            <Link
-              href="/marketplace/insurance"
-              className="card flex items-center gap-4 p-5 transition-colors hover:bg-bg-secondary"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-bg-secondary text-muted">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-                  <path
-                    d="M12 5v14M5 12h14"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-              <div>
-                <p className="font-semibold text-foreground">
-                  Start a new request
-                </p>
-                <p className="mt-1 text-sm text-muted">
-                  Insurance, mortgage, or maintenance — we&apos;ll connect you
-                  with the right people.
-                </p>
-              </div>
-            </Link>
-          </div>
-        )}
+              <Link
+                href="/marketplace/insurance"
+                className="card flex items-center gap-4 p-5 transition-colors hover:bg-bg-secondary"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-bg-secondary text-muted">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-foreground">
+                    Start a new request
+                  </p>
+                  <p className="mt-1 text-sm text-muted">
+                    Insurance, mortgage, or maintenance — we&apos;ll connect you
+                    with the right people.
+                  </p>
+                </div>
+              </Link>
+            </div>
+          </section>
 
-        {activeTab === "report" && (
-          <div className="card p-6">
+          <section className="card p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-foreground">
@@ -327,8 +303,8 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                   Last updated {formatDate(lastHealthCheckDate)}
                 </p>
               </div>
-              <Link href="/check" className="btn-violet h-11 px-6 text-sm">
-                Run a new check
+              <Link href="/report" className="btn-violet h-11 px-6 text-sm">
+                View report
               </Link>
             </div>
 
@@ -362,8 +338,8 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                 </Link>
               </p>
             </div>
-          </div>
-        )}
+          </section>
+        </div>
       </div>
     </div>
   );
