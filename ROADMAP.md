@@ -1,154 +1,296 @@
 # Sanctury Product Roadmap
+## Last updated: June 2026
 
-## Live in Production
-- Landing page with NZ homeowner positioning
-- Three-step Home Health Check form
-- NZ address autocomplete via Addy API with auto region detection
-- Dollar-based loan structure calculator with auto-remainder
-- Comma-formatted dollar inputs
-- Insurance gap calculation with regional NZ rebuild cost rates
-- House coverage visual showing insured vs gap proportion
-- Mortgage strategy with loan payoff curve and timeline visualisation
-- Maintenance snapshot with colour-coded property age timeline
-- Email capture before report delivery
-- Regulatory disclaimer throughout
-- Deployed to Vercel at sanctury-five.vercel.app
+---
 
-## In Progress
-- Insurance marketplace with live RFP flow
-- Homeowner job posting pre-filled from report data
-- Adviser proposal cards with selection flow
-- Confirmation and next steps page
+## The Vision
 
-## Technical Debt
+Sanctury builds trust so normal Kiwis can make decisions that work for them — transparently, in plain language, with full understanding of what they are signing up for.
 
-- **Persist health check data to Supabase** — Currently the report and insurance proposals pages read from sessionStorage, which means they break when navigating directly from the dashboard. The health check form data and generated report need to be saved to the `health_checks` Supabase table at submission, and loaded from there on the report and marketplace pages. This will also enable the dashboard to show real data per user instead of placeholder data. Priority: high — do before real user deployment.
+It takes the smoke and mirrors out of insurance, mortgages, utilities, and property services — and keeps it real.
 
-## Feature Requests & Ideas
+Free for homeowners. Forever. Paid for by the professionals who want to serve them.
 
-### Marketplace
-- [ ] Standalone marketplace access without requiring Home Health Check
-      — allow homeowners to browse and post jobs directly without 
-      completing the full qualification flow first
-- [ ] Mortgage adviser marketplace with RFP flow
-- [ ] Energy provider comparison and switching marketplace
-- [ ] Tradie and maintenance services marketplace
-- [ ] Vendor subscription billing ($99–$299/month by category)
-- [ ] Per-lead fee tracking and invoicing
-- [ ] Vendor dashboard — manage profile, view incoming jobs, submit proposals
-- [ ] Homeowner rating and review system for advisers post-engagement
-- [ ] Adviser response time tracking and badges
+---
 
-### Agent Tools (Tall Poppy Integration)
-- [ ] Agent dashboard — client portfolio view
-- [ ] Automated alert feed — refix approaching, equity milestone, 
-      bright-line expiry, market movement, maintenance overdue
-- [ ] One-click personalised client contact generator using Claude API
-- [ ] Annual property WOF report — generated for agent to deliver to client
-- [ ] Neighbourhood market report — hyper-local comparable sales by street
-- [ ] Settlement onboarding flow — agent inputs property data at close
-- [ ] Agent referral tracking — which clients converted to marketplace leads
+## The Platform Principles
 
-### Agent Intelligence Tools
-- [ ] Renovation value adviser — agent shares data-backed renovation recommendations with clients before their next sale. 'In your suburb, adding a second bathroom returns 1.8x the cost on average. A pool in this price bracket typically reduces days on market but adds less than the build cost.' Agent becomes the trusted adviser on how to maximise the property before listing.
-- [ ] The things agents know — a curated intelligence layer where agents share local knowledge that never appears in public data: which streets flood, which developments are coming, which body corporates are well-run, which areas are being rezoned, where the infrastructure investment is going. Structured as agent-verified local insights attached to specific suburbs.
-- [ ] Pre-sale maximiser report — generated 12-18 months before a likely sale. Agent sits down with client and walks through: the three renovations most likely to add value for their specific property and price bracket, current comparable sales, optimal listing timing based on seasonal patterns, and a realistic sale price range. Turns the coffee catchup into a genuine strategic planning session.
-- [ ] Suburb data dashboard for agents — everything an agent knows about their patch in one place: average days on market, auction clearance rates, price per m² trends, most common buyer profiles, seasonal volume patterns. Makes every agent conversation data-backed rather than opinion-based.
+1. **Homeowner first** — every feature, every decision, every integration is evaluated by whether it serves the homeowner. Not the agent, not the vendor, not Sanctury.
 
-## Renovation Intelligence Tool
+2. **Radical transparency** — homeowners see exactly what advisers are paid, what products cost, and what their options are. No hidden commissions, no preferred partners, no smoke and mirrors.
 
-### Vision
-Give agents a data-backed reason to meet clients annually and give homeowners genuine intelligence about how to maximise their property before sale. This turns the agent from a transactional service provider into a trusted property adviser.
+3. **Data ownership** — homeowner data belongs to the homeowner. They can view it, export it, and delete it. Sanctury uses it to serve them, not to sell to third parties.
 
-### Homeowner-facing features (My Sanctury)
-- [ ] Renovation Planner tool — homeowner selects a renovation type and sees estimated cost range for their region, estimated value added at sale based on comparable sales, net return percentage, and break-even holding period
-- [ ] Side-by-side renovation comparison — model up to three renovations simultaneously
-- [ ] Best return recommendation — AI-generated recommendation based on property type, suburb, and price bracket
-- [ ] What not to do section — renovations that typically do not add value in their specific market (e.g. pools in lower price brackets, over-capitalising on kitchens)
-- [ ] Renovation cost tracker — log actual renovation costs and contractors, builds a record that adds value at resale
-- [ ] Before and after value modelling — shows estimated property value before and after a planned renovation
+4. **Agnostic by design** — Sanctury works with any agent, any adviser, any vendor. No single commercial interest can own or steer the platform. Tall Poppy gets first mover advantage, not exclusivity forever.
 
-### Agent-facing features (Agent Dashboard)
-- [ ] Renovation intelligence card on each client profile — top two recommended renovations for their property type and suburb before sale, estimated cost and return for each
-- [ ] Optimal listing window — if client renovates in next X months and lists in Y season, comparable data suggests sale price range of A–B
-- [ ] One-click Generate renovation briefing — produces a personalised one-page renovation recommendation the agent can share with the client at a coffee meeting
-- [ ] Annual property maximiser review — automatically generated once per year for every client in the agent portfolio. Agent receives alert: Client X annual property review is ready — two renovation recommendations could add $Y to their sale price
-- [ ] One-click coffee meeting invitation — agent sends a personalised meeting request referencing the renovation briefing
+5. **Plain language always** — no jargon, no fine print, no complexity theatre. If a 25-year-old first home buyer can't understand it, rewrite it.
 
-### Data sources
-- [ ] Phase 1 — Manually maintained NZ renovation return lookup table: suburb x property type x renovation type = average cost, average value added, average return. Updated quarterly. Sufficient for POC and early deployment.
-- [ ] Phase 2 — Relab data integration for real-time comparable sales analysis and suburb-specific renovation return data. Leverage existing Tall Poppy x Relab relationship.
-- [ ] Phase 3 — Cotality Cordell cost data integration for accurate regional build cost benchmarks
+6. **Climate aware** — every property decision includes climate and flood risk context. Homeowners deserve to know what risks they are taking on and where.
 
-### The regular contact mechanism
-- [ ] Automated annual trigger — 12 months after settlement, and every 12 months thereafter, Sanctury generates a property maximiser review for every client in the agent portfolio
-- [ ] Agent alert — notifies agent that the review is ready with a summary of key recommendations and estimated value uplift
-- [ ] One-click briefing generation — agent produces a personalised PDF in one click
-- [ ] Meeting scheduler — agent sends a coffee meeting invitation with one click, pre-populated with the client name and a warm personal message
+7. **Plays with others** — Sanctury integrates with TradeMe, realestate.co.nz, Wise Move, Builderscrack, Relab, Cotality, banks, insurers, and energy providers via API. We complete the ecosystem, not compete with it.
 
-### Why this matters strategically
-The renovation intelligence tool transforms the agent from a transactional service provider into a trusted annual property adviser. An agent who arrives once a year with data-backed renovation recommendations — specific to the client's property, suburb, and price bracket — does not need to pitch for the listing. By the time the client is ready to sell, the choice of agent is already made. This tool is the most defensible agent retention mechanism in the Sanctury platform because it delivers genuine, tangible, recurring value that no other NZ real estate technology currently provides.
+---
 
-### NZ-specific renovation return benchmarks (to be validated with Relab data)
-Initial lookup table values for Bay of Plenty region:
+## The Business Model
 
-- Bathroom addition: cost $25,000–$45,000, typical value added $45,000–$80,000, return 1.6–1.8x
-- Kitchen renovation: cost $20,000–$50,000, typical value added $25,000–$55,000, return 1.1–1.3x
-- Deck addition: cost $15,000–$30,000, typical value added $15,000–$35,000, return 1.0–1.2x
-- Heat pump installation: cost $3,500–$6,000, typical value added $8,000–$15,000, return 1.8–2.5x
-- Solar installation: cost $12,000–$20,000, typical value added $10,000–$18,000, return 0.8–1.0x
-- Exterior repaint: cost $8,000–$15,000, typical value added $15,000–$25,000, return 1.5–2.0x
-- Sleepout addition: cost $50,000–$90,000, typical value added $60,000–$110,000, return 1.1–1.3x
-- Pool installation: cost $60,000–$120,000, typical value added $20,000–$50,000, return 0.3–0.5x — generally not recommended
-- Landscaping: cost $10,000–$25,000, typical value added $10,000–$20,000, return 0.8–1.0x
-- Insulation upgrade: cost $3,000–$8,000, typical value added $8,000–$15,000, return 1.5–2.5x
+**Homeowners:** Free. Always. No subscription, no premium tier, no upsell.
 
-### Homeowner Tools
-- [ ] Google address autocomplete as alternative to Addy
-- [ ] LINZ property data integration — title type, land area, parcel ID
-- [ ] Relab property data integration — AVM valuation, comparable sales
-- [ ] Quarterly property intelligence report — automated, AI-generated
-- [ ] Bright-line tax position tracker and alert
-- [ ] Equity position tracker updated with market movements
-- [ ] Renovation ROI modelling tool
-- [ ] Climate and flood risk assessment by property address
-- [ ] Full maintenance calendar with 10-year schedule
-- [ ] Maintenance job history log — builds property record over time
-- [ ] First home buyer education hub — KiwiSaver, First Home Loan, 
-      auction process, LIM guide
-- [ ] Mortgage strategy coach — revolving credit explainer, 
-      overpayment calculator, refix timing guide
-- [ ] Renovation ROI tool — data-driven analysis of which renovations add value in specific NZ suburbs. What does adding a bedroom return vs cost? Does a pool add or subtract value in this market? What about a sleepout, a heat pump, a new kitchen? Powered by comparable sales data from Relab/Cotality.
-- [ ] Neighbourhood intelligence feed — what is happening in my street and suburb that I don't know about? New consents lodged nearby, recent sales with prices, new developments, zoning changes, infrastructure projects. The things only agents currently know.
+**Vendors pay to participate:**
+- Insurance advisers: $199/month + $150–300 per won lead
+- Mortgage advisers: $299/month + $500–900 per won lead
+- Energy providers: $99/month + $50–100 per switch
+- Tradies: $99/month + $20–80 per won job
+- Moving companies: $99/month + $30–60 per won job
 
-### Platform & Infrastructure
-- [ ] Supabase database — store all form submissions and user data
-- [ ] User accounts — homeowners can log back in to see their report
-- [ ] Agent login and dashboard authentication
-- [ ] Vendor login and profile management
-- [ ] Connect sanctury.co.nz domain to Vercel
-- [ ] Claude API integration — personalised AI-generated report text
-- [ ] PDF report download — branded, shareable
-- [ ] Email delivery of report via Resend or similar
-- [ ] Referral link tracking — per adviser, per agent, per vendor
-- [ ] Analytics — user journey tracking, drop-off points, conversion rates
-- [ ] Mobile app (future)
+**The flywheel:** More homeowners → more leads → more vendors → better deals → more homeowners.
 
-### Business Model
+---
+
+## The Homeowner Journey
+
+### At purchase (Settlement onboarding)
+- Agent sits down with new homeowner before settlement
+- Together they enrol in Sanctury — property details, mortgage, insurance, utilities, family composition
+- Homeowner gets complete picture of their new home from day one
+- Agent gets a reason to return at 3 months post-settlement
+- Sanctury gets complete, accurate data that no web form could capture
+
+### Year 1 (Getting sorted)
+- Renewal calendar shows every upcoming date — refix, insurance, power, broadband
+- Maintenance schedule specific to the property age and features
+- Insurance gap identified and fixed via marketplace
+- Mortgage structure optimised via adviser marketplace
+- Utilities switched to best deal via comparison engine
+
+### Years 2–5 (Managing well)
+- Quarterly property value updates via Relab/Cotality AVM
+- Equity position tracked and visualised
+- Refix decisions supported with rate comparison and adviser access
+- Maintenance calendar updated as items become due
+- Climate and flood risk assessment surfaced
+
+### Years 5–10 (Growing wealth)
+- Equity decision tool — renovate, invest, pay down, do nothing
+- Renovation ROI modelling — what adds value in this suburb
+- Investment property feasibility using existing equity
+- Pre-listing preparation — what to do 12–18 months before selling
+- Neighbourhood intelligence — what agents know that Google doesn't
+
+### At sale (Closing the loop)
+- Pre-sale maximiser report generated
+- Agent who enrolled them at settlement wins the listing
+- Moving marketplace connected via Wise Move API
+- Next property search begins — the cycle restarts
+
+---
+
+## Current Status (June 2026)
+
+### Live and working
+- Landing page — sanctury-five.vercel.app
+- Home Health Check — 4-step form with NZ address autocomplete
+- Insurance gap calculation with regional rebuild cost rates
+- Report page — insurance, mortgage, and maintenance visualisations
+- Insurance marketplace — job posting, adviser proposals, selection flow
+- My Sanctury dashboard — property overview, active requests, home status, alerts
+- Agent dashboard — client portfolio, alert feed, message generator
+- Magic link authentication via Supabase
+
+### In progress
+- Domain connection — sanctury.co.nz not yet pointing to Vercel
+- Privacy notice — required before real user deployment
+- Demo data consistency — seed data now matches calculation engine
+
+### Technical debt (fix before real deployment)
+- **Persist health check to Supabase** — report and marketplace pages read from sessionStorage. Must save to `health_checks` table and load from there. Enables real per-user data on dashboard.
+- **Agent dashboard auth** — currently hardcoded demo credentials. Needs proper auth before real agents use it.
+- **Addy API keys** — not in Vercel environment variables. Address autocomplete may fail on live site.
+- **Middleware deprecation** — update middleware file convention to proxy pattern.
+- **Supabase keep-alive** — free tier pauses after inactivity. Upgrade or implement ping.
+- **136 days spacing bug** — missing space in mortgage section copy.
+
+---
+
+## Build Priorities
+
+### This week (before Tall Poppy pitch)
+- [ ] Connect sanctury.co.nz to Vercel
+- [ ] Add privacy notice to health check form
+- [ ] Create /privacy page
+- [ ] Fix all known bugs
+- [ ] Full QA sweep of demo flow
+
+### Phase 1 — Foundation (post Tall Poppy, months 1–3)
+- [ ] Persist health check data to Supabase
+- [ ] Settlement onboarding flow for agents
+- [ ] Renewal calendar — visual 12-month view of upcoming dates
+- [ ] Mortgage marketplace — same pattern as insurance
+- [ ] Connect Claude API for personalised report insights
+- [ ] PDF report download
+- [ ] Email report delivery via Resend
+- [ ] Privacy policy page and consent framework
+
+### Phase 2 — Marketplace (months 3–6)
+- [ ] Energy and broadband comparison marketplace
+- [ ] Tradie marketplace — native or Builderscrack API integration
+- [ ] Moving marketplace — Wise Move API integration
 - [ ] Vendor subscription billing infrastructure
-- [ ] Per-lead fee payment processing
-- [ ] Referral partner agreements — mortgage advisers
-- [ ] Referral partner agreements — insurance brokers
-- [ ] Referral partner agreements — energy providers
-- [ ] Relab data partnership discussion
-- [ ] Tall Poppy network deployment agreement
-- [ ] Sanctury Limited company formation and IP ownership
+- [ ] Vendor dashboard — profile, incoming jobs, proposals
+- [ ] Per-lead fee tracking and payment processing
+- [ ] Homeowner review and rating system
 
-## Notes
-- Standalone marketplace (without Home Health Check) to be scoped 
-  as a parallel entry point — same vendor and proposal infrastructure, 
-  different consumer entry flow
-- All financial content to maintain clear disclaimer: 
-  Sanctury is not a licensed financial adviser
-- Vendor data and consumer data to be strictly separated in database
-- Climate risk data to be added as NZ council flood map APIs mature
+### Phase 3 — Intelligence (months 6–12)
+- [ ] Equity decision tool — renovate, invest, pay down, do nothing
+- [ ] Renovation ROI modelling by suburb and property type
+- [ ] Home timeline — visual history of the property journey
+- [ ] Climate and flood risk assessment by address
+- [ ] Neighbourhood intelligence feed
+- [ ] LINZ property data integration
+- [ ] Relab AVM integration for quarterly value updates
+- [ ] Bright-line tax position tracker
+- [ ] Pre-sale maximiser report
+
+### Phase 4 — Scale (year 2)
+- [ ] Mortgage rate comparison with live bank feeds
+- [ ] TradeMe and realestate.co.nz listing data integration
+- [ ] First home buyer hub
+- [ ] Investment property feasibility tool
+- [ ] Mobile app
+- [ ] API for third-party integrations
+- [ ] Homeowner advisory board
+
+---
+
+## The Agent Proposition
+
+### What agents currently do at settlement
+$80 gift basket. Relationship ends. Client lists with someone else in 7 years.
+
+### What Tall Poppy agents do with Sanctury
+1. **Before settlement** — sit down with the new homeowner, open Sanctury together, enrol the property with complete data. Takes 20 minutes. Homeowner leaves with a complete picture of their new home.
+
+2. **3 months post-settlement** — return visit. Review the dashboard together. Answer questions. Connect with the right adviser if needed. Cements the relationship in a way no other agent in NZ offers.
+
+3. **Annually** — Sanctury generates a property maximiser review. Agent delivers it. Stays relevant without cold calling.
+
+4. **At sale** — the agent who enrolled them wins the listing. Near-zero acquisition cost.
+
+**The cost:** Two visits and an hour of the agent's time.
+**The return:** A warm client relationship for 7–10 years and a near-certain listing at the end of it.
+
+---
+
+## The Tall Poppy Deal
+
+**The ask:** Tall Poppy takes 15–20% equity in Sanctury Limited in exchange for:
+- Network deployment across all franchises within 12 months
+- Co-marketing and agent onboarding support
+- Franchise fee waived for founder
+
+**What Tall Poppy gets:**
+- First mover advantage — 12 months before platform opens to other agencies
+- The only agent proposition in NZ that turns settlement into a 10-year relationship
+- Near-zero listing acquisition cost for every enrolled homeowner
+- A genuine reason to be the agent of choice for Millennial and Gen Z buyers
+
+**What Sanctury gets:**
+- Immediate distribution across Tall Poppy's national franchise network
+- Settlement data at the point of purchase — the richest possible onboarding
+- Credibility with other JV partners
+
+---
+
+## The JV Structure
+
+- Founder: 55–60%
+- Tall Poppy: 15–20%
+- Insurance JV partner: 10%
+- Mortgage JV partner: 10%
+- Data JV partner (Relab/Cotality): 5–10%
+- Option pool (team): 10%
+
+**JV partners to approach after Tall Poppy signed:**
+1. Insurance broker group — Tower, IAG, or independent broker network
+2. Mortgage adviser group — Squirrel, Loan Market
+3. Relab or Cotality for data partnership
+
+---
+
+## Integration Partners (APIs and data)
+
+| Partner | What they provide | How Sanctury uses it |
+|---------|------------------|---------------------|
+| Relab | Property AVM, comparable sales | Quarterly value updates, renovation ROI |
+| Cotality | Cordell build costs, property data | Insurance rebuild cost accuracy |
+| LINZ | Title, land area, parcel data | Property profile enrichment |
+| TradeMe Property | Listing data, market trends | Comparable sales, neighbourhood intelligence |
+| realestate.co.nz | Listing data | Market context |
+| Wise Move | Moving quotes | Moving marketplace |
+| Builderscrack | Tradie network | Tradie marketplace |
+| Addy | NZ address autocomplete | Health check and onboarding forms |
+| Google Maps | Address, street view | Property visualisation |
+| NZ councils | Flood maps, zoning, consents | Climate and planning risk |
+| Contact/Genesis/Mercury | Energy pricing | Utilities marketplace |
+| Spark/One NZ | Broadband pricing | Utilities marketplace |
+
+---
+
+## Climate and Risk
+
+Every property profile includes:
+- Flood zone classification (council data)
+- Coastal erosion risk (NIWA/council)
+- Liquefaction risk (Canterbury and Wellington specific)
+- Insurance availability risk — areas where insurers are quietly withdrawing
+- Climate trajectory — projected risk change over 10, 20, 30 years
+
+This is not fearmongering. It is information homeowners deserve to have when making the biggest financial decision of their lives. Sanctury surfaces it clearly, in plain language, with context about what it means practically.
+
+---
+
+## The Manifesto
+
+Sanctury exists because the people who own New Zealand's homes deserve the same quality of financial guidance that used to be available only to the wealthy.
+
+Not advice — intelligence. Not sales — transparency. Not a platform that profits from confusion — one that profits from clarity.
+
+We believe that when homeowners understand their options and can access the best professionals to help them act, everyone wins. The homeowners win because they make better decisions. The professionals win because they earn clients who trust them. The housing market wins because informed owners make better long-term decisions. And Sanctury wins because it built the trust that makes all of it possible.
+
+Free for homeowners. Forever.
+
+---
+
+## Key Accounts and Contacts
+
+- GitHub: github.com/ratherspicy/sanctury
+- Vercel: vercel.com — project: sanctury
+- Supabase: supabase.com — project: ratherspicy's Project
+- Domain registrar: iwantmyname.com or 1stdomains.nz
+- Addy: addy.co.nz
+- Tall Poppy: jointallpoppy.com
+- Relab: relab.co.nz
+- NZ Privacy Commissioner: privacy.org.nz
+
+---
+
+## Technology Stack
+
+- Next.js 16.2.6 (App Router, Turbopack)
+- TypeScript
+- Tailwind CSS
+- Supabase (database + auth)
+- Anthropic Claude API (insights and personalisation)
+- Addy API (NZ address autocomplete)
+- Recharts (data visualisations)
+- Vercel (hosting)
+
+## Environment Variables Required
+
+```
+NEXT_PUBLIC_ADDY_API_KEY=
+ADDY_API_SECRET=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
+ANTHROPIC_API_KEY=
+```

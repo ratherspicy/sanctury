@@ -128,7 +128,7 @@ export function DashboardView({ firstName }: DashboardViewProps) {
             <p className="text-xs font-medium text-foreground">Mortgage</p>
             <p className="text-base font-bold text-warning mt-0.5">47 days</p>
             <p className="text-xs text-muted">Until refix</p>
-            <Link href="/marketplace/insurance" className="mt-2 flex items-center gap-1 text-xs font-medium text-violet">Review <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></Link>
+            <Link href="/report" className="mt-2 flex items-center gap-1 text-xs font-medium text-violet">Review <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></Link>
           </div>
           <div className="card p-4">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-danger-soft text-danger mb-2">
@@ -149,6 +149,14 @@ export function DashboardView({ firstName }: DashboardViewProps) {
             <Link href="/report" className="mt-2 flex items-center gap-1 text-xs font-medium text-violet">See detail <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></Link>
           </div>
         </div>
+        <p className="mt-4 text-center">
+          <Link
+            href="/report"
+            className="text-sm font-medium text-violet hover:underline"
+          >
+            View your full Home Health Check report
+          </Link>
+        </p>
       </section>
 
       {/* For you */}
