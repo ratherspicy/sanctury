@@ -4,6 +4,98 @@
 
 ---
 
+## Session Summary — June 4 2026
+
+### What was built this session
+
+**My Sanctury dashboard — complete redesign**
+- Removed tab-based layout, replaced with single scrollable page
+- New section order: Property card → Active requests → Home status grid → For you nudges
+- Property card: address, estimated value, equity bar, gain since purchase, refix date
+- Active requests: live status, expandable quote panel for Sarah Mitchell, start new request
+- Home status: 2x2 visual grid — Insurance, Mortgage, Maintenance, Market — each with status, value, and action link
+- For you: lightweight nudge feed with coloured dots and plain English sentences
+
+**Login page — redesigned**
+- Card on grey background, logo centred above
+- "Good to have you back." as hero
+- "New to Sanctury? Run your free Home Health Check" below card
+
+**Logo wordmark — updated**
+- Lowercase "sanctury" with letter-spacing -0.04em — cleaner, more confident
+
+**Demo data seed — fixed**
+- Created lib/storage/demo-seed.ts
+- Seeds sessionStorage from dashboard on first load
+- Floor area set to 262m² Above Standard to produce ~$1,063,290 rebuild cost
+- Consistent numbers throughout: dashboard, report, insurance marketplace
+- Previously report showed $706K rebuild cost and no gap — now consistent $163K gap
+
+**Roadmap and handover — fully updated**
+- ROADMAP.md rewritten with full vision, platform principles, GaaS definition, homeowner journey, agent proposition, integration partners, build priorities, manifesto
+- HANDOVER.md created as standalone handover document
+- Both committed to GitHub
+
+**Vercel deployment — fixed**
+- Environment variables added to Vercel dashboard
+- sanctury-five.vercel.app now live and current
+
+### What still needs fixing
+
+**Before Tall Poppy pitch:**
+- [ ] Connect sanctury.co.nz domain to Vercel
+- [ ] Add privacy notice to health check form
+- [ ] Create /privacy page
+- [ ] Fix "46days" spacing bug in mortgage section copy
+- [ ] Full QA sweep of demo flow — every page, every button, every link
+
+**Known broken links on dashboard:**
+- "Find tradie" → currently goes to /check, no tradie marketplace yet
+- "Review" under Mortgage → currently goes to /marketplace/insurance, mortgage marketplace not built
+- "See detail" under Market → goes to /report, works
+
+**Technical debt (logged in ROADMAP.md):**
+- Persist health check data to Supabase — currently sessionStorage only
+- Agent dashboard uses hardcoded credentials
+- Supabase free tier pauses — needs upgrade or keep-alive
+- Middleware deprecation warning
+
+### Key decisions made this session
+
+1. **GaaS not SaaS** — Sanctury is Guidance as a Service. AI is the product, not a feature.
+
+2. **Agnostic platform** — Tall Poppy gets first mover advantage, not permanent exclusivity. Platform must work for any agent, any adviser, any vendor.
+
+3. **Data ownership** — homeowner owns their data always. Sanctury stewards it, never sells it.
+
+4. **The agent proposition** — before settlement sit-down + 3 month return visit replaces the gift basket. Agent becomes the onboarding experience and physical data gatherer for the platform.
+
+5. **Plays with others** — Sanctury integrates with Wise Move, Builderscrack, TradeMe, Relab, banks, energy providers via API. Completes the ecosystem, doesn't compete with it.
+
+6. **Climate risk** — every property profile includes flood, coastal, liquefaction, and insurance withdrawal risk. Homeowners deserve this information.
+
+7. **The renewal calendar** — because settlement data captures every contract start date, Sanctury can predict every renewal event. Each one is a revenue opportunity and a reason to return to the platform.
+
+8. **Report stays as conversion tool** — /report page kept as the hook that converts health check completions into My Sanctury signups. Dashboard absorbs report content for logged-in users via expandable home status tiles (Phase 1 build priority).
+
+### Next session should start with
+
+1. Connect sanctury.co.nz to Vercel (DNS settings at domain registrar)
+2. Fix the 46days spacing bug
+3. Add privacy notice to /check form
+4. Full QA sweep
+5. Then start Phase 1 builds:
+   - Settlement onboarding flow for agents
+   - Renewal calendar
+   - Mortgage marketplace
+   - Claude API for personalised insights
+
+### The vision in one line
+
+Sanctury builds trust so normal Kiwis can make decisions that work for them — transparently, in plain language, with full understanding. Free for homeowners. Forever.
+
+---
+
 ## What Sanctury Is
 
 Sanctury builds trust so normal Kiwis can make decisions that work for them — transparently, in plain language, with full understanding of what they are signing up for.
