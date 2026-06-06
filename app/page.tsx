@@ -89,9 +89,17 @@ export default function Home() {
               About
             </a>
           </div>
-          <a href="/check" className="btn-primary justify-self-end">
-            Get started
-          </a>
+          <div className="flex items-center gap-6 justify-self-end">
+            <a
+              href="/agent/login"
+              className="text-sm font-medium text-muted transition-colors hover:text-foreground"
+            >
+              Agent login
+            </a>
+            <a href="/check" className="btn-primary">
+              Get started
+            </a>
+          </div>
         </nav>
       </header>
 
@@ -101,13 +109,11 @@ export default function Home() {
             <div className="max-w-4xl">
               <p className="badge-violet mb-10">Your home sorted. For free.</p>
               <h1 className="text-hero text-foreground max-sm:text-5xl max-sm:tracking-[-0.03em]">
-                Get your home{" "}
-                <span className="text-violet">in order</span> — for free
+                <span className="text-violet">Right,</span> from day one.
               </h1>
               <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-                Owning a home is complicated. Sanctury makes it simpler — your
-                insurance, your mortgage, your maintenance, all in one place. No
-                jargon. No sales pitch. Just clarity.
+                The AI-powered marketplace that helps Kiwis get a fair deal on
+                everything their home needs — free, forever.
               </p>
               <div
                 id="get-started"
@@ -157,8 +163,8 @@ export default function Home() {
                 Everything your home needs. Finally in one place.
               </h2>
               <p className="mt-5 text-base leading-relaxed text-muted">
-                Insurance, mortgage, maintenance — finally talking to each
-                other. One clear picture of the home you actually own.
+                The AI decides when you need help. The marketplace puts
+                competing experts in front of you. You choose freely.
               </p>
             </div>
 
@@ -189,14 +195,15 @@ export default function Home() {
         <section id="about" className="bg-foreground py-24 lg:py-32">
           <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
             <h2 className="text-h2 !text-white max-sm:text-3xl">
-              Stop guessing. Start knowing.
+              Stop accepting the deal you&apos;re offered.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
-              Sanctury gives you the full picture of your home — so you can make
-              confident decisions without needing to be an expert.
+              85% of NZ homes are underinsured. Most homeowners are paying too
+              much on their mortgage. Sanctury gives you the intelligence to get
+              what&apos;s fair.
             </p>
             <a href="/check" className="btn-accent mt-10 inline-flex h-11 px-8">
-              Get started
+              Get started — it&apos;s free
             </a>
           </div>
         </section>
@@ -208,7 +215,7 @@ export default function Home() {
             <div>
               <SancturyLogo />
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-                Your home, sorted. Built for New Zealand.
+                Right, from day one. Built for New Zealand.
               </p>
             </div>
             <div className="flex gap-16">
