@@ -195,7 +195,7 @@ export function ReportView() {
         id="mortgage"
         title="Mortgage Strategy"
         description="Timely prompts based on your refix date, loan structure, and income."
-        cta={{ label: "Explore mortgage options", href: "#mortgage" }}
+        cta={{ label: "Explore mortgage options", href: "/my-sanctury" }}
       >
         <div className="space-y-6 rounded-xl border border-border bg-background p-5 sm:p-6">
           <MortgageBalanceChart points={loanCurves.points} />
@@ -251,7 +251,7 @@ export function ReportView() {
         id="maintenance"
         title="Maintenance Snapshot"
         description={`Built in ${maintenance.yearBuilt} — here's one thing worth your attention.`}
-        cta={{ label: "Build your maintenance plan", href: "#maintenance" }}
+        cta={{ label: "Build your maintenance plan", href: "/my-sanctury" }}
       >
         <div className="rounded-xl border border-border bg-background p-5 sm:p-6">
           <MaintenanceTimelineChart
