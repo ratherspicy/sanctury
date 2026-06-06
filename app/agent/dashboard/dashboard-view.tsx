@@ -32,12 +32,16 @@ export function AgentDashboardView() {
           <StatsBar />
 
           <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,380px)_1fr]">
-            <AlertFeed
-              alerts={AGENT_ALERTS}
-              onGenerate={setActiveAlertId}
-              onView={setActiveAlertId}
-            />
-            <ClientPortfolio clients={AGENT_CLIENTS} />
+            <div id="alerts">
+              <AlertFeed
+                alerts={AGENT_ALERTS}
+                onGenerate={setActiveAlertId}
+                onView={setActiveAlertId}
+              />
+            </div>
+            <div id="clients">
+              <ClientPortfolio clients={AGENT_CLIENTS} />
+            </div>
           </div>
         </div>
       </main>

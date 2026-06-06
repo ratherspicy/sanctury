@@ -217,3 +217,11 @@ export const AGENT_CLIENTS: ClientRow[] = [
 export function getAlertById(id: string): AgentAlert | undefined {
   return AGENT_ALERTS.find((a) => a.id === id);
 }
+
+export function getClientById(id: string): ClientRow | undefined {
+  return AGENT_CLIENTS.find((c) => c.id === id);
+}
+
+export function getAlertsForClient(clientName: string): AgentAlert[] {
+  return AGENT_ALERTS.filter((a) => a.clientName === clientName);
+}

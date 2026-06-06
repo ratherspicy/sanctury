@@ -1,17 +1,28 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { formatCurrency, formatDate } from "@/lib/format";
 import type { ClientRow } from "@/lib/agent/dashboard-data";
 
 const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
   Completed: "bg-brand-light text-brand",
   "In progress": "bg-violet-light text-violet",
-"Not started": "bg-background text-muted border border-border",
+  "Not started": "bg-[#F3F4F6] text-muted",
 };
+
+function refixClass(days: number): string {
+  if (days <= 30) return "font-bold text-danger";
+  if (days <= 90) return "font-semibold text-warning";
+  return "text-muted";
+}
 
 type ClientPortfolioProps = {
   clients: ClientRow[];
 };
 
 export function ClientPortfolio({ clients }: ClientPortfolioProps) {
+  const router = useRouter();
+
   return (
     <section id="clients" className="card ">
       <div className="border-b border-border px-6 py-5">
@@ -21,55 +32,59 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
         </p>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[900px] text-left text-sm">
+        <table className="w-full min-w-[960px] table-auto text-left text-sm">
           <thead>
             <tr className="border-b border-border bg-background/80 text-xs font-semibold uppercase tracking-wide text-muted">
-              <th className="px-6 py-3">Name</th>
-              <th className="px-4 py-3">Property address</th>
-              <th className="px-4 py-3">Purchase date</th>
-              <th className="px-4 py-3">Purchase price</th>
-              <th className="px-4 py-3">Est. current value</th>
-              <th className="px-4 py-3">Health check</th>
-              <th className="px-6 py-3">Days to refix</th>
+              <th className="min-w-[140px] px-6 py-3">Name</th>
+              <th className="min-w-[200px] px-4 py-3">Property address</th>
+              <th className="min-w-[120px] px-4 py-3">Purchase date</th>
+              <th className="min-w-[120px] px-4 py-3">Purchase price</th>
+              <th className="min-w-[130px] px-4 py-3">Est. current value</th>
+              <th className="min-w-[110px] px-4 py-3">Health check</th>
+              <th className="min-w-[110px] px-4 py-3">Days to refix</th>
+              <th className="w-10 min-w-[40px] px-4 py-3" aria-hidden />
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody>
             {clients.map((client) => (
-              <tr key={client.id} className="transition-colors hover:bg-background/50">
-                <td className="px-6 py-4 font-medium text-foreground">{client.name}</td>
-                <td className="px-4 py-4 text-muted">{client.address}</td>
-                <td className="px-4 py-4 text-muted whitespace-nowrap">
-                  {formatDate(client.purchaseDate)}
-                </td>
-                <td className="px-4 py-4 text-foreground whitespace-nowrap">
-                  {formatCurrency(client.purchasePrice)}
-                </td>
-                <td className="px-4 py-4 font-medium text-foreground whitespace-nowrap">
-                  {formatCurrency(client.estimatedValue)}
-                </td>
-                <td className="px-4 py-4">
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[client.healthCheckStatus]}`}
-                  >
-                    {client.healthCheckStatus}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-muted whitespace-nowrap">
-                  {client.daysToRefix !== null ? (
+              <tr
+                key={client.id}
+                onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
+                className="group cursor-pointer border-b border-[#F0F0F0] transition-colors duration-150 hover:bg-[#F5F4FF]"
+              >
+                  <td className="px-6 py-4 text-base font-bold text-foreground">
+                    {client.name}
+                  </td>
+                  <td className="px-4 py-4 text-muted">{client.address}</td>
+                  <td className="px-4 py-4 whitespace-nowrap text-muted">
+                    {formatDate(client.purchaseDate)}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-foreground">
+                    {formatCurrency(client.purchasePrice)}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap font-medium text-foreground">
+                    {formatCurrency(client.estimatedValue)}
+                  </td>
+                  <td className="px-4 py-4">
                     <span
-                      className={
-                        client.daysToRefix <= 30
-                          ? "font-semibold text-danger"
-                          : undefined
-                      }
+                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[client.healthCheckStatus]}`}
                     >
-                      {client.daysToRefix} days
+                      {client.healthCheckStatus}
                     </span>
-                  ) : (
-"—"
-                  )}
-                </td>
-              </tr>
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    {client.daysToRefix !== null ? (
+                      <span className={refixClass(client.daysToRefix)}>
+                        {client.daysToRefix} days
+                      </span>
+                    ) : (
+                      <span className="text-muted">—</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-4 text-right text-lg font-medium text-violet opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                    ›
+                  </td>
+                </tr>
             ))}
           </tbody>
         </table>

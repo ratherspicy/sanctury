@@ -15,7 +15,7 @@ export function AgentNav() {
   };
 
   return (
-      <header className="sticky top-0 z-50 border-b border-border bg-surface">
+    <header className="sticky top-0 z-50 border-b border-border bg-surface">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-6">
           <Link href="/agent/dashboard" aria-label="Agent dashboard">
@@ -27,27 +27,13 @@ export function AgentNav() {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Link
-            href="/agent/dashboard#clients"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-background hover:text-foreground"
-          >
-            My Clients
-          </Link>
-          <Link
-            href="/agent/dashboard#alerts"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-background hover:text-foreground"
-          >
-            Alerts
-          </Link>
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="btn-ghost ml-2 px-4 py-2 text-sm font-medium"
-          >
-            Sign out
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="btn-ghost px-4 py-2 text-sm font-medium"
+        >
+          Sign out
+        </button>
       </nav>
     </header>
   );
