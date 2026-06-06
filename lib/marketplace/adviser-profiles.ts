@@ -1,3 +1,5 @@
+import { getQuoteById } from "./insurance-quotes";
+
 export type AdviserReview = {
   firstName: string;
   rating: number;
@@ -10,6 +12,7 @@ export type AdviserProfile = {
   title: string;
   region: string;
   initials: string;
+  photo?: string;
   yearsExperience: number;
   qualifications: string[];
   insurers: string[];
@@ -174,5 +177,15 @@ export function formatYearsExperience(years: number): string {
 }
 
 export function getAdviserProfile(id: string): AdviserProfile | undefined {
-  return ADVISER_PROFILES[id];
+  const profile = ADVISER_PROFILES[id];
+  if (!profile) return undefined;
+
+  const quote = getQuoteById(id);
+  if (!quote) return profile;
+
+  return {
+    ...profile,
+    photo: quote.photo,
+    initials: quote.initials,
+  };
 }

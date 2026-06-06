@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   formatYearsExperience,
   type AdviserProfile,
@@ -47,6 +47,8 @@ export function AdviserProfileModal({
   onClose,
   onChoose,
 }: AdviserProfileModalProps) {
+  const [photoError, setPhotoError] = useState(false);
+
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -91,8 +93,17 @@ export function AdviserProfileModal({
         <div className="overflow-y-auto overscroll-contain px-5 pb-6 pt-8 sm:px-8 sm:pb-8 sm:pt-10">
           {/* Header */}
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#F3F4F6] text-2xl font-bold text-foreground">
-              {profile.initials}
+            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[#F3F4F6] text-2xl font-bold text-foreground">
+              {photoError || !profile.photo ? (
+                profile.initials
+              ) : (
+                <img
+                  src={profile.photo}
+                  alt={profile.name}
+                  className="h-full w-full rounded-full object-cover"
+                  onError={() => setPhotoError(true)}
+                />
+              )}
             </div>
             <h2 id="adviser-profile-title" className="mt-4 text-2xl font-bold text-foreground">
               {profile.name}

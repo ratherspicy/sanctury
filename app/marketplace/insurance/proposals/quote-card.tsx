@@ -66,6 +66,7 @@ export function QuoteCard({
 }: QuoteCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [photoError, setPhotoError] = useState(false);
   const profile = getAdviserProfile(quote.id);
   const personalNote = quote.getPersonalNote(
     posting.coverageGap,
@@ -90,27 +91,50 @@ export function QuoteCard({
       <div className="p-5 sm:p-6">
         {/* Adviser row */}
         <div className="flex flex-wrap items-start gap-4 border-b border-border pb-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F3F4F6] text-sm font-bold text-foreground">
-            {quote.initials}
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-start justify-between gap-2">
-              <div>
-                <h2 className="text-lg font-bold text-foreground">{quote.name}</h2>
-                <p className="text-sm text-muted">{quote.title}</p>
-                <p className="text-sm text-muted">{quote.region}</p>
+          <button
+            type="button"
+            onClick={() => setProfileOpen(true)}
+            className="contents text-left"
+          >
+            <div className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#F3F4F6] text-sm font-bold text-foreground">
+              {photoError ? (
+                quote.initials
+              ) : (
+                <img
+                  src={quote.photo}
+                  alt={quote.name}
+                  className="h-full w-full rounded-full object-cover"
+                  onError={() => setPhotoError(true)}
+                />
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <h2 className="cursor-pointer text-lg font-bold text-foreground">
+                    {quote.name}
+                  </h2>
+                  <p className="text-sm text-muted">{quote.title}</p>
+                  <p className="text-sm text-muted">{quote.region}</p>
+                </div>
+                <span
+                  className="inline-flex items-center rounded-full bg-[#F3F4F6] px-2.5 py-1 text-xs font-medium text-muted"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {quote.responseTime}
+                </span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-[#F3F4F6] px-2.5 py-1 text-xs font-medium text-muted">
-                {quote.responseTime}
-              </span>
+              <div
+                className="mt-2 flex flex-wrap items-center gap-3"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <StarRating rating={quote.rating} />
+                <span className="text-xs text-muted">
+                  {quote.reviewCount} reviews
+                </span>
+              </div>
             </div>
-            <div className="mt-2 flex flex-wrap items-center gap-3">
-              <StarRating rating={quote.rating} />
-              <span className="text-xs text-muted">
-                {quote.reviewCount} reviews
-              </span>
-            </div>
-          </div>
+          </button>
         </div>
 
         {/* Pricing row */}
