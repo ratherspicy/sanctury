@@ -72,7 +72,7 @@ export default function AgentsPage() {
             <div className="max-w-4xl">
               <p className="badge-violet mb-10">For Tall Poppy agents</p>
               <h1 className="text-hero text-foreground max-sm:text-5xl max-sm:tracking-[-0.03em]">
-                Win the listing before it happens.
+                Own the listing before it exists.
               </h1>
               <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
                 Sanctury keeps you present through the seven years between sales.
