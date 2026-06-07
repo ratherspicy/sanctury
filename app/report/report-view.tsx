@@ -226,8 +226,8 @@ export function ReportView() {
           />
         </div>
         <p className="rounded-xl bg-background p-5 text-base leading-relaxed text-muted">
-          With {mortgage.daysUntilRefix} days until your refix, it&apos;s a good
-          time to compare structures. Routing income through your revolving
+          With {mortgage.daysUntilRefix} days until your refix,
+          it&apos;s a good time to compare structures. Routing income through your revolving
           credit facility could save around{" "}
           <span className="font-medium text-foreground">
             {formatCurrency(mortgage.revolvingCreditSavings)}

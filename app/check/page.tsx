@@ -1,23 +1,10 @@
-import Link from "next/link";
-import { SancturyLogo } from "../components/sanctury-logo";
+import { SiteHeader } from "../components/site-header";
 import { HomeHealthCheckForm } from "./home-health-check-form";
 
 export default function CheckPage() {
   return (
     <div className="flex min-h-full flex-col">
-      <header className="sticky top-0 z-50 border-b border-border bg-surface">
-        <nav className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
-          <Link href="/" aria-label="Sanctury home">
-            <SancturyLogo />
-          </Link>
-          <Link
-            href="/"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Exit
-          </Link>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main className="flex-1 bg-surface">
         <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">
