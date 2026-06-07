@@ -4,7 +4,7 @@ import { HomeHealthCheckForm } from "./home-health-check-form";
 export default function CheckPage() {
   return (
     <div className="flex min-h-full flex-col">
-      <SiteHeader />
+      <SiteHeader hideCta />
 
       <main className="flex-1 bg-surface">
         <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">

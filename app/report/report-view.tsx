@@ -226,23 +226,23 @@ export function ReportView() {
           />
         </div>
         <p className="rounded-xl bg-background p-5 text-base leading-relaxed text-muted">
-          With {mortgage.daysUntilRefix} days until your refix,
-          it&apos;s a good time to compare structures. Routing income through your revolving
+          With{" "}{mortgage.daysUntilRefix}{" "}days until your refix, it&apos;s a
+          good time to compare structures. Routing income through your revolving
           credit facility could save around{" "}
-          <span className="font-medium text-foreground">
-            {formatCurrency(mortgage.revolvingCreditSavings)}
-          </span>{" "}
-          in interest over your remaining term — and paying an extra{" "}
-          <span className="font-medium text-foreground">$500</span> per month
-          could trim roughly{" "}
-          <span className="font-medium text-foreground">
+          <strong className="text-foreground">
+            ${mortgage.revolvingCreditSavings.toLocaleString()}
+          </strong>
+          {" "}in interest over your remaining term — and paying an extra{" "}
+          <strong className="text-foreground">$500</strong>
+          {" "}per month could trim roughly{" "}
+          <strong className="text-foreground">
             {mortgage.overpaymentYearsSaved} years
-          </span>{" "}
-          while saving{" "}
-          <span className="font-medium text-foreground">
-            {formatCurrency(mortgage.overpaymentInterestSaved)}
-          </span>{" "}
-          in total interest.
+          </strong>
+          {" "}while saving{" "}
+          <strong className="text-foreground">
+            ${mortgage.overpaymentInterestSaved.toLocaleString()}
+          </strong>
+          {" "}in total interest.
         </p>
       </ReportSection>
 
