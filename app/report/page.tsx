@@ -4,7 +4,7 @@ import { ReportView } from "./report-view";
 export default function ReportPage() {
   return (
     <div className="flex min-h-full flex-col">
-      <SiteHeader hideCta />
+      <SiteHeader minimal />
 
       <main className="flex-1 bg-surface">
         <div className="mx-auto max-w-4xl px-6 py-10 lg:py-14">
