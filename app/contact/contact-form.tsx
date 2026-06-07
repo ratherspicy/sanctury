@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 const ROLE_OPTIONS = [
-  "Homeowner",
   "Insurance adviser",
   "Mortgage adviser",
   "Energy provider",
