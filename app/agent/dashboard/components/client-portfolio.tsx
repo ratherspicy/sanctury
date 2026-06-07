@@ -6,7 +6,7 @@ import type { ClientRow } from "@/lib/agent/dashboard-data";
 
 const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
   Completed: "bg-brand-light text-brand",
-  "In progress": "bg-violet-light text-violet",
+  "In progress": "bg-green-50 text-green-600",
   "Not started": "bg-[#F3F4F6] text-muted",
 };
 
@@ -81,7 +81,7 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
                       <span className="text-muted">—</span>
                     )}
                   </td>
-                  <td className="px-4 py-4 text-right text-lg font-medium text-violet opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                  <td className="px-4 py-4 text-right text-lg font-medium text-green-600 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
                     ›
                   </td>
                 </tr>

@@ -31,7 +31,7 @@ export function StatsBar() {
           <p className="text-sm text-muted">{stat.label}</p>
           <p
             className={`mt-2 text-2xl font-bold tracking-tight ${
-              stat.accent ? "text-violet" : "text-foreground"
+              stat.accent ? "text-green-600" : "text-foreground"
             }`}
           >
             {stat.value}

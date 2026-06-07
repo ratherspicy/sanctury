@@ -52,7 +52,7 @@ export function MessageModal({ alert, onClose }: MessageModalProps) {
       />
       <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-border bg-surface">
         <div className="border-b border-border px-6 py-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-violet">
+          <p className="text-xs font-semibold uppercase tracking-wide text-green-600">
             Client message
           </p>
           <h2 id="message-modal-title" className="mt-1 text-xl font-bold text-foreground">
@@ -75,7 +75,7 @@ export function MessageModal({ alert, onClose }: MessageModalProps) {
             className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm leading-relaxed text-foreground"
           />
           <p className="mt-3 flex items-center gap-2 text-xs text-muted">
-            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-violet" aria-hidden>
+            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-green-600" aria-hidden>
               <path
                 d="M8 1.5l1.2 2.4 2.7.4-2 1.9.5 2.7L8 7.5 5.6 8.9l.5-2.7-2-1.9 2.7-.4L8 1.5z"
                 fill="currentColor"
@@ -96,7 +96,7 @@ export function MessageModal({ alert, onClose }: MessageModalProps) {
           <button
             type="button"
             onClick={handleCopy}
-            className="btn-violet h-11 px-6 text-sm"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-green-600 px-6 text-sm font-medium text-white transition-colors hover:bg-green-700"
           >
             {copied ? "Copied!" : "Copy to clipboard"}
           </button>

@@ -13,7 +13,7 @@ import { MessageModal } from "../../components/message-modal";
 
 const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
   Completed: "bg-brand-light text-brand",
-  "In progress": "bg-violet-light text-violet",
+  "In progress": "bg-green-50 text-green-600",
   "Not started": "bg-background text-muted border border-border",
 };
 
@@ -34,9 +34,9 @@ const URGENCY_STYLES: Record<
     label: "Attention",
   },
   green: {
-    border: "border-l-violet",
-    badge: "text-violet",
-    dot: "bg-violet",
+    border: "border-l-green-600",
+    badge: "text-green-600",
+    dot: "bg-green-600",
     label: "Update",
   },
 };
@@ -248,7 +248,7 @@ export function ClientProfileView({ client }: ClientProfileViewProps) {
                           <button
                             type="button"
                             onClick={() => setActiveAlert(alert)}
-                            className="btn-violet mt-4 inline-flex h-9 px-4 text-sm"
+                            className="mt-4 inline-flex h-9 items-center justify-center rounded-lg bg-green-600 px-4 text-sm font-medium text-white transition-colors hover:bg-green-700"
                           >
                             Generate message
                           </button>
@@ -267,7 +267,9 @@ export function ClientProfileView({ client }: ClientProfileViewProps) {
                   <h2 className="text-lg font-semibold text-foreground">
                     Listing signals
                   </h2>
-                  <span className="badge-violet">Powered by Sanctury AI</span>
+                  <span className="inline-flex items-center rounded-lg bg-green-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-green-600">
+                    Powered by Sanctury AI
+                  </span>
                 </div>
               </div>
               <div className="px-6 py-5">
@@ -282,7 +284,7 @@ export function ClientProfileView({ client }: ClientProfileViewProps) {
                         key={signal}
                         className="flex items-start gap-3 text-sm leading-relaxed text-foreground"
                       >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet" />
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green-600" />
                         {signal}
                       </li>
                     ))}
@@ -313,7 +315,7 @@ export function ClientProfileView({ client }: ClientProfileViewProps) {
             <button
               type="button"
               onClick={openDefaultMessage}
-              className="btn-violet h-11 px-6 text-sm"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-green-600 px-6 text-sm font-medium text-white transition-colors hover:bg-green-700"
             >
               Generate message
             </button>
