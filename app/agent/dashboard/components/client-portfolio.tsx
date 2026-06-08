@@ -186,17 +186,22 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                 </div>
               </div>
 
-              <div className="flex min-w-0 flex-col items-start">
+              <div className="flex min-w-0 items-center gap-3">
                 {display.alertBadge && (
                   <span
-                    className={`rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
+                    className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
                   >
                     {display.alertBadge.label}
                   </span>
                 )}
+                {display.alertContext && (
+                  <p className="text-xs leading-snug text-gray-500">
+                    {display.alertContext}
+                  </p>
+                )}
               </div>
 
-              <div className="flex flex-col items-end gap-1">
+              <div className="flex justify-end">
                 {display.action?.type === "message" && (
                   <button
                     type="button"
@@ -225,12 +230,6 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                   >
                     View →
                   </button>
-                )}
-
-                {display.alertContext && (
-                  <p className="max-w-[180px] text-right text-xs text-gray-400">
-                    {display.alertContext}
-                  </p>
                 )}
               </div>
             </li>
