@@ -76,7 +76,7 @@ export function AlertFeed({ alerts, onGenerate, onView }: AlertFeedProps) {
               <button
                 type="button"
                 onClick={() => (isView ? onView(alert.id) : onGenerate(alert.id))}
-                className="mt-2 inline-flex items-center gap-1 rounded-lg border border-green-600 px-3 py-1.5 text-sm font-medium text-green-600 transition-colors hover:bg-green-600 hover:text-white"
+                className="mt-2 inline-flex items-center gap-1 rounded-lg border border-[#2E8B57] px-3 py-1.5 text-sm font-medium text-[#2E8B57] transition-colors hover:bg-[#2E8B57] hover:text-white"
               >
                 <svg
                   viewBox="0 0 16 16"

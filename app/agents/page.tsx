@@ -56,7 +56,7 @@ export default function AgentsPage() {
           />
           <div
             className="absolute inset-0"
-            style={{ backgroundColor: "#14532D", opacity: 0.72 }}
+            style={{ backgroundColor: "#1a5c3a", opacity: 0.72 }}
             aria-hidden
           />
           <div className="relative z-10 mx-auto w-full max-w-6xl px-8 py-16 lg:py-20">
@@ -72,7 +72,7 @@ export default function AgentsPage() {
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
                   href="/agent/login"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#16A34A] transition-opacity hover:opacity-90"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#2E8B57] transition-opacity hover:opacity-90"
                 >
                   Agent login →
                 </a>
@@ -96,7 +96,7 @@ export default function AgentsPage() {
           <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-10 px-8 text-center lg:gap-16">
             {stats.map((stat) => (
               <div key={stat.value}>
-                <p className="text-5xl font-black text-[#34D399]">
+                <p className="text-5xl font-black text-[#3CB371]">
                   {stat.value}
                 </p>
                 <p className="mt-1 text-sm text-white/70">{stat.label}</p>
@@ -109,7 +109,7 @@ export default function AgentsPage() {
         <section className="bg-surface py-24">
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-8 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#16A34A]">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#2E8B57]">
                 For Tall Poppy agents
               </p>
               <h2 className="mb-4 text-[44px] font-black leading-tight tracking-tight text-foreground max-sm:text-3xl">
@@ -123,7 +123,7 @@ export default function AgentsPage() {
               </p>
               <a
                 href="/agent/login"
-                className="text-base font-semibold text-[#16A34A] hover:underline"
+                className="text-base font-semibold text-[#2E8B57] hover:underline"
               >
                 Agent login →
               </a>
@@ -155,10 +155,10 @@ export default function AgentsPage() {
               {featureCards.map((card) => (
                 <article
                   key={card.title}
-                  className="flex flex-col rounded-2xl border-l-4 border-[#16A34A] bg-white p-8 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+                  className="flex flex-col rounded-2xl border-l-4 border-[#3CB371] bg-white p-8 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
                 >
                   {card.badge && (
-                    <span className="mb-3 inline-flex w-fit rounded-full bg-accent-light px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#16A34A]">
+                    <span className="mb-3 inline-flex w-fit rounded-full bg-[#d1fae5] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#2E8B57]">
                       {card.badge}
                     </span>
                   )}
@@ -171,7 +171,7 @@ export default function AgentsPage() {
                   {card.link && (
                     <a
                       href={card.link.href}
-                      className="mt-6 text-base font-semibold text-[#16A34A] hover:underline"
+                      className="mt-6 text-base font-semibold text-[#2E8B57] hover:underline"
                     >
                       {card.link.label}
                     </a>
@@ -183,7 +183,7 @@ export default function AgentsPage() {
         </section>
 
         {/* CTA */}
-        <section className="bg-[#15803D] py-24 text-center text-white">
+        <section className="bg-[#2E8B57] py-24 text-center text-white">
           <div className="mx-auto max-w-6xl px-8">
             <h2 className="!text-white mb-4 text-[52px] font-black leading-tight max-sm:text-3xl">
               Your clients, sorted.
@@ -194,7 +194,7 @@ export default function AgentsPage() {
             </p>
             <a
               href="/agent/login"
-              className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-lg font-bold text-[#15803D] transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-lg font-bold text-[#2E8B57] transition-opacity hover:opacity-90"
             >
               Get started as an agent
             </a>

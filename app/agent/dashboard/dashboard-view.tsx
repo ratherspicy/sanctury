@@ -31,7 +31,7 @@ export function AgentDashboardView() {
           className="px-8 py-10 text-white"
           style={{
             background:
-              "linear-gradient(135deg, #052e16 0%, #14532D 50%, #166534 100%)",
+              "linear-gradient(135deg, #1a5c3a 0%, #2E8B57 50%, #3CB371 100%)",
           }}
         >
           <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">

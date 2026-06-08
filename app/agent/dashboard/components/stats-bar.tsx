@@ -6,7 +6,7 @@ const STATS = [
     label: "Total clients",
     value: String(AGENT_STATS.totalClients),
     accent: false,
-    cardClass: "border-l-4 border-green-600 bg-green-50",
+    cardClass: "border-l-4 border-[#3CB371] bg-[#f0fdf4]",
   },
   {
     label: "Health checks completed",
@@ -24,7 +24,7 @@ const STATS = [
     label: "Estimated referral income",
     value: formatCurrency(AGENT_STATS.estimatedReferralIncome),
     accent: true,
-    cardClass: "border-l-4 border-emerald-500 bg-emerald-50",
+    cardClass: "border-l-4 border-[#3CB371] bg-[#f0fdf4]",
   },
 ] as const;
 
@@ -38,7 +38,7 @@ export function StatsBar() {
           </p>
           <p
             className={`mt-2 text-3xl font-black tracking-tight ${
-              stat.accent ? "text-green-600" : "text-foreground"
+              stat.accent ? "text-[#2E8B57]" : "text-foreground"
             }`}
           >
             {stat.value}
