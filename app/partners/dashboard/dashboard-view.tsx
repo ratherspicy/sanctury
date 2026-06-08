@@ -19,14 +19,31 @@ const URGENCY_LABELS = {
   new: "New",
 } as const;
 
+const AVATAR_CLASS =
+  "w-12 h-12 rounded-full object-cover object-top flex-shrink-0";
+
 const LEAD_PHOTOS: Record<string, { src: string; alt: string }> = {
   jane: {
     src: "/avatars/jane-thompson.jpg",
     alt: "Jane Thompson",
   },
   michael: {
-    src: "/avatars/michael-brown.jpg",
+    src: "https://randomuser.me/api/portraits/men/45.jpg",
     alt: "Michael Brown",
+  },
+};
+
+const PROPOSAL_PHOTOS: Record<string, { src: string; alt: string }> = {
+  "emma-wilson": {
+    src: "/avatars/emma-wilson.jpg",
+    alt: "Emma Wilson",
+  },
+};
+
+const WON_JOB_PHOTOS: Record<string, { src: string; alt: string }> = {
+  "david-chen": {
+    src: "/avatars/david-chen.jpg",
+    alt: "David Chen",
   },
 };
 
@@ -225,7 +242,7 @@ export function PartnerDashboardView() {
                         <img
                           src={photo.src}
                           alt={photo.alt}
-                          className="w-14 h-14 rounded-full object-cover object-top flex-shrink-0"
+                          className={AVATAR_CLASS}
                         />
                       )}
                       <h3 className="text-lg font-bold text-foreground">
@@ -285,8 +302,20 @@ export function PartnerDashboardView() {
           <section className="mt-10">
             <h2 className="text-lg font-semibold text-foreground">Active proposals</h2>
             <ul className="mt-4 space-y-4">
-              {ACTIVE_PROPOSALS.map((proposal) => (
+              {ACTIVE_PROPOSALS.map((proposal) => {
+                const photo = PROPOSAL_PHOTOS[proposal.id];
+
+                return (
                 <li key={proposal.id} className="card p-5 sm:p-6">
+                  <div className="flex items-start gap-4">
+                    {photo && (
+                      <img
+                        src={photo.src}
+                        alt={photo.alt}
+                        className={AVATAR_CLASS}
+                      />
+                    )}
+                    <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <p className="font-bold text-foreground">{proposal.name}</p>
                     <span className="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-amber-700">
@@ -308,16 +337,29 @@ export function PartnerDashboardView() {
                     </span>
                   </p>
                   <ProposalProgress />
+                    </div>
+                  </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </section>
 
           <section className="mt-10">
             <h2 className="text-lg font-semibold text-foreground">Won jobs</h2>
             <ul className="mt-4 space-y-4">
-              {WON_JOBS.map((job) => (
+              {WON_JOBS.map((job) => {
+                const photo = WON_JOB_PHOTOS[job.id];
+
+                return (
                 <li key={job.id} className="card flex gap-4 p-5 sm:p-6">
+                  {photo ? (
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      className={AVATAR_CLASS}
+                    />
+                  ) : (
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-600">
                     <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
                       <path
@@ -329,6 +371,7 @@ export function PartnerDashboardView() {
                       />
                     </svg>
                   </span>
+                  )}
                   <div className="min-w-0 flex-1">
                     <p className="font-bold text-foreground">{job.name}</p>
                     <p className="mt-0.5 text-xs text-gray-500">
@@ -350,7 +393,8 @@ export function PartnerDashboardView() {
                     </p>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           </section>
         </div>
