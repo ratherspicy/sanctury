@@ -107,7 +107,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
     <section id="clients">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-2xl font-bold text-foreground">Your clients</h2>
-        <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+        <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700">
           {ATTENTION_COUNT} need attention
         </span>
       </div>
@@ -121,15 +121,15 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
             <li
               key={client.id}
               onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
-              className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md ${display.rowClass}`}
+              className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-5 transition-shadow hover:shadow-md ${display.rowClass}`}
             >
               <img
                 src={`https://i.pravatar.cc/48?img=${display.avatarImg}`}
-                alt=""
-                className="h-12 w-12 shrink-0 rounded-full object-cover"
+                alt={client.name}
+                className="w-12 h-12 rounded-full object-cover flex-shrink-0"
               />
 
-              <p className="w-36 shrink-0 text-base font-bold text-foreground">
+              <p className="w-36 shrink-0 text-lg font-bold text-foreground">
                 {client.name}
               </p>
 
@@ -140,7 +140,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
               <div className="ml-auto flex shrink-0 items-center gap-3">
                 {display.urgencyBadge && (
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${display.urgencyBadge.className}`}
+                    className={`rounded-full px-3 py-1 text-sm font-semibold ${display.urgencyBadge.className}`}
                   >
                     {display.urgencyBadge.label}
                   </span>
@@ -153,7 +153,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                       e.stopPropagation();
                       onMessage(display.action.alertId);
                     }}
-                    className="rounded-full bg-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#267349]"
+                    className="rounded-full bg-[#2E8B57] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#267349]"
                   >
                     Message →
                   </button>
@@ -166,7 +166,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                       e.stopPropagation();
                       router.push(`/agent/dashboard/clients/${client.id}`);
                     }}
-                    className="rounded-full border border-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-[#2E8B57] transition-colors hover:bg-[#2E8B57]/5"
+                    className="rounded-full border border-[#2E8B57] px-5 py-2 text-sm font-semibold text-[#2E8B57] transition-colors hover:bg-[#2E8B57]/5"
                   >
                     View →
                   </button>
