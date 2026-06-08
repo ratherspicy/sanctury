@@ -110,8 +110,8 @@ export default function Home() {
             aria-hidden
           />
           <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
-            <div className="mx-auto max-w-[700px] text-center lg:mx-0 lg:text-left">
-              <h1 className="text-[52px] font-extrabold leading-[1.05] tracking-[-0.03em] text-white lg:text-[88px]">
+            <div className="mx-auto max-w-[700px] text-center text-white lg:mx-0 lg:text-left">
+              <h1 className="!text-white text-[52px] font-extrabold leading-[1.05] tracking-[-0.03em] lg:text-[88px]">
                 <span className="italic">Right,</span> from day one.
               </h1>
               <p className="mx-auto mt-6 max-w-[560px] text-xl text-white/85 lg:mx-0">
@@ -247,7 +247,7 @@ export default function Home() {
               <p className="mb-3 text-sm uppercase tracking-widest text-white/70">
                 Get your report
               </p>
-              <h2 className="text-[40px] font-extrabold leading-[1.1] tracking-tight max-sm:text-3xl">
+              <h2 className="!text-white text-[40px] font-extrabold leading-[1.1] tracking-tight max-sm:text-3xl">
                 Know exactly where you stand.
               </h2>
               <p className="mb-6 mt-6 text-base leading-[1.7] text-white/80">
@@ -255,9 +255,9 @@ export default function Home() {
                 mortgage payoff curve, and what maintenance is coming. No
                 adviser. No sales pitch. No cost.
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-white">
                 {reportChecks.map((item) => (
-                  <li key={item} className="flex gap-2 text-base">
+                  <li key={item} className="flex gap-2 text-base text-white">
                     <span aria-hidden>✓</span>
                     <span>{item}</span>
                   </li>
@@ -312,8 +312,8 @@ export default function Home() {
 
         {/* CTA */}
         <section id="about" className="bg-foreground py-20 lg:py-24">
-          <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
-            <h2 className="text-[44px] font-extrabold leading-[1.1] text-white max-sm:text-3xl">
+          <div className="mx-auto max-w-6xl px-6 text-center text-white lg:px-8">
+            <h2 className="!text-white text-[52px] font-extrabold leading-[1.1] max-sm:text-3xl">
               Stop accepting the deal you&apos;re offered.
             </h2>
             <p className="mx-auto mb-8 mt-6 max-w-xl text-lg text-white/70">
