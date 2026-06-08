@@ -5,6 +5,7 @@ import { getAdviserProfile } from "@/lib/marketplace/adviser-profiles";
 import { formatCurrency } from "@/lib/format";
 import type { InsuranceQuote } from "@/lib/marketplace/insurance-quotes";
 import type { InsuranceJobPosting } from "@/lib/marketplace/insurance-storage";
+import { AdviserConsentModal } from "./adviser-consent-modal";
 import { AdviserProfileModal } from "./adviser-profile-modal";
 
 function StarRating({ rating }: { rating: number }) {
@@ -66,7 +67,14 @@ export function QuoteCard({
 }: QuoteCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [consentOpen, setConsentOpen] = useState(false);
   const [photoError, setPhotoError] = useState(false);
+
+  const openConsent = () => setConsentOpen(true);
+  const confirmChoose = () => {
+    setConsentOpen(false);
+    onChoose(quote.id);
+  };
   const profile = getAdviserProfile(quote.id);
   const personalNote = quote.getPersonalNote(
     posting.coverageGap,
@@ -76,11 +84,21 @@ export function QuoteCard({
 
   return (
     <>
+    {consentOpen && (
+      <AdviserConsentModal
+        adviserName={quote.name}
+        onConfirm={confirmChoose}
+        onClose={() => setConsentOpen(false)}
+      />
+    )}
     {profileOpen && profile && (
       <AdviserProfileModal
         profile={profile}
         onClose={() => setProfileOpen(false)}
-        onChoose={() => onChoose(quote.id)}
+        onChoose={() => {
+          setProfileOpen(false);
+          openConsent();
+        }}
       />
     )}
     <article
@@ -203,7 +221,7 @@ export function QuoteCard({
           </div>
           <button
             type="button"
-            onClick={() => onChoose(quote.id)}
+            onClick={openConsent}
             className="btn-violet h-11 w-full px-6 text-sm"
           >
             Choose this adviser
