@@ -1,65 +1,42 @@
+import Image from "next/image";
 import { SiteHeader } from "../components/site-header";
 import { SancturyLogo } from "../components/sanctury-logo";
 
-const AGENT_FEATURES = [
+const stats = [
   {
-    icon: "bell" as const,
+    value: "18 months",
+    label: "before a listing decision, the signal is there",
+  },
+  {
+    value: "7 years",
+    label: "between sales that Sanctury owns for you",
+  },
+  {
+    value: "$480",
+    label: "average monthly referral income per agent",
+  },
+] as const;
+
+const featureCards = [
+  {
     title: "Timed alerts",
     body: "Sanctury tells you when a client has a refix coming, an insurance gap, or an equity milestone. No guessing. No cold calls.",
+    link: { href: "/agent/login", label: "View dashboard →" },
+    badge: null,
   },
   {
-    icon: "message" as const,
     title: "Ready-to-send messages",
     body: "One click generates a personalised message for each alert. Reviewed by AI. Sent by you. Your clients feel looked after.",
+    link: null,
+    badge: null,
   },
   {
-    icon: "chart" as const,
     title: "Listing signals",
     body: "See which clients are approaching the seven-year mark with growing equity. The next listing is visible 18 months before it happens.",
+    link: null,
+    badge: "POWERED BY SANCTURY AI",
   },
-];
-
-function FeatureIcon({ icon }: { icon: "bell" | "message" | "chart" }) {
-  if (icon === "bell") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  }
-
-  if (icon === "message") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-      <path
-        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+] as const;
 
 export default function AgentsPage() {
   return (
@@ -67,61 +44,158 @@ export default function AgentsPage() {
       <SiteHeader minimal />
 
       <main className="flex-1">
-        <section className="bg-surface">
-          <div className="mx-auto max-w-6xl px-6 pb-20 pt-20 lg:px-8 lg:pb-28 lg:pt-28">
-            <div className="max-w-4xl">
-              <p className="badge-violet mb-10">For Tall Poppy agents</p>
-              <h1 className="text-hero text-foreground max-sm:text-5xl max-sm:tracking-[-0.03em]">
+        {/* Hero */}
+        <section className="relative flex min-h-[70vh] items-center lg:min-h-[85vh]">
+          <Image
+            src="/images/agent-hero.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0 bg-[#14532D]/72"
+            aria-hidden
+          />
+          <div className="relative z-10 mx-auto w-full max-w-6xl px-8 py-16 lg:py-20">
+            <div className="max-w-[700px] text-white">
+              <h1 className="!text-white text-[52px] font-extrabold leading-[1.05] tracking-[-0.03em] lg:text-[88px]">
                 Own the listing before it exists.
               </h1>
-              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+              <p className="mt-4 max-w-[540px] text-xl text-white/85">
                 Sanctury keeps you present through the seven years between sales.
-                Know who needs attention, when — and have something genuine to say.
+                Know who needs attention, when — and have something genuine to
+                say.
               </p>
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-                <a href="/agent/login" className="btn-violet h-11 px-8">
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a
+                  href="/agent/login"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#16A34A] transition-opacity hover:opacity-90"
+                >
                   Agent login →
                 </a>
-                <a href="#how" className="btn-ghost h-11 px-8">
+                <a
+                  href="#how"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-white bg-transparent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10"
+                >
                   See how it works ↓
                 </a>
               </div>
+              <p className="mt-6 text-sm text-white/70">
+                The listing is won 18 months before it happens. Sanctury sees it
+                first.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="bg-bg-secondary py-24 lg:py-32">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        {/* Stats bar */}
+        <section className="bg-[#0A0A0A] py-14">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-10 px-8 text-center lg:gap-16">
+            {stats.map((stat) => (
+              <div key={stat.value}>
+                <p className="text-5xl font-black text-[#4ADE80]">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-sm text-white/70">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Feature split */}
+        <section className="bg-surface py-24">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-8 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#16A34A]">
+                For Tall Poppy agents
+              </p>
+              <h2 className="mb-4 text-[44px] font-black leading-tight tracking-tight text-foreground max-sm:text-3xl">
+                The settlement meeting replaces the gift basket.
+              </h2>
+              <p className="mb-6 text-base leading-relaxed text-[#525252]">
+                At settlement, open Sanctury with your buyer. The property
+                details you already know are pre-filled from the transaction.
+                They enter their own financial details. They leave with their
+                report. You leave with a reason to come back.
+              </p>
+              <a
+                href="/agent/login"
+                className="text-base font-semibold text-[#16A34A] hover:underline"
+              >
+                Agent login →
+              </a>
+            </div>
+            <div className="relative h-[280px] w-full sm:h-[360px] lg:h-[480px]">
+              <Image
+                src="/images/agent.jpg"
+                alt="Real estate agent with clients at settlement"
+                fill
+                className="rounded-2xl object-cover shadow-xl"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Feature cards */}
+        <section id="how" className="bg-[#F7F7F7] py-20">
+          <div className="mx-auto max-w-6xl px-8">
+            <h2 className="mb-4 text-[44px] font-black leading-tight tracking-tight text-foreground max-sm:text-3xl">
+              Everything Sanctury gives you.
+            </h2>
+            <p className="mb-12 text-[#525252]">
+              Built for agents who want to win the relationship, not just the
+              transaction.
+            </p>
+
             <div className="grid gap-6 md:grid-cols-3">
-              {AGENT_FEATURES.map((item) => (
-                <article key={item.title} className="card flex flex-col p-8">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-violet-light text-violet">
-                    <FeatureIcon icon={item.icon} />
-                  </div>
-                  <h3 className="mt-6 text-lg font-bold text-foreground">
-                    {item.title}
+              {featureCards.map((card) => (
+                <article
+                  key={card.title}
+                  className="flex flex-col rounded-2xl border-l-4 border-[#16A34A] bg-white p-8 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+                >
+                  {card.badge && (
+                    <span className="mb-3 inline-flex w-fit rounded-full bg-accent-light px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#16A34A]">
+                      {card.badge}
+                    </span>
+                  )}
+                  <h3 className="text-xl font-bold text-foreground">
+                    {card.title}
                   </h3>
-                  <p className="mt-3 flex-1 text-base leading-relaxed text-muted">
-                    {item.body}
+                  <p className="mt-3 flex-1 text-base leading-relaxed text-[#525252]">
+                    {card.body}
                   </p>
+                  {card.link && (
+                    <a
+                      href={card.link.href}
+                      className="mt-6 text-base font-semibold text-[#16A34A] hover:underline"
+                    >
+                      {card.link.label}
+                    </a>
+                  )}
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="how" className="bg-foreground py-24 lg:py-32">
-          <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
-            <h2 className="text-h2 !text-white max-sm:text-3xl">
-              The settlement meeting replaces the gift basket.
+        {/* CTA */}
+        <section className="bg-[#15803D] py-24 text-center text-white">
+          <div className="mx-auto max-w-6xl px-8">
+            <h2 className="!text-white mb-4 text-[52px] font-black leading-tight max-sm:text-3xl">
+              Your clients, sorted.
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
-              At settlement, open Sanctury with your buyer. The property details
-              you already know are pre-filled. They enter their financial details.
-              They leave with their report. You leave with a reason to come back.
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/70">
+              Every alert. Every message. Every listing — earned before anyone
+              else knew it was coming.
             </p>
-            <a href="/agent/login" className="btn-accent mt-10 inline-flex h-11 px-8">
-              Agent login →
+            <a
+              href="/agent/login"
+              className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-lg font-bold text-[#15803D] transition-opacity hover:opacity-90"
+            >
+              Get started as an agent
             </a>
           </div>
         </section>
@@ -141,17 +215,17 @@ export default function AgentsPage() {
                 <p className="text-sm font-semibold text-foreground">Product</p>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li>
-                    <a href="#tools" className="hover:text-violet">
+                    <a href="/#tools" className="hover:text-violet">
                       Home Health Check
                     </a>
                   </li>
                   <li>
-                    <a href="#tools" className="hover:text-violet">
+                    <a href="/#tools" className="hover:text-violet">
                       Mortgage Strategy
                     </a>
                   </li>
                   <li>
-                    <a href="#tools" className="hover:text-violet">
+                    <a href="/#tools" className="hover:text-violet">
                       Property Intelligence
                     </a>
                   </li>
@@ -161,7 +235,7 @@ export default function AgentsPage() {
                 <p className="text-sm font-semibold text-foreground">Company</p>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li>
-                    <a href="#about" className="hover:text-violet">
+                    <a href="/#about" className="hover:text-violet">
                       About
                     </a>
                   </li>
