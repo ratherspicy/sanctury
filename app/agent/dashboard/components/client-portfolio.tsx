@@ -166,25 +166,27 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
             <li
               key={client.id}
               onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
-              className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-5 transition-shadow hover:shadow-md ${display.rowClass}`}
+              className={`mb-2 grid cursor-pointer grid-cols-1 items-center gap-4 rounded-xl p-5 transition-shadow hover:shadow-md md:[grid-template-columns:2fr_2fr_160px] ${display.rowClass}`}
             >
-              <img src={avatar.src} alt={avatar.alt} className={AVATAR_CLASS} />
+              <div className="flex min-w-0 items-center gap-4">
+                <img src={avatar.src} alt={avatar.alt} className={AVATAR_CLASS} />
 
-              <div className="flex min-w-0 flex-1 flex-col">
-                <p className="text-lg font-bold text-[#0A0A0A]">{client.name}</p>
-                <div className="mt-1.5 flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
-                    🏠 Est. {formatEstValue(client.estimatedValue)}
-                  </span>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-xs ${healthPill.className}`}
-                  >
-                    {healthPill.label}
-                  </span>
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <p className="text-lg font-bold text-[#0A0A0A]">{client.name}</p>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                      🏠 Est. {formatEstValue(client.estimatedValue)}
+                    </span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs ${healthPill.className}`}
+                    >
+                      {healthPill.label}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex min-w-[200px] flex-col items-center text-center">
+              <div className="flex min-w-0 flex-col items-start">
                 {display.alertBadge && (
                   <span
                     className={`rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
@@ -199,7 +201,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                 </p>
               </div>
 
-              <div className="shrink-0">
+              <div className="flex justify-end">
                 {display.action?.type === "message" && (
                   <button
                     type="button"
