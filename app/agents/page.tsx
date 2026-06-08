@@ -55,7 +55,8 @@ export default function AgentsPage() {
             sizes="100vw"
           />
           <div
-            className="absolute inset-0 bg-[#14532D]/72"
+            className="absolute inset-0"
+            style={{ backgroundColor: "#14532D", opacity: 0.72 }}
             aria-hidden
           />
           <div className="relative z-10 mx-auto w-full max-w-6xl px-8 py-16 lg:py-20">
