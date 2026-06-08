@@ -194,14 +194,9 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                     {display.alertBadge.label}
                   </span>
                 )}
-                <p
-                  className={`text-xs text-gray-500 ${display.alertBadge ? "mt-1" : ""}`}
-                >
-                  {display.alertContext}
-                </p>
               </div>
 
-              <div className="flex justify-end">
+              <div className="flex flex-col items-end gap-1">
                 {display.action?.type === "message" && (
                   <button
                     type="button"
@@ -230,6 +225,12 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                   >
                     View →
                   </button>
+                )}
+
+                {display.alertContext && (
+                  <p className="max-w-[180px] text-right text-xs text-gray-400">
+                    {display.alertContext}
+                  </p>
                 )}
               </div>
             </li>
