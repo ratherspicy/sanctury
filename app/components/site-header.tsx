@@ -29,7 +29,10 @@ export function SiteHeader({ minimal = false }: SiteHeaderProps) {
         )}
         {!minimal && (
           <div className="flex items-center justify-self-end">
-            <a href="/check" className="btn-primary">
+            <a
+              href="/check"
+              className="inline-flex items-center justify-center rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#262626]"
+            >
               Get started
             </a>
           </div>

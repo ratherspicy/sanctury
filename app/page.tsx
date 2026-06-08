@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SiteHeader } from "./components/site-header";
 import { SancturyLogo } from "./components/sanctury-logo";
 
@@ -5,7 +6,7 @@ const tools = [
   {
     name: "Home Health Check",
     description:
-"Find out if your insurance actually covers your home — and where the gaps are before they become a problem.",
+      "Find out if your insurance actually covers your home — and where the gaps are before they become a problem.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
         <path
@@ -26,7 +27,7 @@ const tools = [
   {
     name: "Mortgage Strategy",
     description:
-"See how your loan is really working for you — and what small changes could save you years.",
+      "See how your loan is really working for you — and what small changes could save you years.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
         <path
@@ -47,7 +48,7 @@ const tools = [
   {
     name: "Property Intelligence",
     description:
-"Know what maintenance is coming up and what your home is actually worth — before it catches you off guard.",
+      "Know what maintenance is coming up and what your home is actually worth — before it catches you off guard.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
         <path
@@ -68,6 +69,12 @@ const tools = [
   },
 ];
 
+const stats = [
+  { value: "85%", label: "of NZ homes are underinsured" },
+  { value: "$5.8B", label: "switched banks in December 2025 alone" },
+  { value: "37%", label: "rise in house insurance since 2022" },
+] as const;
+
 const integrations = [
   { name: "Tall Poppy Real Estate", dotClass: "bg-green-500" },
   { name: "Relab Property Data", dotClass: "bg-blue-500" },
@@ -76,91 +83,145 @@ const integrations = [
   { name: "Squirrel Mortgage Advisers", dotClass: "bg-teal-500" },
 ] as const;
 
+const reportChecks = [
+  "Insurance gap analysis",
+  "Mortgage strategy snapshot",
+  "Maintenance timeline",
+] as const;
+
 export default function Home() {
   return (
     <div className="flex min-h-full flex-col bg-surface">
       <SiteHeader />
 
       <main className="flex-1">
-        <section className="bg-surface">
-          <div className="mx-auto max-w-6xl px-6 pb-20 pt-20 lg:px-8 lg:pb-28 lg:pt-28">
-            <div className="max-w-4xl">
-              <p className="badge-violet mb-10">Your home sorted. For free.</p>
-              <h1 className="text-hero text-foreground max-sm:text-5xl max-sm:tracking-[-0.03em]">
-                <span className="text-violet">Right,</span> from day one.
+        {/* Hero */}
+        <section className="relative flex min-h-[70vh] items-center lg:min-h-[85vh]">
+          <Image
+            src="/images/hero.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0 bg-[#3D2F8F]/75"
+            aria-hidden
+          />
+          <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
+            <div className="mx-auto max-w-[700px] text-center lg:mx-0 lg:text-left">
+              <h1 className="text-[52px] font-extrabold leading-[1.05] tracking-[-0.03em] text-white lg:text-[88px]">
+                <span className="italic">Right,</span> from day one.
               </h1>
-              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+              <p className="mx-auto mt-6 max-w-[560px] text-xl text-white/85 lg:mx-0">
                 The AI-powered marketplace that helps Kiwis get a fair deal on
                 everything their home needs — free, forever.
               </p>
               <div
                 id="get-started"
-                className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+                className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center lg:justify-start"
               >
-                <a href="/check" className="btn-violet h-11 px-8">
+                <a
+                  href="/check"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-violet transition-opacity hover:opacity-90"
+                >
                   Get started
                 </a>
-                <a href="#about" className="btn-ghost h-11 px-8">
+                <a
+                  href="#about"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-white bg-transparent px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10"
+                >
                   Learn how it works
                 </a>
               </div>
+              <p className="mt-6 text-sm text-white/70">
+                85% of NZ homes are underinsured — find out where you stand in
+                5 minutes.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="bg-bg-secondary py-16 lg:py-20">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="grid gap-10 sm:grid-cols-3">
-              {[
-                {
-                  label: "Built for NZ",
-                  detail:
-"Rates, rebuild costs and lending rules specific to New Zealand",
-                },
-                {
-                  label: "Always free",
-                  detail: "No subscription, no hidden fees, ever",
-                },
-                { label: "Your data", detail: "You own it. We never sell it." },
-              ].map((item) => (
-                <div key={item.label}>
-                  <p className="font-semibold text-foreground">{item.label}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {item.detail}
-                  </p>
-                </div>
-              ))}
+        {/* Stats bar */}
+        <section className="bg-[#0A0A0A] py-12">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-10 px-6 lg:gap-16 lg:px-8">
+            {stats.map((stat) => (
+              <div key={stat.value} className="text-center">
+                <p className="text-[56px] font-extrabold leading-none text-[#A78BFA]">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-sm text-white/70">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Feature split */}
+        <section className="bg-surface py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+            <div className="order-2 lg:order-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet">
+                For homeowners
+              </p>
+              <h2 className="mt-4 text-[44px] font-extrabold leading-[1.1] tracking-tight text-foreground max-sm:text-3xl">
+                Your home. Finally sorted.
+              </h2>
+              <p className="mt-6 max-w-[440px] text-base leading-[1.7] text-[#525252]">
+                Banks have the data. Insurers have the models. You had nothing.
+                Until now. Sanctury gives you the same intelligence — free, right
+                from day one.
+              </p>
+              <a
+                href="/check"
+                className="mt-8 inline-block text-base font-semibold text-violet hover:underline"
+              >
+                Run your free health check →
+              </a>
+            </div>
+            <div className="relative order-1 h-[280px] w-full sm:h-[360px] lg:order-2 lg:h-[480px]">
+              <Image
+                src="/images/lifestyle.jpg"
+                alt="Homeowner reviewing their property on a laptop at home"
+                fill
+                className="rounded-2xl object-cover shadow-xl"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
           </div>
         </section>
 
-        <section id="tools" className="bg-surface py-24 lg:py-32">
+        {/* Tool cards */}
+        <section id="tools" className="bg-bg-secondary py-20 lg:py-24">
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
             <div className="max-w-2xl">
-              <h2 className="text-h2 text-foreground max-sm:text-3xl">
+              <h2 className="text-[44px] font-extrabold leading-[1.1] tracking-tight text-foreground max-sm:text-3xl">
                 Everything your home needs. Finally in one place.
               </h2>
-              <p className="mt-5 text-base leading-relaxed text-muted">
+              <p className="mt-5 text-base leading-relaxed text-[#525252]">
                 The AI decides when you need help. The marketplace puts
                 competing experts in front of you. You choose freely.
               </p>
             </div>
 
-            <div className="mt-16 grid gap-6 md:grid-cols-3">
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
               {tools.map((tool) => (
-                <article key={tool.name} className="card flex flex-col p-8">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-violet-light text-violet">
+                <article
+                  key={tool.name}
+                  className="flex flex-col rounded-2xl border-l-4 border-[#6D5FD8] bg-white p-8 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-light text-violet">
                     {tool.icon}
                   </div>
-                  <h3 className="mt-6 text-lg font-bold text-foreground">
+                  <h3 className="mt-6 text-xl font-bold text-foreground">
                     {tool.name}
                   </h3>
-                  <p className="mt-3 flex-1 text-base leading-relaxed text-muted">
+                  <p className="mt-3 flex-1 text-base leading-relaxed text-[#525252]">
                     {tool.description}
                   </p>
                   <a
                     href="/check"
-                    className="mt-8 text-sm font-semibold text-violet transition-colors hover:text-violet-dark"
+                    className="mt-8 text-base font-semibold text-violet transition-colors hover:text-violet-dark hover:underline"
                   >
                     Get started →
                   </a>
@@ -170,9 +231,52 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-surface py-16">
+        {/* Homeowner report */}
+        <section className="bg-violet py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+            <div className="relative h-[320px] w-full sm:h-[380px] lg:h-[420px]">
+              <Image
+                src="/images/homeowner.jpg"
+                alt="New Zealand homeowner at home"
+                fill
+                className="rounded-2xl object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+            <div className="text-white">
+              <p className="mb-3 text-sm uppercase tracking-widest text-white/70">
+                Get your report
+              </p>
+              <h2 className="text-[40px] font-extrabold leading-[1.1] tracking-tight max-sm:text-3xl">
+                Know exactly where you stand.
+              </h2>
+              <p className="mb-6 mt-6 text-base leading-[1.7] text-white/80">
+                In five minutes, Sanctury shows you your insurance gap, your
+                mortgage payoff curve, and what maintenance is coming. No
+                adviser. No sales pitch. No cost.
+              </p>
+              <ul className="space-y-3">
+                {reportChecks.map((item) => (
+                  <li key={item} className="flex gap-2 text-base">
+                    <span aria-hidden>✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="/check"
+                className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-violet transition-opacity hover:opacity-90"
+              >
+                Get started — it&apos;s free
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Integrations */}
+        <section className="bg-violet-light py-16">
           <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
-            <h2 className="text-2xl font-bold text-[#0A0A0A]">
+            <h2 className="text-[28px] font-extrabold text-[#0A0A0A]">
               Built to work with what you already use
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-base text-[#525252]">
@@ -206,17 +310,25 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="about" className="bg-foreground py-24 lg:py-32">
+        {/* CTA */}
+        <section id="about" className="bg-foreground py-20 lg:py-24">
           <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
-            <h2 className="text-h2 !text-white max-sm:text-3xl">
+            <h2 className="text-[44px] font-extrabold leading-[1.1] text-white max-sm:text-3xl">
               Stop accepting the deal you&apos;re offered.
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
+            <p className="mx-auto mb-8 mt-6 max-w-xl text-lg text-white/70">
+              Join homeowners across New Zealand who know exactly where they
+              stand.
+            </p>
+            <p className="mx-auto max-w-xl text-lg leading-relaxed text-white/70">
               85% of NZ homes are underinsured. Most homeowners are paying too
               much on their mortgage. Sanctury gives you the intelligence to get
               what&apos;s fair.
             </p>
-            <a href="/check" className="btn-accent mt-10 inline-flex h-11 px-8">
+            <a
+              href="/check"
+              className="btn-accent mt-10 inline-flex rounded-full px-10 py-4 text-lg font-bold"
+            >
               Get started — it&apos;s free
             </a>
           </div>
