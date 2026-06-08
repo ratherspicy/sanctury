@@ -28,7 +28,7 @@ export function AgentDashboardView() {
 
       <main className="relative flex-1">
         <section
-          className="px-8 py-10 text-white"
+          className="border-b-4 border-[#3CB371] px-8 py-10 text-white"
           style={{
             background:
               "linear-gradient(135deg, #1a5c3a 0%, #2E8B57 50%, #3CB371 100%)",
@@ -39,7 +39,7 @@ export function AgentDashboardView() {
               <p className="text-xs uppercase tracking-widest text-white/70">
                 Bay of Plenty · Client intelligence
               </p>
-              <h1 className="!text-white mt-2 text-4xl font-black">
+              <h1 className="!text-white mt-2 text-4xl font-black lg:text-5xl">
                 Good morning, Mark.
               </h1>
               <p className="mt-2 text-base text-white/85">

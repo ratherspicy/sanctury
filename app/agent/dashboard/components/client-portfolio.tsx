@@ -10,10 +10,46 @@ const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
   "Not started": "bg-gray-100 text-gray-500",
 };
 
-function refixClass(days: number): string {
-  if (days <= 30) return "font-bold text-danger";
-  if (days <= 90) return "font-semibold text-warning";
-  return "text-muted";
+const AVATAR_GRADIENTS: Record<string, string> = {
+  S: "bg-gradient-to-br from-[#2E8B57] to-[#3CB371]",
+  C: "bg-gradient-to-br from-blue-500 to-blue-600",
+  E: "bg-gradient-to-br from-purple-500 to-purple-600",
+  M: "bg-gradient-to-br from-orange-500 to-orange-600",
+  J: "bg-gradient-to-br from-teal-500 to-teal-600",
+  D: "bg-gradient-to-br from-red-500 to-red-600",
+  L: "bg-gradient-to-br from-pink-500 to-pink-600",
+  T: "bg-gradient-to-br from-indigo-500 to-indigo-600",
+};
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+}
+
+function avatarClass(name: string): string {
+  const letter = name.charAt(0).toUpperCase();
+  return AVATAR_GRADIENTS[letter] ?? "bg-[#2E8B57]";
+}
+
+function RefixDisplay({ days }: { days: number }) {
+  if (days <= 30) {
+    return (
+      <span className="inline-flex rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-700">
+        {days} days
+      </span>
+    );
+  }
+  if (days <= 90) {
+    return (
+      <span className="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-amber-700">
+        {days} days
+      </span>
+    );
+  }
+  return <span className="text-muted">{days} days</span>;
 }
 
 type ClientPortfolioProps = {
@@ -35,7 +71,7 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
         <table className="w-full min-w-[960px] table-auto text-left text-sm">
           <thead>
             <tr className="border-b border-border bg-background/80 text-xs font-semibold uppercase tracking-wide text-muted">
-              <th className="min-w-[140px] px-6 py-3">Name</th>
+              <th className="min-w-[180px] px-6 py-3">Name</th>
               <th className="min-w-[200px] px-4 py-3">Property address</th>
               <th className="min-w-[120px] px-4 py-3">Purchase date</th>
               <th className="min-w-[120px] px-4 py-3">Purchase price</th>
@@ -54,39 +90,46 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
                   index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 }`}
               >
-                  <td className="px-6 py-4 text-base font-semibold text-foreground">
-                    {client.name}
-                  </td>
-                  <td className="px-4 py-4 text-muted">{client.address}</td>
-                  <td className="px-4 py-4 whitespace-nowrap text-muted">
-                    {formatDate(client.purchaseDate)}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-foreground">
-                    {formatCurrency(client.purchasePrice)}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap font-medium text-foreground">
-                    {formatCurrency(client.estimatedValue)}
-                  </td>
-                  <td className="px-4 py-4">
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
                     <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[client.healthCheckStatus]}`}
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white ${avatarClass(client.name)}`}
                     >
-                      {client.healthCheckStatus}
+                      {getInitials(client.name)}
                     </span>
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    {client.daysToRefix !== null ? (
-                      <span className={refixClass(client.daysToRefix)}>
-                        {client.daysToRefix} days
-                      </span>
-                    ) : (
-                      <span className="text-muted">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-4 text-right text-lg font-medium text-[#3CB371] opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                    ›
-                  </td>
-                </tr>
+                    <span className="text-base font-semibold text-foreground">
+                      {client.name}
+                    </span>
+                  </div>
+                </td>
+                <td className="px-4 py-4 text-muted">{client.address}</td>
+                <td className="whitespace-nowrap px-4 py-4 text-muted">
+                  {formatDate(client.purchaseDate)}
+                </td>
+                <td className="whitespace-nowrap px-4 py-4 text-foreground">
+                  {formatCurrency(client.purchasePrice)}
+                </td>
+                <td className="whitespace-nowrap px-4 py-4 font-medium text-foreground">
+                  {formatCurrency(client.estimatedValue)}
+                </td>
+                <td className="px-4 py-4">
+                  <span
+                    className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[client.healthCheckStatus]}`}
+                  >
+                    {client.healthCheckStatus}
+                  </span>
+                </td>
+                <td className="whitespace-nowrap px-4 py-4">
+                  {client.daysToRefix !== null ? (
+                    <RefixDisplay days={client.daysToRefix} />
+                  ) : (
+                    <span className="text-muted">—</span>
+                  )}
+                </td>
+                <td className="px-4 py-4 text-right text-lg font-medium text-[#3CB371] opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+                  ›
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
