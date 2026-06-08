@@ -11,18 +11,52 @@ import { PartnerNav } from "../../components/partner-nav";
 const inputClassName =
   "mt-1.5 w-full rounded-lg border border-border bg-surface px-4 py-3 text-base text-foreground transition-colors placeholder:text-muted/60 focus:border-teal-600 focus:outline-none focus:ring-0";
 
+const labelClassName = "block text-sm font-medium text-foreground";
+
+const COVER_FEATURES = [
+  "Contents cover",
+  "Natural disaster cover",
+  "Temporary accommodation",
+  "Legal liability",
+  "Underground services",
+  "Gradual damage",
+] as const;
+
 type LeadDetailViewProps = {
   lead: PartnerLead;
 };
 
 export function LeadDetailView({ lead }: LeadDetailViewProps) {
   const router = useRouter();
-  const [sumInsured, setSumInsured] = useState(String(lead.recommendedSumInsured));
+  const [sumInsured, setSumInsured] = useState("750000");
   const [annualPremium, setAnnualPremium] = useState("");
   const [excess, setExcess] = useState("");
-  const [coverType, setCoverType] = useState("Replacement");
-  const [message, setMessage] = useState("");
+  const [insurer, setInsurer] = useState("");
+  const [policyName, setPolicyName] = useState("");
+  const [coverFeatures, setCoverFeatures] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(COVER_FEATURES.map((f) => [f, true]))
+  );
+  const [excessOptions, setExcessOptions] = useState(["", "", ""]);
+  const [exclusions, setExclusions] = useState(["", "", ""]);
+  const [personalNote, setPersonalNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const monthlyPremium =
+    annualPremium && !Number.isNaN(Number(annualPremium))
+      ? (Number(annualPremium) / 12).toFixed(2)
+      : "";
+
+  const toggleCoverFeature = (feature: string) => {
+    setCoverFeatures((prev) => ({ ...prev, [feature]: !prev[feature] }));
+  };
+
+  const updateExcessOption = (index: number, value: string) => {
+    setExcessOptions((prev) => prev.map((opt, i) => (i === index ? value : opt)));
+  };
+
+  const updateExclusion = (index: number, value: string) => {
+    setExclusions((prev) => prev.map((ex, i) => (i === index ? value : ex)));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,86 +148,203 @@ export function LeadDetailView({ lead }: LeadDetailViewProps) {
               Send your quote to {lead.name.split(" ")[0]} through Sanctury.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+            <form onSubmit={handleSubmit} className="mt-6 space-y-8">
+              {/* Pricing */}
               <div>
-                <label htmlFor="sumInsured" className="block text-sm font-medium text-foreground">
-                  Recommended sum insured ($)
-                </label>
-                <input
-                  id="sumInsured"
-                  type="number"
-                  required
-                  min={1}
-                  className={inputClassName}
-                  value={sumInsured}
-                  onChange={(e) => setSumInsured(e.target.value)}
-                  disabled={isSubmitting}
-                />
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+                  Pricing
+                </h3>
+                <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="sumInsured" className={labelClassName}>
+                      Sum insured ($)
+                    </label>
+                    <input
+                      id="sumInsured"
+                      type="number"
+                      required
+                      min={1}
+                      className={inputClassName}
+                      value={sumInsured}
+                      onChange={(e) => setSumInsured(e.target.value)}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="annualPremium" className={labelClassName}>
+                      Annual premium ($)
+                    </label>
+                    <input
+                      id="annualPremium"
+                      type="number"
+                      required
+                      min={1}
+                      placeholder="e.g. 2890"
+                      className={inputClassName}
+                      value={annualPremium}
+                      onChange={(e) => setAnnualPremium(e.target.value)}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="excess" className={labelClassName}>
+                      Standard excess ($)
+                    </label>
+                    <input
+                      id="excess"
+                      type="number"
+                      required
+                      min={0}
+                      placeholder="e.g. 500"
+                      className={inputClassName}
+                      value={excess}
+                      onChange={(e) => setExcess(e.target.value)}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="monthlyPremium" className={labelClassName}>
+                      Est. monthly premium
+                    </label>
+                    <input
+                      id="monthlyPremium"
+                      type="text"
+                      readOnly
+                      placeholder="Calculated from annual premium"
+                      className={`${inputClassName} cursor-not-allowed bg-bg-secondary text-muted`}
+                      value={monthlyPremium ? `$${monthlyPremium}/mo` : ""}
+                      tabIndex={-1}
+                    />
+                  </div>
+                </div>
               </div>
 
+              {/* Policy details */}
               <div>
-                <label htmlFor="annualPremium" className="block text-sm font-medium text-foreground">
-                  Annual premium ($)
-                </label>
-                <input
-                  id="annualPremium"
-                  type="number"
-                  required
-                  min={1}
-                  placeholder="e.g. 2890"
-                  className={inputClassName}
-                  value={annualPremium}
-                  onChange={(e) => setAnnualPremium(e.target.value)}
-                  disabled={isSubmitting}
-                />
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+                  Policy details
+                </h3>
+                <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="insurer" className={labelClassName}>
+                      Insurer name
+                    </label>
+                    <input
+                      id="insurer"
+                      type="text"
+                      required
+                      placeholder="e.g. Tower Insurance"
+                      className={inputClassName}
+                      value={insurer}
+                      onChange={(e) => setInsurer(e.target.value)}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="policyName" className={labelClassName}>
+                      Policy name
+                    </label>
+                    <input
+                      id="policyName"
+                      type="text"
+                      required
+                      placeholder="e.g. Tower Home and Contents"
+                      className={inputClassName}
+                      value={policyName}
+                      onChange={(e) => setPolicyName(e.target.value)}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                </div>
               </div>
 
+              {/* Cover features */}
               <div>
-                <label htmlFor="excess" className="block text-sm font-medium text-foreground">
-                  Excess amount ($)
-                </label>
-                <input
-                  id="excess"
-                  type="number"
-                  required
-                  min={0}
-                  placeholder="e.g. 500"
-                  className={inputClassName}
-                  value={excess}
-                  onChange={(e) => setExcess(e.target.value)}
-                  disabled={isSubmitting}
-                />
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+                  Cover features
+                </h3>
+                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {COVER_FEATURES.map((feature) => (
+                    <label
+                      key={feature}
+                      className="flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-background px-4 py-3 transition-colors has-checked:border-teal-600 has-checked:bg-teal-50"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={coverFeatures[feature]}
+                        onChange={() => toggleCoverFeature(feature)}
+                        disabled={isSubmitting}
+                        className="h-4 w-4 rounded border-border text-teal-600 focus:ring-teal-600"
+                      />
+                      <span className="text-sm font-medium text-foreground">{feature}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
+              {/* Excess options */}
               <div>
-                <label htmlFor="coverType" className="block text-sm font-medium text-foreground">
-                  Cover type
-                </label>
-                <select
-                  id="coverType"
-                  required
-                  className={inputClassName}
-                  value={coverType}
-                  onChange={(e) => setCoverType(e.target.value)}
-                  disabled={isSubmitting}
-                >
-                  <option value="Replacement">Replacement</option>
-                  <option value="Agreed value">Agreed value</option>
-                </select>
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+                  Excess options
+                </h3>
+                <div className="mt-4 space-y-4">
+                  {excessOptions.map((option, index) => (
+                    <div key={index}>
+                      <label htmlFor={`excessOption${index}`} className={labelClassName}>
+                        Option {index + 1}
+                      </label>
+                      <input
+                        id={`excessOption${index}`}
+                        type="text"
+                        placeholder="$500 standard excess"
+                        className={inputClassName}
+                        value={option}
+                        onChange={(e) => updateExcessOption(index, e.target.value)}
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
 
+              {/* Exclusions */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground">
-                  Message to homeowner
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+                  Exclusions
+                </h3>
+                <div className="mt-4 space-y-4">
+                  {exclusions.map((exclusion, index) => (
+                    <div key={index}>
+                      <label htmlFor={`exclusion${index}`} className={labelClassName}>
+                        Exclusion {index + 1}
+                      </label>
+                      <input
+                        id={`exclusion${index}`}
+                        type="text"
+                        placeholder="Pre-existing damage not covered"
+                        className={inputClassName}
+                        value={exclusion}
+                        onChange={(e) => updateExclusion(index, e.target.value)}
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Personal note */}
+              <div>
+                <label htmlFor="personalNote" className={labelClassName}>
+                  Personal note to homeowner
                 </label>
                 <textarea
-                  id="message"
+                  id="personalNote"
                   required
                   rows={4}
-                  placeholder="Brief note explaining your recommendation…"
+                  placeholder="Explain your recommendation and why this policy suits their property…"
                   className={inputClassName}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  value={personalNote}
+                  onChange={(e) => setPersonalNote(e.target.value)}
                   disabled={isSubmitting}
                 />
               </div>
@@ -201,7 +352,7 @@ export function LeadDetailView({ lead }: LeadDetailViewProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-teal-600 px-6 text-sm font-medium text-white transition-colors hover:bg-teal-700 sm:w-auto"
+                className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#0D9488] px-6 text-sm font-medium text-white transition-colors hover:bg-teal-700"
               >
                 {isSubmitting ? "Submitting…" : "Submit proposal"}
               </button>
