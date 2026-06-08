@@ -195,7 +195,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                   </span>
                 )}
                 {display.alertContext && (
-                  <p className="text-xs leading-snug text-gray-500">
+                  <p className="flex-1 text-center text-xs leading-snug text-gray-500">
                     {display.alertContext}
                   </p>
                 )}
