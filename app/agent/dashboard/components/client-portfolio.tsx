@@ -205,7 +205,11 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onMessage(display.action?.alertId ?? "");
+                      onMessage(
+                        display.action?.type === "message"
+                          ? display.action.alertId
+                          : ""
+                      );
                     }}
                     className="rounded-full bg-[#2E8B57] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#267349]"
                   >
