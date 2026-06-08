@@ -31,11 +31,23 @@ type AlertFeedProps = {
 };
 
 export function AlertFeed({ alerts, onGenerate, onView }: AlertFeedProps) {
+  const urgentCount = alerts.filter((a) => a.urgency === "urgent").length;
+
   return (
     <section id="alerts">
-      <h2 className="text-lg font-semibold text-foreground">
-        Who needs your attention today
-      </h2>
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 className="text-lg font-semibold text-foreground">
+          <span className="text-danger" aria-hidden>
+            ●{" "}
+          </span>
+          Action needed
+        </h2>
+        {urgentCount > 0 && (
+          <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
+            {urgentCount} urgent
+          </span>
+        )}
+      </div>
       <p className="mt-1 text-sm text-muted">
         Actionable insights from Sanctury Home Health Checks and property data.
       </p>

@@ -10,8 +10,8 @@ import {
 import { PartnerNav } from "./components/partner-nav";
 
 const URGENCY_STYLES = {
-  urgent: "bg-danger-soft text-danger",
-  new: "bg-teal-50 text-teal-600",
+  urgent: "bg-red-100 text-red-700 font-bold",
+  new: "bg-teal-100 text-teal-700 font-bold",
 } as const;
 
 const URGENCY_LABELS = {
@@ -26,29 +26,78 @@ export function PartnerDashboardView() {
       <PartnerNav />
 
       <main className="relative flex-1">
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
-          <div className="mb-8">
-            <p className="text-sm text-muted">Bay of Plenty · Insurance marketplace</p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
-              Your pipeline
-            </h1>
+        <section
+          className="px-8 py-10 text-white"
+          style={{
+            background:
+              "linear-gradient(135deg, #0F766E 0%, #0D9488 50%, #14B8A6 100%)",
+          }}
+        >
+          <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-white/70">
+                Bay of Plenty · Insurance marketplace
+              </p>
+              <h1 className="!text-white mt-2 text-4xl font-black">
+                Good morning, Sarah.
+              </h1>
+              <p className="mt-2 text-base text-white/85">
+                You have{" "}
+                {PARTNER_LEADS.filter((l) => l.urgency === "new").length} new lead
+                {PARTNER_LEADS.filter((l) => l.urgency === "new").length === 1
+                  ? ""
+                  : "s"}{" "}
+                waiting for your proposal.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                {PARTNER_STATS.activeLeads} active leads
+              </span>
+              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                {PARTNER_STATS.proposalsSent} proposals sent
+              </span>
+              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                {formatCurrency(PARTNER_STATS.earningsThisMonth)} earned
+              </span>
+            </div>
           </div>
+        </section>
 
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
-              { label: "Active leads", value: String(PARTNER_STATS.activeLeads) },
-              { label: "Proposals sent", value: String(PARTNER_STATS.proposalsSent) },
-              { label: "Jobs won this month", value: String(PARTNER_STATS.jobsWonThisMonth) },
+              {
+                label: "Active leads",
+                value: String(PARTNER_STATS.activeLeads),
+                cardClass: "border-l-4 border-teal-600 bg-teal-50",
+                accent: false,
+              },
+              {
+                label: "Proposals sent",
+                value: String(PARTNER_STATS.proposalsSent),
+                cardClass: "border-l-4 border-blue-500 bg-blue-50",
+                accent: false,
+              },
+              {
+                label: "Jobs won this month",
+                value: String(PARTNER_STATS.jobsWonThisMonth),
+                cardClass: "border-l-4 border-green-500 bg-green-50",
+                accent: false,
+              },
               {
                 label: "Earnings this month",
                 value: formatCurrency(PARTNER_STATS.earningsThisMonth),
+                cardClass: "border-l-4 border-emerald-500 bg-emerald-50",
                 accent: true,
               },
             ].map((stat) => (
-              <div key={stat.label} className="card p-5">
-                <p className="text-sm text-muted">{stat.label}</p>
+              <div key={stat.label} className={`rounded-xl p-5 ${stat.cardClass}`}>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+                  {stat.label}
+                </p>
                 <p
-                  className={`mt-2 text-2xl font-bold tracking-tight ${
+                  className={`mt-2 text-3xl font-black tracking-tight ${
                     stat.accent ? "text-teal-600" : "text-foreground"
                   }`}
                 >
@@ -65,7 +114,12 @@ export function PartnerDashboardView() {
             </p>
             <ul className="mt-4 space-y-4">
               {PARTNER_LEADS.map((lead) => (
-                <li key={lead.id} className="card p-5 sm:p-6">
+                <li
+                  key={lead.id}
+                  className={`card p-5 sm:p-6 ${
+                    lead.urgency === "urgent" ? "border-l-4 border-teal-500" : ""
+                  }`}
+                >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
@@ -102,7 +156,7 @@ export function PartnerDashboardView() {
                   </dl>
                   <Link
                     href={`/partners/dashboard/leads/${lead.id}`}
-                    className="mt-5 inline-flex h-9 items-center justify-center rounded-lg bg-teal-600 px-4 text-sm font-medium text-white transition-colors hover:bg-teal-700"
+                    className="mt-5 inline-flex items-center justify-center rounded-full bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-700"
                   >
                     View & respond
                   </Link>

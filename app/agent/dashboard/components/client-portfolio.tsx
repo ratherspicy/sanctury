@@ -5,9 +5,9 @@ import { formatCurrency, formatDate } from "@/lib/format";
 import type { ClientRow } from "@/lib/agent/dashboard-data";
 
 const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
-  Completed: "bg-brand-light text-brand",
-  "In progress": "bg-green-50 text-green-600",
-  "Not started": "bg-[#F3F4F6] text-muted",
+  Completed: "bg-green-100 text-green-700",
+  "In progress": "bg-blue-100 text-blue-700",
+  "Not started": "bg-gray-100 text-gray-500",
 };
 
 function refixClass(days: number): string {
@@ -46,13 +46,15 @@ export function ClientPortfolio({ clients }: ClientPortfolioProps) {
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
+            {clients.map((client, index) => (
               <tr
                 key={client.id}
                 onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
-                className="group cursor-pointer border-b border-[#F0F0F0] transition-colors duration-150 hover:bg-[#F5F4FF]"
+                className={`group cursor-pointer border-b border-[#F0F0F0] transition-colors duration-150 hover:bg-[#F5F4FF] ${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                }`}
               >
-                  <td className="px-6 py-4 text-base font-bold text-foreground">
+                  <td className="px-6 py-4 text-base font-semibold text-foreground">
                     {client.name}
                   </td>
                   <td className="px-4 py-4 text-muted">{client.address}</td>

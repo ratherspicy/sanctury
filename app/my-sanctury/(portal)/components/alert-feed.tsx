@@ -4,10 +4,10 @@ import type { AlertCategory, DashboardAlert } from "@/lib/my-sanctury/dashboard-
 
 const CATEGORY_STYLES: Record<
   AlertCategory,
-  { border: string; tag: string; icon: ReactNode }
+  { card: string; tag: string; icon: ReactNode }
 > = {
   Insurance: {
-    border: "border-l-warning",
+    card: "border-l-4 border-amber-500 bg-amber-50",
     tag: "text-warning",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
@@ -21,8 +21,8 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Mortgage: {
-    border: "border-l-violet",
-    tag: "text-violet",
+    card: "border-l-4 border-amber-500 bg-amber-50",
+    tag: "text-warning",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -36,7 +36,7 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Maintenance: {
-    border: "border-l-border",
+    card: "border-l-4 border-blue-500 bg-blue-50",
     tag: "text-muted",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
@@ -51,8 +51,8 @@ const CATEGORY_STYLES: Record<
     ),
   },
   Market: {
-    border: "border-l-warning",
-    tag: "text-warning",
+    card: "border-l-4 border-green-500 bg-green-50",
+    tag: "text-accent",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path
@@ -84,16 +84,17 @@ export function AlertFeedSection({ alerts }: AlertFeedProps) {
         {alerts.map((alert) => {
           const style = CATEGORY_STYLES[alert.category];
           return (
-            <li
-              key={alert.id}
-              className={`alert-card ${style.border}`}
-            >
+            <li key={alert.id} className={`rounded-xl p-5 sm:p-6 ${style.card}`}>
               <div className="flex gap-4">
-                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-bg-secondary ${style.tag}`}>
+                <span
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white/60 ${style.tag}`}
+                >
                   {style.icon}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <span className={`text-xs font-semibold uppercase tracking-wide ${style.tag}`}>
+                  <span
+                    className={`text-xs font-semibold uppercase tracking-wide ${style.tag}`}
+                  >
                     {alert.category}
                   </span>
                   <h3 className="mt-2 font-semibold text-foreground">
@@ -104,7 +105,7 @@ export function AlertFeedSection({ alerts }: AlertFeedProps) {
                   </p>
                   <Link
                     href={alert.actionHref}
-                    className="btn-violet mt-3 inline-flex h-9 px-4 text-sm"
+                    className="mt-3 inline-flex rounded-full bg-[#6D5FD8] px-4 py-2 text-sm font-medium text-white hover:bg-violet-dark"
                   >
                     {alert.actionLabel}
                   </Link>
