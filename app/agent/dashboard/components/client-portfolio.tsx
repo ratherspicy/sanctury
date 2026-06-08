@@ -189,7 +189,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
               <div className="flex min-w-0 items-center gap-3">
                 {display.alertBadge && (
                   <span
-                    className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
+                    className={`min-w-[180px] text-center whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
                   >
                     {display.alertBadge.label}
                   </span>
