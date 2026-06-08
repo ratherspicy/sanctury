@@ -1,81 +1,97 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  AGENT_ALERTS,
-  type AgentAlert,
-  type ClientRow,
-} from "@/lib/agent/dashboard-data";
-import { formatCurrency } from "@/lib/format";
+import type { ClientRow } from "@/lib/agent/dashboard-data";
 
-type ClientTier = "urgent" | "attention" | "update" | "none";
+type ClientAction =
+  | { type: "message"; alertId: string }
+  | { type: "view" }
+  | null;
 
-const STATUS_STYLES: Record<ClientRow["healthCheckStatus"], string> = {
-  Completed: "bg-[#d1fae5] text-[#2E8B57]",
-  "In progress": "bg-blue-100 text-blue-700",
-  "Not started": "bg-gray-100 text-gray-500",
+type ClientDisplay = {
+  avatarImg: number;
+  whatsHappening: string;
+  urgencyBadge: { label: string; className: string } | null;
+  rowClass: string;
+  action: ClientAction;
+  sortOrder: number;
 };
 
-const TIER_ORDER: Record<ClientTier, number> = {
-  urgent: 0,
-  attention: 1,
-  update: 2,
-  none: 3,
+const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
+  "sarah-chen": {
+    avatarImg: 5,
+    whatsHappening: "Mortgage refix in 14 days — action needed",
+    urgencyBadge: { label: "14 days", className: "bg-red-100 text-red-700" },
+    rowClass: "bg-red-50 border-l-4 border-red-500",
+    action: { type: "message", alertId: "sarah-chen-refix" },
+    sortOrder: 0,
+  },
+  "james-wilson": {
+    avatarImg: 8,
+    whatsHappening: "Insurance gap of $142,000 identified",
+    urgencyBadge: { label: "Attention", className: "bg-orange-100 text-orange-700" },
+    rowClass: "bg-orange-50 border-l-4 border-orange-400",
+    action: { type: "message", alertId: "james-wilson-insurance" },
+    sortOrder: 1,
+  },
+  "michael-brown": {
+    avatarImg: 11,
+    whatsHappening: "Bright-line test expires in 90 days",
+    urgencyBadge: { label: "90 days", className: "bg-orange-100 text-orange-700" },
+    rowClass: "bg-orange-50 border-l-4 border-orange-400",
+    action: { type: "message", alertId: "michael-brown-brightline" },
+    sortOrder: 2,
+  },
+  "jane-smith": {
+    avatarImg: 15,
+    whatsHappening: "Health check complete — refix in 89 days",
+    urgencyBadge: { label: "89 days", className: "bg-yellow-100 text-yellow-700" },
+    rowClass: "bg-yellow-50 border-l-4 border-yellow-400",
+    action: { type: "message", alertId: "jane-smith-completed" },
+    sortOrder: 3,
+  },
+  "emma-thompson": {
+    avatarImg: 16,
+    whatsHappening: "Equity up $95,000 since purchase",
+    urgencyBadge: { label: "New", className: "bg-green-100 text-green-700" },
+    rowClass: "bg-green-50 border-l-4 border-green-400",
+    action: { type: "message", alertId: "emma-thompson-equity" },
+    sortOrder: 4,
+  },
+  "david-park": {
+    avatarImg: 13,
+    whatsHappening: "Health check in progress",
+    urgencyBadge: { label: "In progress", className: "bg-blue-100 text-blue-700" },
+    rowClass: "bg-blue-50 border-l-4 border-blue-300",
+    action: { type: "view" },
+    sortOrder: 5,
+  },
+  "lisa-ngata": {
+    avatarImg: 20,
+    whatsHappening: "No current alerts",
+    urgencyBadge: null,
+    rowClass: "bg-white border-l-4 border-transparent",
+    action: null,
+    sortOrder: 6,
+  },
+  "tom-harrison": {
+    avatarImg: 12,
+    whatsHappening: "Refix in 456 days",
+    urgencyBadge: null,
+    rowClass: "bg-white border-l-4 border-transparent",
+    action: null,
+    sortOrder: 7,
+  },
 };
 
-const ROW_STYLES: Record<ClientTier, string> = {
-  urgent: "bg-red-50 border-l-4 border-red-500",
-  attention: "bg-orange-50 border-l-4 border-orange-400",
-  update: "bg-blue-50 border-l-4 border-blue-400",
-  none: "bg-white border-l-4 border-transparent",
-};
-
-const BADGE_STYLES: Record<Exclude<ClientTier, "none">, string> = {
-  urgent: "bg-red-100 text-red-700",
-  attention: "bg-orange-100 text-orange-700",
-  update: "bg-blue-100 text-blue-700",
-};
-
-function getInitials(name: string): string {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-  }
-  return name.slice(0, 2).toUpperCase();
-}
-
-function getPrimaryAlert(clientName: string): AgentAlert | undefined {
-  return AGENT_ALERTS.find((a) => a.clientName === clientName);
-}
-
-function getClientTier(alert: AgentAlert | undefined): ClientTier {
-  if (!alert) return "none";
-  if (alert.urgency === "urgent") return "urgent";
-  if (alert.urgency === "amber") return "attention";
-  if (alert.urgency === "green" && alert.action === "view") return "update";
-  return "none";
-}
-
-function getAlertBadgeLabel(alert: AgentAlert, client: ClientRow): string {
-  if (alert.id === "sarah-chen-refix" && client.daysToRefix !== null) {
-    return `Refix in ${client.daysToRefix} days`;
-  }
-  if (alert.id === "james-wilson-insurance") return "Insurance gap $142,000";
-  if (alert.id === "emma-thompson-equity") return "Equity up $95,000";
-  if (alert.id === "jane-smith-completed") return "Health check complete";
-  return alert.headline;
-}
+const ATTENTION_COUNT = 3;
 
 function sortClients(clients: ClientRow[]): ClientRow[] {
-  return clients
-    .map((client, index) => ({ client, index }))
-    .sort((a, b) => {
-      const tierA = getClientTier(getPrimaryAlert(a.client.name));
-      const tierB = getClientTier(getPrimaryAlert(b.client.name));
-      const tierDiff = TIER_ORDER[tierA] - TIER_ORDER[tierB];
-      return tierDiff !== 0 ? tierDiff : a.index - b.index;
-    })
-    .map(({ client }) => client);
+  return [...clients].sort(
+    (a, b) =>
+      (CLIENT_DISPLAY[a.id]?.sortOrder ?? 99) -
+      (CLIENT_DISPLAY[b.id]?.sortOrder ?? 99)
+  );
 }
 
 type ClientPortfolioProps = {
@@ -89,73 +105,72 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
 
   return (
     <section id="clients">
-      <h2 className="text-lg font-semibold text-foreground">Your clients</h2>
-      <p className="mt-1 text-sm text-muted">
-        Bay of Plenty homeowners in your Sanctury network.
-      </p>
-      <ul className="mt-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <h2 className="text-2xl font-bold text-foreground">Your clients</h2>
+        <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+          {ATTENTION_COUNT} need attention
+        </span>
+      </div>
+
+      <ul className="mt-5">
         {sorted.map((client) => {
-          const alert = getPrimaryAlert(client.name);
-          const tier = getClientTier(alert);
-          const showAlert = tier !== "none" && alert;
+          const display = CLIENT_DISPLAY[client.id];
+          if (!display) return null;
 
           return (
             <li
               key={client.id}
               onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
-              className={`mb-2 cursor-pointer rounded-xl p-4 shadow-sm transition-shadow hover:shadow-md ${ROW_STYLES[tier]}`}
+              className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md ${display.rowClass}`}
             >
-              <div className="flex flex-wrap items-center gap-4 lg:flex-nowrap">
-                <div className="flex min-w-0 flex-1 items-center gap-3 sm:min-w-[240px]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#2E8B57] text-sm font-bold text-white">
-                    {getInitials(client.name)}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[15px] font-bold text-[#0A0A0A]">
-                      {client.name}
-                    </p>
-                    <p className="truncate text-[13px] text-[#525252]">
-                      {client.address}
-                    </p>
-                  </div>
-                </div>
+              <img
+                src={`https://i.pravatar.cc/48?img=${display.avatarImg}`}
+                alt=""
+                className="h-12 w-12 shrink-0 rounded-full object-cover"
+              />
 
-                <div className="flex min-w-[160px] flex-1 items-center justify-center">
-                  {showAlert && (
-                    <span
-                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${BADGE_STYLES[tier]}`}
-                    >
-                      {getAlertBadgeLabel(alert, client)}
-                    </span>
-                  )}
-                </div>
+              <p className="w-36 shrink-0 text-base font-bold text-foreground">
+                {client.name}
+              </p>
 
-                <div className="ml-auto flex flex-wrap items-center gap-4">
-                  <span className="text-sm text-[#525252]">
-                    {formatCurrency(client.estimatedValue)}
-                  </span>
+              <p className="min-w-0 flex-1 text-sm text-[#525252]">
+                {display.whatsHappening}
+              </p>
+
+              <div className="ml-auto flex shrink-0 items-center gap-3">
+                {display.urgencyBadge && (
                   <span
-                    className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[client.healthCheckStatus]}`}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${display.urgencyBadge.className}`}
                   >
-                    {client.healthCheckStatus}
+                    {display.urgencyBadge.label}
                   </span>
-                  {showAlert && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onMessage(alert.id);
-                      }}
-                      className={
-                        tier === "update"
-                          ? "rounded-full border border-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-[#2E8B57] transition-colors hover:bg-[#2E8B57]/5"
-                          : "rounded-full bg-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#267349]"
-                      }
-                    >
-                      Message →
-                    </button>
-                  )}
-                </div>
+                )}
+
+                {display.action?.type === "message" && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onMessage(display.action.alertId);
+                    }}
+                    className="rounded-full bg-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#267349]"
+                  >
+                    Message →
+                  </button>
+                )}
+
+                {display.action?.type === "view" && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/agent/dashboard/clients/${client.id}`);
+                    }}
+                    className="rounded-full border border-[#2E8B57] px-4 py-1.5 text-xs font-semibold text-[#2E8B57] transition-colors hover:bg-[#2E8B57]/5"
+                  >
+                    View →
+                  </button>
+                )}
               </div>
             </li>
           );
