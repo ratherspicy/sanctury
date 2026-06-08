@@ -19,6 +19,17 @@ const URGENCY_LABELS = {
   new: "New",
 } as const;
 
+const LEAD_PHOTOS: Record<string, { src: string; alt: string }> = {
+  jane: {
+    src: "https://randomuser.me/api/portraits/women/50.jpg",
+    alt: "Jane Thompson",
+  },
+  michael: {
+    src: "https://randomuser.me/api/portraits/men/45.jpg",
+    alt: "Michael Brown",
+  },
+};
+
 const PARTNER_STATS_CONFIG = [
   {
     label: "Active leads",
@@ -202,30 +213,34 @@ export function PartnerDashboardView() {
                 const gapPercent = Math.round(
                   (lead.gap / lead.estimatedRebuild) * 100
                 );
+                const photo = LEAD_PHOTOS[lead.id];
 
                 return (
                   <li
                     key={lead.id}
-                    className={`card relative p-5 sm:p-6 ${
-                      lead.urgency === "urgent" ? "border-l-4 border-teal-500" : ""
-                    }`}
+                    className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm"
                   >
-                    <span className="absolute right-5 top-5 rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-500">
-                      Posted {lead.postedLabel}
-                    </span>
-                    <div className="pr-28">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-lg font-bold text-foreground">
-                          {lead.name}
-                        </h3>
-                        <span
-                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${URGENCY_STYLES[lead.urgency]}`}
-                        >
-                          {URGENCY_LABELS[lead.urgency]}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-sm text-muted">{lead.location}</p>
+                    <div className="flex items-center gap-4">
+                      {photo && (
+                        <img
+                          src={photo.src}
+                          alt={photo.alt}
+                          className="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                        />
+                      )}
+                      <h3 className="text-lg font-bold text-foreground">
+                        {lead.name}
+                      </h3>
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${URGENCY_STYLES[lead.urgency]}`}
+                      >
+                        {URGENCY_LABELS[lead.urgency]}
+                      </span>
+                      <span className="ml-auto text-xs text-gray-400">
+                        Posted {lead.postedLabel}
+                      </span>
                     </div>
+                    <p className="mt-1 text-sm text-muted">{lead.location}</p>
                     <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
                       <div>
                         <dt className="text-muted">Current cover</dt>
