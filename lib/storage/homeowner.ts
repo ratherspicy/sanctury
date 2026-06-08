@@ -1,12 +1,23 @@
+import type { HomeownerGoalId } from "../types/health-check";
+
 export const HOMEOWNER_CONTACT_KEY = "sanctury-homeowner-contact";
 
 export type HomeownerContact = {
   name: string;
   email: string;
+  goals?: HomeownerGoalId[];
 };
 
-export function saveHomeownerContact(name: string, email: string): void {
-  const payload: HomeownerContact = { name: name.trim(), email: email.trim() };
+export function saveHomeownerContact(
+  name: string,
+  email: string,
+  goals?: HomeownerGoalId[]
+): void {
+  const payload: HomeownerContact = {
+    name: name.trim(),
+    email: email.trim(),
+    ...(goals && goals.length > 0 ? { goals } : {}),
+  };
   sessionStorage.setItem(HOMEOWNER_CONTACT_KEY, JSON.stringify(payload));
 }
 

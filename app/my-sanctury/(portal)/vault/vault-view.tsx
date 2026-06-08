@@ -1,10 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import {
   MAINTENANCE_EVENTS,
   VAULT_DOCUMENTS,
   VAULT_STATS,
   type DocumentCategory,
   type MaintenanceCategory,
+  type VaultDocument,
 } from "@/lib/my-sanctury/vault-data";
+import { DocumentModal } from "./document-modal";
 
 function PdfIcon() {
   return (
@@ -55,8 +60,16 @@ function maintenanceBadgeClass(category: MaintenanceCategory): string {
 }
 
 export function VaultView() {
+  const [openDocument, setOpenDocument] = useState<VaultDocument | null>(null);
+
   return (
     <div className="mx-auto max-w-3xl space-y-10 px-4 py-6 sm:px-6">
+      {openDocument && (
+        <DocumentModal
+          vaultDocument={openDocument}
+          onClose={() => setOpenDocument(null)}
+        />
+      )}
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
@@ -128,7 +141,11 @@ export function VaultView() {
                 >
                   {doc.category}
                 </span>
-                <button type="button" className="btn-ghost h-8 px-3 text-xs">
+                <button
+                  type="button"
+                  className="btn-ghost h-8 px-3 text-xs"
+                  onClick={() => setOpenDocument(doc)}
+                >
                   View
                 </button>
               </div>

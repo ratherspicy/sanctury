@@ -6,8 +6,12 @@ import { useState } from "react";
 import { saveHealthCheckAndReport } from "@/lib/storage/health-check";
 import { saveHomeownerContact } from "@/lib/storage/homeowner";
 import { getAuthCallbackUrl } from "@/lib/auth/auth-callback-url";
-import type { FeatureKey, HealthCheckFormData } from "@/lib/types/health-check";
-import { PROPERTY_FEATURES } from "@/lib/types/health-check";
+import type {
+  FeatureKey,
+  HealthCheckFormData,
+  HomeownerGoalId,
+} from "@/lib/types/health-check";
+import { HOMEOWNER_GOAL_OPTIONS, PROPERTY_FEATURES } from "@/lib/types/health-check";
 import { AddressAutocomplete } from "./address-autocomplete";
 import { FormattedNumberInput } from "./formatted-number-input";
 import {
@@ -22,6 +26,7 @@ const STEPS = [
   { id: 2, label: "Insurance Details" },
   { id: 3, label: "Mortgage Details" },
   { id: 4, label: "Your report" },
+  { id: 5, label: "Goals & Aspirations" },
 ] as const;
 
 const inputClassName =
@@ -58,6 +63,8 @@ export function HomeHealthCheckForm() {
   const [regionAutoSet, setRegionAutoSet] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [selectedGoals, setSelectedGoals] = useState<HomeownerGoalId[]>([]);
+  const [goalsError, setGoalsError] = useState("");
   const [leadError, setLeadError] = useState("");
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
@@ -82,6 +89,15 @@ export function HomeHealthCheckForm() {
     }));
   };
 
+  const toggleGoal = (goalId: HomeownerGoalId) => {
+    setGoalsError("");
+    setSelectedGoals((prev) =>
+      prev.includes(goalId)
+        ? prev.filter((id) => id !== goalId)
+        : [...prev, goalId]
+    );
+  };
+
   const goNext = () => {
     if (step === 3) {
       if (
@@ -102,7 +118,13 @@ export function HomeHealthCheckForm() {
   };
 
   const submitLeadAndViewReport = async () => {
+    if (selectedGoals.length === 0) {
+      setGoalsError("Select at least one option to continue.");
+      return;
+    }
+
     setLeadError("");
+    setGoalsError("");
     setIsSubmittingLead(true);
 
     try {
@@ -130,7 +152,7 @@ export function HomeHealthCheckForm() {
         }),
       });
 
-      saveHomeownerContact(fullName, email);
+      saveHomeownerContact(fullName, email, selectedGoals);
       router.push("/report");
     } catch {
       setLeadError("Something went wrong. Please try again.");
@@ -141,6 +163,7 @@ export function HomeHealthCheckForm() {
 
   const goBack = () => {
     setLoanSplitError("");
+    setGoalsError("");
     setStep((s) => Math.max(1, s - 1));
   };
 
@@ -188,7 +211,7 @@ export function HomeHealthCheckForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (step === 4) {
+          if (step === 5) {
             submitLeadAndViewReport();
           } else {
             goNext();
@@ -499,6 +522,58 @@ export function HomeHealthCheckForm() {
           </fieldset>
         )}
 
+        {step === 5 && (
+          <fieldset className="space-y-6">
+            <legend className="sr-only">Goals &amp; Aspirations</legend>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
+                What matters most to you right now?
+              </h2>
+              <p className="mt-2 text-muted">
+                Choose everything that applies — we&apos;ll use this to
+                personalise your report and dashboard.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {HOMEOWNER_GOAL_OPTIONS.map((goal) => (
+                <label
+                  key={goal.id}
+                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 transition-colors has-checked:border-violet has-checked:bg-violet-light"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedGoals.includes(goal.id)}
+                    onChange={() => toggleGoal(goal.id)}
+                    disabled={isSubmittingLead}
+                    className="h-4 w-4 rounded border-border text-violet focus:ring-violet/30"
+                  />
+                  <span className="text-sm font-medium text-foreground">
+                    {goal.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+
+            <p className="text-sm leading-relaxed text-muted">
+              Your answers personalise your Sanctury experience. We use them to
+              surface the right information at the right time — nothing else.
+            </p>
+
+            {goalsError && (
+              <p className="text-sm font-medium text-danger" role="alert">
+                {goalsError}
+              </p>
+            )}
+
+            {leadError && (
+              <p className="text-sm font-medium text-danger" role="alert">
+                {leadError}
+              </p>
+            )}
+          </fieldset>
+        )}
+
         <div className="mt-10 flex flex-col-reverse gap-3 border-t border-border pt-8 sm:flex-row sm:justify-between">
           {step > 1 ? (
             <button
@@ -523,15 +598,17 @@ export function HomeHealthCheckForm() {
               disabled={isSubmittingLead}
               className="btn-violet h-12 px-8 text-base"
             >
-              {step === 4
+              {step === 5
                 ? isSubmittingLead
                   ? "Saving…"
                   : "See my report"
-                : step === 3
-                  ? "Complete check"
-                  : "Next"}
+                : step === 4
+                  ? "Continue"
+                  : step === 3
+                    ? "Complete check"
+                    : "Next"}
             </button>
-            {step === 4 && (
+            {step === 5 && (
               <p className="text-center text-xs text-muted sm:text-right">
                 We&apos;ll email a magic link for My Sanctury — no password
                 needed. No spam. Unsubscribe anytime.
