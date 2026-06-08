@@ -9,9 +9,8 @@ type ClientAction =
   | null;
 
 type ClientDisplay = {
-  avatarImg: number;
-  whatsHappening: string;
-  urgencyBadge: { label: string; className: string } | null;
+  alertBadge: { label: string; className: string } | null;
+  alertContext: string;
   rowClass: string;
   action: ClientAction;
   sortOrder: number;
@@ -19,65 +18,63 @@ type ClientDisplay = {
 
 const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "sarah-chen": {
-    avatarImg: 5,
-    whatsHappening: "Mortgage refix in 14 days — action needed",
-    urgencyBadge: { label: "14 days", className: "bg-red-100 text-red-700" },
+    alertBadge: { label: "Refix in 14 days", className: "bg-red-100 text-red-700" },
+    alertContext: "Contact before 22 June or rate rolls to variable",
     rowClass: "bg-red-50 border-l-4 border-red-500",
     action: { type: "message", alertId: "sarah-chen-refix" },
     sortOrder: 0,
   },
   "james-wilson": {
-    avatarImg: 8,
-    whatsHappening: "Insurance gap of $142,000 identified",
-    urgencyBadge: { label: "Attention", className: "bg-orange-100 text-orange-700" },
+    alertBadge: {
+      label: "Insurance gap $142,000",
+      className: "bg-orange-100 text-orange-700",
+    },
+    alertContext: "Rebuild cost exceeds current cover by $142k",
     rowClass: "bg-orange-50 border-l-4 border-orange-400",
     action: { type: "message", alertId: "james-wilson-insurance" },
     sortOrder: 1,
   },
   "michael-brown": {
-    avatarImg: 11,
-    whatsHappening: "Bright-line test expires in 90 days",
-    urgencyBadge: { label: "90 days", className: "bg-orange-100 text-orange-700" },
+    alertBadge: { label: "Bright-line in 90 days", className: "bg-orange-100 text-orange-700" },
+    alertContext: "Tax event approaching — flag to client",
     rowClass: "bg-orange-50 border-l-4 border-orange-400",
     action: { type: "message", alertId: "michael-brown-brightline" },
     sortOrder: 2,
   },
   "jane-smith": {
-    avatarImg: 15,
-    whatsHappening: "Health check complete — refix in 89 days",
-    urgencyBadge: { label: "89 days", className: "bg-yellow-100 text-yellow-700" },
+    alertBadge: { label: "Health check done", className: "bg-yellow-100 text-yellow-700" },
+    alertContext: "Refix due in 89 days — watch this one",
     rowClass: "bg-yellow-50 border-l-4 border-yellow-400",
     action: { type: "message", alertId: "jane-smith-completed" },
     sortOrder: 3,
   },
   "emma-thompson": {
-    avatarImg: 16,
-    whatsHappening: "Equity up $95,000 since purchase",
-    urgencyBadge: { label: "New", className: "bg-green-100 text-green-700" },
+    alertBadge: { label: "Equity up $95,000", className: "bg-green-100 text-green-700" },
+    alertContext: "Good time to discuss borrowing power",
     rowClass: "bg-green-50 border-l-4 border-green-400",
     action: { type: "message", alertId: "emma-thompson-equity" },
     sortOrder: 4,
   },
   "david-park": {
-    avatarImg: 13,
-    whatsHappening: "Health check in progress",
-    urgencyBadge: { label: "In progress", className: "bg-blue-100 text-blue-700" },
+    alertBadge: {
+      label: "Health check in progress",
+      className: "bg-blue-100 text-blue-700",
+    },
+    alertContext: "Awaiting client completion",
     rowClass: "bg-blue-50 border-l-4 border-blue-300",
     action: { type: "view" },
     sortOrder: 5,
   },
   "lisa-ngata": {
-    avatarImg: 20,
-    whatsHappening: "No current alerts",
-    urgencyBadge: null,
+    alertBadge: null,
+    alertContext: "No current alerts",
     rowClass: "bg-white border-l-4 border-transparent",
     action: null,
     sortOrder: 6,
   },
   "tom-harrison": {
-    avatarImg: 12,
-    whatsHappening: "Refix in 456 days",
-    urgencyBadge: null,
+    alertBadge: null,
+    alertContext: "Refix in 456 days",
     rowClass: "bg-white border-l-4 border-transparent",
     action: null,
     sortOrder: 7,
@@ -85,6 +82,37 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
 };
 
 const ATTENTION_COUNT = 3;
+
+function formatEstValue(amount: number): string {
+  if (amount >= 1_000_000) {
+    const millions = amount / 1_000_000;
+    const formatted =
+      millions % 1 === 0
+        ? `$${millions}m`
+        : `$${millions.toFixed(2).replace(/\.?0+$/, "")}m`;
+    return formatted;
+  }
+  return `$${Math.round(amount / 1000)}k`;
+}
+
+function getHealthCheckPill(status: ClientRow["healthCheckStatus"]) {
+  if (status === "Completed") {
+    return {
+      label: "✓ Health check done",
+      className: "bg-green-100 text-green-700",
+    };
+  }
+  if (status === "In progress") {
+    return {
+      label: "○ Health check in progress",
+      className: "bg-blue-100 text-blue-700",
+    };
+  }
+  return {
+    label: "○ No health check",
+    className: "bg-gray-100 text-gray-400",
+  };
+}
 
 function sortClients(clients: ClientRow[]): ClientRow[] {
   return [...clients].sort(
@@ -117,6 +145,8 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
           const display = CLIENT_DISPLAY[client.id];
           if (!display) return null;
 
+          const healthPill = getHealthCheckPill(client.healthCheckStatus);
+
           return (
             <li
               key={client.id}
@@ -124,28 +154,41 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
               className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-5 transition-shadow hover:shadow-md ${display.rowClass}`}
             >
               <img
-                src={`https://i.pravatar.cc/48?img=${display.avatarImg}`}
+                src={`/avatars/${client.id}.jpg`}
                 alt={client.name}
-                className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                className="h-14 w-14 shrink-0 rounded-full object-cover object-top"
               />
 
-              <p className="w-36 shrink-0 text-lg font-bold text-foreground">
-                {client.name}
-              </p>
-
-              <p className="min-w-0 flex-1 text-sm text-[#525252]">
-                {display.whatsHappening}
-              </p>
-
-              <div className="ml-auto flex shrink-0 items-center gap-3">
-                {display.urgencyBadge && (
+              <div className="flex min-w-0 flex-1 flex-col">
+                <p className="text-lg font-bold text-[#0A0A0A]">{client.name}</p>
+                <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    🏠 Est. {formatEstValue(client.estimatedValue)}
+                  </span>
                   <span
-                    className={`rounded-full px-3 py-1 text-sm font-semibold ${display.urgencyBadge.className}`}
+                    className={`rounded-full px-2 py-0.5 text-xs ${healthPill.className}`}
                   >
-                    {display.urgencyBadge.label}
+                    {healthPill.label}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex min-w-[200px] flex-col items-center text-center">
+                {display.alertBadge && (
+                  <span
+                    className={`rounded-full px-4 py-1.5 text-sm font-semibold ${display.alertBadge.className}`}
+                  >
+                    {display.alertBadge.label}
                   </span>
                 )}
+                <p
+                  className={`text-xs text-gray-500 ${display.alertBadge ? "mt-1" : ""}`}
+                >
+                  {display.alertContext}
+                </p>
+              </div>
 
+              <div className="shrink-0">
                 {display.action?.type === "message" && (
                   <button
                     type="button"
