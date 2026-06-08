@@ -68,6 +68,14 @@ const tools = [
   },
 ];
 
+const integrations = [
+  { name: "Tall Poppy Real Estate", dotClass: "bg-green-500" },
+  { name: "Relab Property Data", dotClass: "bg-blue-500" },
+  { name: "Addy Address Intelligence", dotClass: "bg-violet" },
+  { name: "IAG / State Insurance", dotClass: "bg-orange-500" },
+  { name: "Squirrel Mortgage Advisers", dotClass: "bg-teal-600" },
+] as const;
+
 export default function Home() {
   return (
     <div className="flex min-h-full flex-col bg-surface">
@@ -159,6 +167,45 @@ export default function Home() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-surface py-20 lg:py-24">
+          <div className="mx-auto max-w-6xl px-6 text-center lg:px-8">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Built to work with what you already use
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              Sanctury connects to the tools and data sources that power New
+              Zealand property.
+            </p>
+
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+              {integrations.map((integration) => (
+                <span
+                  key={integration.name}
+                  className="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-5 py-2.5"
+                >
+                  <span
+                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${integration.dotClass}`}
+                    aria-hidden
+                  />
+                  <span className="text-sm font-medium text-foreground">
+                    {integration.name}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            <p className="mt-8 text-[13px] text-muted">
+              More integrations coming. Want to connect your platform?{" "}
+              <a
+                href="/contact"
+                className="font-medium text-foreground transition-colors hover:text-violet"
+              >
+                Get in touch →
+              </a>
+            </p>
           </div>
         </section>
 
