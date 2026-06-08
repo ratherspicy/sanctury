@@ -60,6 +60,38 @@ export function DashboardView({ firstName }: DashboardViewProps) {
         </div>
       </section>
 
+      {/* Property Passport */}
+      <Link
+        href="/my-sanctury/vault"
+        className="card flex items-center gap-4 p-4 transition-colors hover:bg-bg-secondary sm:p-5"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-violet-light text-violet">
+          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
+            <path
+              d="M12 3L4 7v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V7l-8-4z"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9 12l2 2 4-4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-semibold text-foreground">Property Passport</p>
+          <p className="mt-0.5 text-xs text-muted">5 documents · 4 maintenance events</p>
+          <p className="mt-0.5 text-xs text-muted">Last updated 14 Mar 2024</p>
+        </div>
+        <span className="shrink-0 text-sm font-medium text-violet">
+          View passport →
+        </span>
+      </Link>
+
       {/* Active requests */}
       <section>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-3">Active requests</p>
