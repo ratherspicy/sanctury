@@ -16,6 +16,20 @@ type ClientDisplay = {
   sortOrder: number;
 };
 
+const CLIENT_AVATARS: Record<string, { src: string; alt: string }> = {
+  "sarah-chen": { src: "/avatars/sarah-chen.jpg", alt: "Sarah Chen" },
+  "james-wilson": { src: "/avatars/james-wilson.jpg", alt: "James Wilson" },
+  "emma-thompson": { src: "/avatars/emma-thompson.jpg", alt: "Emma Thompson" },
+  "michael-brown": { src: "/avatars/michael-brown.jpg", alt: "Michael Brown" },
+  "jane-smith": { src: "/avatars/jane-smith.jpg", alt: "Jane Smith" },
+  "david-park": { src: "/avatars/david-park.jpg", alt: "David Park" },
+  "lisa-ngata": { src: "/avatars/lisa-ngata.jpg", alt: "Lisa Ngata" },
+  "tom-harrison": { src: "/avatars/tom-harrison.jpg", alt: "Tom Harrison" },
+};
+
+const AVATAR_CLASS =
+  "w-14 h-14 rounded-full object-cover object-top flex-shrink-0";
+
 const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "sarah-chen": {
     alertBadge: { label: "Refix in 14 days", className: "bg-red-100 text-red-700" },
@@ -143,7 +157,8 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
       <ul className="mt-5">
         {sorted.map((client) => {
           const display = CLIENT_DISPLAY[client.id];
-          if (!display) return null;
+          const avatar = CLIENT_AVATARS[client.id];
+          if (!display || !avatar) return null;
 
           const healthPill = getHealthCheckPill(client.healthCheckStatus);
 
@@ -153,11 +168,7 @@ export function ClientPortfolio({ clients, onMessage }: ClientPortfolioProps) {
               onClick={() => router.push(`/agent/dashboard/clients/${client.id}`)}
               className={`mb-2 flex cursor-pointer items-center gap-4 rounded-xl p-5 transition-shadow hover:shadow-md ${display.rowClass}`}
             >
-              <img
-                src={`/avatars/${client.id}.jpg`}
-                alt={client.name}
-                className="h-14 w-14 shrink-0 rounded-full object-cover object-top"
-              />
+              <img src={avatar.src} alt={avatar.alt} className={AVATAR_CLASS} />
 
               <div className="flex min-w-0 flex-1 flex-col">
                 <p className="text-lg font-bold text-[#0A0A0A]">{client.name}</p>
