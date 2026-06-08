@@ -96,7 +96,7 @@ export default function AgentsPage() {
           <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-10 px-8 text-center lg:gap-16">
             {stats.map((stat) => (
               <div key={stat.value}>
-                <p className="text-5xl font-black text-white">
+                <p className="text-5xl font-black text-[#22C55E]">
                   {stat.value}
                 </p>
                 <p className="mt-1 text-sm text-white/70">{stat.label}</p>
