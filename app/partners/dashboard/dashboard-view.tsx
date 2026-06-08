@@ -21,11 +21,11 @@ const URGENCY_LABELS = {
 
 const LEAD_PHOTOS: Record<string, { src: string; alt: string }> = {
   jane: {
-    src: "https://randomuser.me/api/portraits/women/50.jpg",
+    src: "/avatars/jane-thompson.jpg",
     alt: "Jane Thompson",
   },
   michael: {
-    src: "https://randomuser.me/api/portraits/men/45.jpg",
+    src: "/avatars/michael-brown.jpg",
     alt: "Michael Brown",
   },
 };
@@ -225,7 +225,7 @@ export function PartnerDashboardView() {
                         <img
                           src={photo.src}
                           alt={photo.alt}
-                          className="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                          className="w-14 h-14 rounded-full object-cover object-top flex-shrink-0"
                         />
                       )}
                       <h3 className="text-lg font-bold text-foreground">
