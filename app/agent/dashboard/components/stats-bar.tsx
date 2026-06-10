@@ -25,7 +25,7 @@ const STATS = [
     label: "Health checks completed",
     value: String(AGENT_STATS.healthChecksCompleted),
     accent: false,
-    cardClass: "border-l-4 border-blue-500 bg-blue-50",
+    cardClass: "border-l-4 border-[#3CB371] bg-blue-50",
     iconBg: "bg-blue-50",
     iconColor: "text-blue-500",
     icon: (
@@ -45,7 +45,7 @@ const STATS = [
     label: "Marketplace referrals generated",
     value: String(AGENT_STATS.marketplaceReferrals),
     accent: false,
-    cardClass: "border-l-4 border-purple-500 bg-purple-50",
+    cardClass: "border-l-4 border-[#3CB371] bg-purple-50",
     iconBg: "bg-purple-50",
     iconColor: "text-purple-500",
     icon: (

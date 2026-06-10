@@ -30,11 +30,16 @@ const CLIENT_AVATARS: Record<string, { src: string; alt: string }> = {
 const AVATAR_CLASS =
   "w-14 h-14 rounded-full object-cover object-top flex-shrink-0";
 
+const ROW_URGENT =
+  "bg-white border border-gray-100 border-l-4 border-l-[#DC2626]";
+const ROW_DEFAULT =
+  "bg-white border border-gray-100 border-l-4 border-l-[#3CB371]";
+
 const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "sarah-chen": {
     alertBadge: { label: "Refix in 14 days", className: "bg-red-100 text-red-700" },
     alertContext: "Contact before 22 June or rate rolls to variable",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-red-500",
+    rowClass: ROW_URGENT,
     action: { type: "message", alertId: "sarah-chen-refix" },
     sortOrder: 0,
   },
@@ -44,28 +49,28 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
       className: "bg-orange-100 text-orange-700",
     },
     alertContext: "Rebuild cost exceeds current cover by $142k",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-orange-400",
+    rowClass: ROW_URGENT,
     action: { type: "message", alertId: "james-wilson-insurance" },
     sortOrder: 1,
   },
   "michael-brown": {
     alertBadge: { label: "Bright-line in 90 days", className: "bg-orange-100 text-orange-700" },
     alertContext: "Tax event approaching — flag to client",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-orange-400",
+    rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "michael-brown-brightline" },
     sortOrder: 2,
   },
   "jane-smith": {
     alertBadge: { label: "Health check done", className: "bg-yellow-100 text-yellow-700" },
     alertContext: "Refix due in 89 days — watch this one",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-yellow-400",
+    rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "jane-smith-completed" },
     sortOrder: 3,
   },
   "emma-thompson": {
     alertBadge: { label: "Equity up $95,000", className: "bg-green-100 text-green-700" },
     alertContext: "Good time to discuss borrowing power",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-green-400",
+    rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "emma-thompson-equity" },
     sortOrder: 4,
   },
@@ -75,21 +80,21 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
       className: "bg-blue-100 text-blue-700",
     },
     alertContext: "Awaiting client completion",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-blue-300",
+    rowClass: ROW_DEFAULT,
     action: { type: "view" },
     sortOrder: 5,
   },
   "lisa-ngata": {
     alertBadge: null,
     alertContext: "No current alerts",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-transparent",
+    rowClass: ROW_DEFAULT,
     action: null,
     sortOrder: 6,
   },
   "tom-harrison": {
     alertBadge: null,
     alertContext: "Refix in 456 days",
-    rowClass: "bg-white border border-gray-100 border-l-4 border-l-transparent",
+    rowClass: ROW_DEFAULT,
     action: null,
     sortOrder: 7,
   },
