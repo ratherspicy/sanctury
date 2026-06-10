@@ -35,9 +35,12 @@ const ROW_URGENT =
 const ROW_DEFAULT =
   "bg-white border border-gray-100 border-l-4 border-l-[#3CB371]";
 
+const BADGE_URGENT = "bg-[#FEE2E2] text-[#DC2626]";
+const BADGE_NEUTRAL = "bg-[#F3F4F6] text-[#374151]";
+
 const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "sarah-chen": {
-    alertBadge: { label: "Refix in 14 days", className: "bg-red-100 text-red-700" },
+    alertBadge: { label: "Refix in 14 days", className: BADGE_URGENT },
     alertContext: "Contact before 22 June or rate rolls to variable",
     rowClass: ROW_URGENT,
     action: { type: "message", alertId: "sarah-chen-refix" },
@@ -46,7 +49,7 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "james-wilson": {
     alertBadge: {
       label: "Insurance gap $142,000",
-      className: "bg-orange-100 text-orange-700",
+      className: BADGE_URGENT,
     },
     alertContext: "Rebuild cost exceeds current cover by $142k",
     rowClass: ROW_URGENT,
@@ -54,21 +57,21 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
     sortOrder: 1,
   },
   "michael-brown": {
-    alertBadge: { label: "Bright-line in 90 days", className: "bg-orange-100 text-orange-700" },
+    alertBadge: { label: "Bright-line in 90 days", className: BADGE_URGENT },
     alertContext: "Tax event approaching — flag to client",
     rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "michael-brown-brightline" },
     sortOrder: 2,
   },
   "jane-smith": {
-    alertBadge: { label: "Health check done", className: "bg-yellow-100 text-yellow-700" },
+    alertBadge: { label: "Health check done", className: BADGE_NEUTRAL },
     alertContext: "Refix due in 89 days — watch this one",
     rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "jane-smith-completed" },
     sortOrder: 3,
   },
   "emma-thompson": {
-    alertBadge: { label: "Equity up $95,000", className: "bg-green-100 text-green-700" },
+    alertBadge: { label: "Equity up $95,000", className: BADGE_NEUTRAL },
     alertContext: "Good time to discuss borrowing power",
     rowClass: ROW_DEFAULT,
     action: { type: "message", alertId: "emma-thompson-equity" },
@@ -77,7 +80,7 @@ const CLIENT_DISPLAY: Record<string, ClientDisplay> = {
   "david-park": {
     alertBadge: {
       label: "Health check in progress",
-      className: "bg-blue-100 text-blue-700",
+      className: BADGE_NEUTRAL,
     },
     alertContext: "Awaiting client completion",
     rowClass: ROW_DEFAULT,
