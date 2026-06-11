@@ -47,8 +47,8 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     reviewCount: 127,
     insurer: "Tower",
     policyName: "Tower Home and Contents",
-    sumInsured: 680000,
-    monthlyPremium: 198,
+    sumInsured: 1064000,
+    monthlyPremium: 241,
     excess: 500,
     highlights: [
       { label: "Full rebuild cover", included: true },
@@ -75,7 +75,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
       "Commercial use of home without disclosure",
     ],
     getPersonalNote: (gap, region) =>
-      `I've recommended Tower Home and Contents because it closes your ${formatCurrency(gap)} coverage gap with a sum insured of $680,000 — well above your current level and aligned with rebuild costs in ${region}. Tower's package is straightforward for homeowners who want solid core cover without paying for premium extras they won't use. This is the option I'd choose for my own clients in your situation.`,
+      `I've recommended Tower Home and Contents because it closes your ${formatCurrency(gap)} coverage gap with a sum insured of $1,064,000 — fully covering your estimated rebuild cost in ${region}. Tower's package is straightforward for homeowners who want solid core cover without paying for premium extras they won't use. This is the option I'd choose for my own clients in your situation.`,
   },
   {
     id: "james-tauroa",
@@ -90,8 +90,8 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     reviewCount: 203,
     insurer: "Vero",
     policyName: "Vero Premier Home",
-    sumInsured: 695000,
-    monthlyPremium: 215,
+    sumInsured: 1150000,
+    monthlyPremium: 268,
     excess: 400,
     highlights: [
       { label: "Full rebuild cover", included: true },
@@ -118,7 +118,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
       "Wear and tear",
     ],
     getPersonalNote: (gap, region, address) =>
-      `Vero Premier Home offers the highest sum insured in your comparison at $695,000. I've priced this deliberately above the estimated rebuild figure because ${region} properties like yours at ${address} benefit from a buffer — building cost blowouts during a claim are common, and being underinsured at claim time is far costlier than a slightly higher premium today. You're closing a ${formatCurrency(gap)} gap with room to spare. Premier also adds higher liability limits and extended temporary accommodation.`,
+      `Vero Premier Home offers the highest sum insured in your comparison at $1,150,000. I've priced this deliberately above the estimated rebuild figure because ${region} properties like yours at ${address} benefit from a buffer — building cost blowouts during a claim are common, and being underinsured at claim time is far costlier than a slightly higher premium today. You're closing a ${formatCurrency(gap)} gap with room to spare. Premier also adds higher liability limits and extended temporary accommodation.`,
   },
   {
     id: "rachel-chen",
@@ -133,8 +133,8 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     reviewCount: 89,
     insurer: "AMI",
     policyName: "AMI Home Insurance",
-    sumInsured: 670000,
-    monthlyPremium: 187,
+    sumInsured: 1065000,
+    monthlyPremium: 232,
     excess: 750,
     highlights: [
       { label: "Full rebuild cover", included: true },
@@ -161,7 +161,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
       "Home office over 50% of floor area without endorsement",
     ],
     getPersonalNote: (gap, region) =>
-      `AMI Home Insurance is my value recommendation: at $187 per month it's the most competitive premium here while still addressing your ${formatCurrency(gap)} shortfall with a $670,000 sum insured. For homeowners in ${region} who want dependable cover without overpaying for premium-tier extras, AMI consistently delivers. The trade-off is a higher standard excess ($750), which suits most clients who prefer lower ongoing costs.`,
+      `AMI Home Insurance is my value recommendation: at $232 per month it's the most competitive premium here while still closing your ${formatCurrency(gap)} shortfall with a $1,065,000 sum insured — above your estimated rebuild cost. For homeowners in ${region} who want dependable cover without overpaying for premium-tier extras, AMI consistently delivers. The trade-off is a higher standard excess ($750), which suits most clients who prefer lower ongoing costs.`,
   },
 ];
 

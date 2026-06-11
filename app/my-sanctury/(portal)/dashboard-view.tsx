@@ -204,7 +204,7 @@ export function DashboardView({ firstName: _firstName }: DashboardViewProps) {
                       Sarah Mitchell · Eves Insurance Tauranga
                     </p>
                     <p className="mt-0.5 text-xs text-muted">
-                      $1,064,000 cover · $2,890/yr · $1,000 excess
+                      $1,064,000 cover · $2,892/yr · $1,000 excess
                     </p>
                     <Link
                       href="/marketplace/insurance/proposals"
