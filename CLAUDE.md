@@ -10,7 +10,7 @@ Sanctury is a NZ property intelligence platform. It gives homeowners a free home
 
 ## CRITICAL RULES — NEVER BREAK THESE
 
-1. **Never change the demo seed data.** Property is 14 Cameron Road, Tauranga. Cover $600K. Rebuild $1,063,290. Gap $163,290. Mortgage $480K. These numbers appear in multiple places — if you change one, you must change all. Safest: don't change any.
+1. **Never change the demo seed data.** Property is 14 Cameron Road, Tauranga. Cover $900K. Rebuild $1,063,290. Gap $163,290. Mortgage $480K. These numbers appear in multiple places — if you change one, you must change all. Safest: don't change any. (Cover corrected from $600K on 12 June 2026 — $900K is the only value where rebuild − cover = gap.)
 2. **Always git commit after every session.** `git add -A && git commit -m "description" && git push`. No exceptions.
 3. **TypeScript is strict.** Vercel will reject the build on type errors. Always check types before pushing. Fix type errors before committing.
 4. **Never manually edit files** unless using `sed` for a targeted single-line fix. Use Cursor or Claude Code for all code changes.

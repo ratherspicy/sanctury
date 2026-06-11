@@ -283,7 +283,7 @@ function DocumentBody({ documentId }: { documentId: string }) {
           </DocSection>
 
           <DocSection title="Sum insured (house)">
-            <p>$600,000</p>
+            <p>$900,000</p>
           </DocSection>
 
           <DocSection title="Sum insured (contents)">
