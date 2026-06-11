@@ -184,6 +184,7 @@ export default function Home() {
                 src="/images/lifestyle.jpg"
                 alt="Homeowner reviewing their property on a laptop at home"
                 fill
+                priority
                 className="rounded-2xl object-cover shadow-xl"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
@@ -369,7 +370,7 @@ export default function Home() {
                 <p className="text-sm font-semibold text-foreground">Company</p>
                 <ul className="mt-4 space-y-3 text-sm text-muted">
                   <li>
-                    <a href="#about" className="hover:text-violet">
+                    <a href="/about" className="hover:text-violet">
                       About
                     </a>
                   </li>

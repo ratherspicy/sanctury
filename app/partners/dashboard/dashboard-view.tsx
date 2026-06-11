@@ -28,7 +28,7 @@ const LEAD_PHOTOS: Record<string, { src: string; alt: string }> = {
     alt: "Jane Thompson",
   },
   michael: {
-    src: "https://randomuser.me/api/portraits/men/45.jpg",
+    src: "/avatars/michael-brown.jpg",
     alt: "Michael Brown",
   },
 };

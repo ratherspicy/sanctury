@@ -41,8 +41,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     title: "Independent Insurance Adviser",
     region: "Bay of Plenty",
     initials: "SM",
-    photo:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=face",
+    photo: "/avatars/sarah-mitchell.jpg",
     responseTime: "Responded in 42 minutes",
     rating: 4.9,
     reviewCount: 127,
@@ -85,8 +84,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     title: "Senior Insurance Broker",
     region: "Auckland",
     initials: "JT",
-    photo:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face",
+    photo: "/avatars/james-tauroa.jpg",
     responseTime: "Responded in 1 hour 15 minutes",
     rating: 4.8,
     reviewCount: 203,
@@ -129,8 +127,7 @@ export const INSURANCE_QUOTES: InsuranceQuote[] = [
     title: "Insurance Adviser",
     region: "Wellington",
     initials: "RC",
-    photo:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=face",
+    photo: "/avatars/rachel-chen.jpg",
     responseTime: "Responded in 58 minutes",
     rating: 4.9,
     reviewCount: 89,

@@ -127,6 +127,8 @@ export function HomeHealthCheckForm() {
     setGoalsError("");
     setIsSubmittingLead(true);
 
+    // Lead capture and magic link are best-effort — the homeowner always
+    // gets their report, even if Supabase is paused or unreachable.
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -134,31 +136,27 @@ export function HomeHealthCheckForm() {
         body: JSON.stringify({ name: fullName, email }),
       });
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setLeadError(
-          data.error ?? "Something went wrong. Please try again."
-        );
-        return;
+      if (res.ok) {
+        await fetch("/api/auth/magic-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.trim().toLowerCase(),
+            fullName,
+            redirectTo: getAuthCallbackUrl(window.location.origin),
+          }),
+        }).catch(() => {});
+      } else {
+        console.error("Lead save failed:", res.status);
       }
-
-      await fetch("/api/auth/magic-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          fullName,
-          redirectTo: getAuthCallbackUrl(window.location.origin),
-        }),
-      });
-
-      saveHomeownerContact(fullName, email, selectedGoals);
-      router.push("/report");
-    } catch {
-      setLeadError("Something went wrong. Please try again.");
+    } catch (err) {
+      console.error("Lead save failed:", err);
     } finally {
       setIsSubmittingLead(false);
     }
+
+    saveHomeownerContact(fullName, email, selectedGoals);
+    router.push("/report");
   };
 
   const goBack = () => {

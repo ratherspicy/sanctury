@@ -167,3 +167,8 @@ grep -n "search term" path/to/file.tsx
 - GitHub: https://github.com/ratherspicy/sanctury
 - Supabase: https://nfzesfwumjzkaigvnenc.supabase.co
 - Vercel dashboard: https://vercel.com
+### Next.js 16 JSX space-eating bug
+Next 16 eats spaces after inline JSX expressions at build time.
+"136days" and "Mitchellwithin" are symptoms of this.
+Always use explicit {" "} between inline expressions — never rely on source whitespace.
+Check rendered text on Vercel, not just source code.
