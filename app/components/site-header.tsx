@@ -7,7 +7,7 @@ type SiteHeaderProps = {
 export function SiteHeader({ minimal = false }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-surface">
-      <nav className="mx-auto grid h-16 max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-8">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:grid md:grid-cols-[1fr_auto_1fr] lg:px-8">
         <a href="/" aria-label="Sanctury home" className="justify-self-start">
           <SancturyLogo />
         </a>

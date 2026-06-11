@@ -31,13 +31,17 @@ export function MaintenanceTimelineChart({
         Maintenance milestones by property age
       </p>
 
-      <div className="min-w-[280px]">
-        {/* Axis */}
-        <div className="relative mb-2 h-2 rounded-full bg-border">
-          {/* Property age marker */}
+      <div>
+        {/* Axis — top margin reserves room for the property age pill */}
+        <div className="relative mb-2 mt-10 h-2 rounded-full bg-border">
+          {/* Property age marker — bottom-anchored so the diamond sits on the axis */}
           <div
-            className="absolute top-1/2 z-10 -translate-y-1/2"
-            style={{ left: `${agePosition}%`, transform: "translate(-50%, -50%)" }}
+            className="absolute z-10"
+            style={{
+              left: `${agePosition}%`,
+              top: "50%",
+              transform: "translate(-50%, calc(-100% + 8px))",
+            }}
           >
             <div className="flex flex-col items-center">
               <span className="mb-1 whitespace-nowrap rounded-lg bg-violet px-2 py-0.5 text-xs font-semibold text-white">

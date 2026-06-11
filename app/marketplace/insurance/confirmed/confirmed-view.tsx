@@ -129,8 +129,8 @@ export function InsuranceConfirmedView() {
 
       <div className="rounded-xl border border-border bg-bg-secondary px-5 py-4">
         <p className="text-sm leading-relaxed text-foreground">
-          <span className="font-semibold">The Sanctury promise:</span> if you
-          haven&apos;t heard from {adviser.name} within 24 hours, we&apos;ll
+          <span className="font-semibold">The Sanctury promise:</span>{" "}if you
+          haven&apos;t heard from {adviser.name}{" "}within 24 hours, we&apos;ll
           follow up on your behalf to make sure you&apos;re taken care of.
         </p>
       </div>

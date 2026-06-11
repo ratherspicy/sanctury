@@ -172,29 +172,32 @@ export function MortgagePayoffTimeline({
   return (
     <div className="w-full">
       <p className="mb-3 text-sm font-medium text-muted">Loan paid off</p>
-      <div className="relative pt-8 pb-2">
-        <div className="h-3 rounded-full bg-border" />
-        {/* Current marker */}
-        <div
-          className="absolute top-0 flex flex-col items-center"
-          style={{ left: `${currentPos}%`, transform: "translateX(-50%)" }}
-        >
-          <span className="mb-1 whitespace-nowrap text-xs font-medium text-muted">
-            Current · {currentPayoffYears} yrs
-          </span>
-          <span className="h-5 w-5 rounded-full border-2 border-surface bg-border" />
-        </div>
-        {/* Restructured marker */}
-        <div
-          className="absolute top-0 flex flex-col items-center"
+      <div className="relative pt-14 pb-2">
+        {/* Labels sit in two rows so they never collide on narrow screens */}
+        <span
+          className="absolute top-0 whitespace-nowrap text-xs font-semibold text-violet"
           style={{ left: `${restructuredPos}%`, transform: "translateX(-50%)" }}
         >
-          <span className="mb-1 whitespace-nowrap text-xs font-semibold text-violet">
-            Restructured · {restructuredPayoffYears} yrs
-          </span>
+          Restructured · {restructuredPayoffYears} yrs
+        </span>
+        <span
+          className="absolute top-[22px] whitespace-nowrap text-xs font-medium text-muted"
+          style={{ left: `${currentPos}%`, transform: "translateX(-50%)" }}
+        >
+          Current · {currentPayoffYears} yrs
+        </span>
+        <div className="relative h-3 rounded-full bg-border">
           <span
-            className="h-5 w-5 rounded-full border-2 border-surface"
-            style={{ backgroundColor: CHART_COLORS.restructured }}
+            className="absolute top-1/2 h-5 w-5 rounded-full border-2 border-surface bg-border"
+            style={{ left: `${currentPos}%`, transform: "translate(-50%, -50%)" }}
+          />
+          <span
+            className="absolute top-1/2 h-5 w-5 rounded-full border-2 border-surface"
+            style={{
+              left: `${restructuredPos}%`,
+              transform: "translate(-50%, -50%)",
+              backgroundColor: CHART_COLORS.restructured,
+            }}
           />
         </div>
       </div>
