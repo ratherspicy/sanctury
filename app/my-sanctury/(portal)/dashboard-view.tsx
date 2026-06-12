@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatCurrency } from "@/lib/format";
 import { seedDemoDataIfEmpty } from "@/lib/storage/demo-seed";
 import {
   FINANCES,
   HANDOVER,
   HOME_HEALTH_SCORE,
+  HOUSEHOLD,
   PROPERTY,
   PROPERTY_PHOTOS,
 } from "@/lib/my-sanctury/handover-data";
@@ -105,7 +106,7 @@ const QUICK_NAV = [
   {
     label: "Marketplace",
     description: "Advisers and services",
-    href: "/marketplace/insurance",
+    href: "/my-sanctury/marketplace",
     icon: (
       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
         <path
@@ -157,6 +158,8 @@ const DETAIL_CHIPS = [
 ];
 
 export function DashboardView({ firstName }: DashboardViewProps) {
+  const [householdOpen, setHouseholdOpen] = useState(false);
+
   useEffect(() => {
     seedDemoDataIfEmpty();
   }, []);
@@ -224,6 +227,50 @@ export function DashboardView({ firstName }: DashboardViewProps) {
           </div>
         </section>
 
+        {/* Homeowner profile bar */}
+        <section
+          aria-label="Household profile"
+          className="card flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="flex shrink-0 -space-x-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HOUSEHOLD.photos.jane}
+                alt="Jane Thompson"
+                className="h-12 w-12 rounded-full border-2 border-surface object-cover"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HOUSEHOLD.photos.david}
+                alt="David Thompson"
+                className="h-12 w-12 rounded-full border-2 border-surface object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-foreground">
+                {HOUSEHOLD.displayName}
+              </p>
+              <p className="mt-0.5 text-xs text-muted">
+                {HOUSEHOLD.occupancyLabel}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 border-t border-border pt-3 text-xs text-muted sm:border-t-0 sm:pt-0 sm:text-right">
+            <p className="flex items-center gap-1.5 sm:justify-end">
+              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
+                <path
+                  d="M16 19v-1a4 4 0 00-4-4H6a4 4 0 00-4 4v1m20 0v-1a4 4 0 00-3-3.87M15 3.13a4 4 0 010 7.75M12 7a3 3 0 11-6 0 3 3 0 016 0z"
+                  {...strokeProps}
+                />
+              </svg>
+              {HOUSEHOLD.familyLabel}
+            </p>
+            <p>{HOUSEHOLD.kidsLabel}</p>
+            <p>{HOUSEHOLD.tenureLabel}</p>
+          </div>
+        </section>
+
         {/* Home health score */}
         <section className="card flex flex-col items-center gap-5 p-6 sm:flex-row sm:gap-10 sm:p-8">
           <ScoreRing score={HOME_HEALTH_SCORE.overall} />
@@ -282,6 +329,82 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                 </p>
               </Link>
             ))}
+          </div>
+        </section>
+
+        {/* Your household */}
+        <section aria-label="Your household" className="card p-4 sm:p-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-bold text-foreground">
+              Your household
+            </h2>
+            <button
+              type="button"
+              onClick={() => setHouseholdOpen((s) => !s)}
+              aria-expanded={householdOpen}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-bg-secondary md:hidden"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                className={`h-4 w-4 transition-transform ${householdOpen ? "rotate-180" : ""}`}
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M4 6l4 4 4-4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className={`${householdOpen ? "block" : "hidden"} md:block`}>
+            <ul className="mt-3 divide-y divide-border">
+              {HOUSEHOLD.members.map((member) => (
+                <li
+                  key={member.name}
+                  className="flex items-center justify-between gap-3 py-2.5"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-foreground">
+                      {member.name}
+                    </p>
+                    <p className="text-xs text-muted">
+                      {member.role}
+                      {member.detail ? ` · ${member.detail}` : ""}
+                    </p>
+                  </div>
+                </li>
+              ))}
+              <li className="flex items-center justify-between gap-3 py-2.5">
+                <div>
+                  <p className="text-sm font-semibold text-muted">
+                    Emergency contact
+                  </p>
+                  <p className="text-xs text-muted/80">None on file</p>
+                </div>
+                <button
+                  type="button"
+                  className="text-sm font-semibold text-violet hover:underline"
+                >
+                  Add →
+                </button>
+              </li>
+            </ul>
+            <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
+              <button
+                type="button"
+                className="text-sm font-medium text-violet hover:underline"
+              >
+                Edit household
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-muted/80">
+              Your household profile helps Sanctury surface the right services
+              at the right time.
+            </p>
           </div>
         </section>
 

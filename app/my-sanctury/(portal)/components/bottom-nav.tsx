@@ -66,8 +66,8 @@ const NAV_ITEMS: NavItem[] = [
   },
   {
     label: "Marketplace",
-    href: "/marketplace/insurance",
-    isActive: (p) => p.startsWith("/marketplace"),
+    href: "/my-sanctury/marketplace",
+    isActive: (p) => p.startsWith("/my-sanctury/marketplace"),
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
         <path

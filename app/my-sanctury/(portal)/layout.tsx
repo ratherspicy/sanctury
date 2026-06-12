@@ -8,7 +8,7 @@ const DESKTOP_NAV = [
   { label: "Finances", href: "/my-sanctury/finances" },
   { label: "Documents", href: "/my-sanctury/vault" },
   { label: "Maintenance", href: "/my-sanctury/maintenance" },
-  { label: "Marketplace", href: "/marketplace/insurance" },
+  { label: "Marketplace", href: "/my-sanctury/marketplace" },
 ];
 
 export default function MySancturyPortalLayout({

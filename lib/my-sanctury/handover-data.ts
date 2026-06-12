@@ -48,6 +48,24 @@ export const HOME_HEALTH_SCORE = {
   ],
 } as const;
 
+export const HOUSEHOLD = {
+  displayName: "Jane & David Thompson",
+  occupancyLabel: "Owner-occupiers since March 2024",
+  familyLabel: "Family of 4",
+  kidsLabel: "Lily (14) · Sam (9)",
+  tenureLabel: "Freehold · Owner-occupied",
+  members: [
+    { name: "Jane Thompson", role: "Primary contact", detail: "jane@example.com" },
+    { name: "David Thompson", role: "Co-owner", detail: "" },
+    { name: "Lily Thompson", role: "Dependent", detail: "14" },
+    { name: "Sam Thompson", role: "Dependent", detail: "9" },
+  ],
+  photos: {
+    jane: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+    david: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80",
+  },
+} as const;
+
 export type PropertyPhoto = {
   id: string;
   label: string;
