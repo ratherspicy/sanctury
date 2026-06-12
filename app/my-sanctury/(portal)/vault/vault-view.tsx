@@ -70,12 +70,31 @@ export function VaultView() {
           onClose={() => setOpenDocument(null)}
         />
       )}
+      {/* Completion bar */}
+      <div className="card p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold text-[#6D5FD8]">
+            Your property record is 78% complete
+          </p>
+          <p className="shrink-0 text-xs text-muted">3 documents missing</p>
+        </div>
+        <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-violet-light">
+          <div
+            className="h-full rounded-full bg-[#6D5FD8]"
+            style={{ width: "78%" }}
+          />
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Property Passport
           </h1>
+          <p className="mt-1.5 text-xs text-muted">
+            Handed over by Mark Williams, Tall Poppy Tauranga · 15 March 2024
+          </p>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
             The complete record of your home. Documents, repairs, renovations,
             certificates — all in one place. When you sell, it transfers with the
@@ -151,6 +170,32 @@ export function VaultView() {
               </div>
             </article>
           ))}
+        </div>
+
+        {/* Missing document slots */}
+        <h3 className="mt-6 text-sm font-semibold text-foreground">
+          Missing from your record
+        </h3>
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {["Renovation permits", "Property valuation", "Pest inspection"].map(
+            (name) => (
+              <div
+                key={name}
+                className="flex flex-col items-start justify-between gap-3 rounded-xl border-2 border-dashed border-border bg-transparent p-4"
+              >
+                <div>
+                  <p className="text-sm font-semibold text-muted">{name}</p>
+                  <p className="mt-0.5 text-xs text-muted/80">Not yet on file</p>
+                </div>
+                <button
+                  type="button"
+                  className="text-sm font-semibold text-violet hover:underline"
+                >
+                  Upload →
+                </button>
+              </div>
+            )
+          )}
         </div>
       </section>
 
