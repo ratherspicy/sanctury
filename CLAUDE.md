@@ -1,16 +1,31 @@
 # Sanctury — Claude Code Project Rules
 
+## Read ARCHITECTURE.md
+Before building anything new (new entities, data models, account/profile/document 
+features), read ARCHITECTURE.md in the project root. It is the constitutional 
+document for how Person, Property, and Relationship data is structured. The 
+current build uses hardcoded demo data and does not yet implement it — that's 
+fine for the pitch — but never build something that assumes a different model 
+(e.g., never merge two people's data into one account, never store personal 
+financial data on the property record).
+
 ## What This Project Is
-Sanctury is a NZ property intelligence platform. It gives homeowners a free home health check (insurance gap, mortgage refix window, maintenance timeline), then connects them to relevant advisers and services. Three personas: Homeowner, Agent (real estate), Partner (financial adviser/insurer). 13 days to a major pitch (Tall Poppy). Every session must leave the project in a clean, deployable state.
+Sanctury is a NZ property intelligence platform. It gives homeowners a free home health check (insurance gap, mortgage refix window, maintenance timeline), then connects them to relevant advisers and services via an AI-powered marketplace. Three personas: Homeowner, Agent (real estate), Partner (financial adviser/insurer). ~11 days to a major pitch (Tall Poppy, June 23). Every session must leave the project in a clean, deployable state.
+
+## The One-Line Pitch
+"Nobody teaches you how to own a home. Sanctury is where you feel safe, get 
+help, get a good deal, and keep your home together. Right from day one."
 
 ## Current Focus
-**Day 5 — Mobile responsiveness audit.** Use Chrome DevTools → iPhone 14 Pro (390px). Audit all Priority 1 routes first, screenshot all failures, then batch-fix in one pass. Do not fix during the audit.
+Pitch sprint. Sprint prompts C through H are defined in SPRINT_PROMPTS.md — run 
+them in order, one session at a time, reviewing the live URL after each. 
+Prompt C (dashboard layout fixes) is next.
 
 ---
 
 ## CRITICAL RULES — NEVER BREAK THESE
 
-1. **Never change the demo seed data.** Property is 14 Cameron Road, Tauranga. Cover $900K. Rebuild $1,063,290. Gap $163,290. Mortgage $480K. These numbers appear in multiple places — if you change one, you must change all. Safest: don't change any. (Cover corrected from $600K on 12 June 2026 — $900K is the only value where rebuild − cover = gap.)
+1. **Never change the demo seed data.** Property is 14 Cameron Road, Tauranga. Cover **$900,000** (corrected June 12 — was $600K, now reconciles with rebuild cost $1,063,290 minus gap $163,290 across every surface including the partner dashboard and the vault insurance document). Rebuild $1,063,290. Gap $163,290. Mortgage $480K. Purchase price $1,285,000. Settlement 15 March 2024. These numbers appear in many places — if you change one, you must change all. Safest: don't change any without explicit instruction.
 2. **Always git commit after every session.** `git add -A && git commit -m "description" && git push`. No exceptions.
 3. **TypeScript is strict.** Vercel will reject the build on type errors. Always check types before pushing. Fix type errors before committing.
 4. **Never manually edit files** unless using `sed` for a targeted single-line fix. Use Cursor or Claude Code for all code changes.
@@ -38,6 +53,13 @@ Sanctury is a NZ property intelligence platform. It gives homeowners a free home
 // CORRECT
 <div style={{ backgroundColor: '#14532D', opacity: 0.72 }} />
 ```
+
+### Next.js 16 JSX space-eating bug — CRITICAL
+Next 16 eats spaces after inline JSX expressions at build time. Symptoms look 
+like "136days" or "Mitchellwithin" — the source has a space but the rendered 
+output doesn't. Always use explicit `{" "}` between inline expressions — never 
+rely on source whitespace. Always check rendered text on the live Vercel URL, 
+not just the source code.
 
 ### Supabase
 Free tier pauses after inactivity. Always check it's running before demos or auth-dependent testing: supabase.com → check project status.
@@ -148,16 +170,22 @@ grep -n "search term" path/to/file.tsx
 ## KNOWN OUTSTANDING ISSUES
 
 **Blocking (must fix before pitch):**
-- Mobile responsiveness — Day 5, in progress
-- sanctury.co.nz DNS not connected to Vercel — Day 10
+- Sprint prompts C–H (SPRINT_PROMPTS.md) — run in order, this is the active build queue
+- sanctury.co.nz DNS not connected to Vercel — Day 10, manual step
 - 8 agent avatar photos still using randomuser.me — replace with Pexels photos in `/public/avatars/`, update `app/agent/dashboard/components/client-portfolio.tsx`
-- Middleware deprecation warning (non-blocking but noisy)
+- Session B marketplace (public + personalised) needs a manual auth-check on phone
 
-**Week 2:**
-- Connect Anthropic Claude API — Day 7
-- Resend email (report delivery) — Day 8
-- Report page: insurance gap amount needs to be more prominent
-- /privacy page needs real content
+**Already done — do not redo:**
+- Mobile responsiveness audit (Day 5) ✅
+- Full QA sweep (Day 6) ✅ — /privacy and /about now have real content, middleware fixed
+- Jane Thompson data reconciliation ✅ — cover is $900K everywhere, see rule #1
+- Marketplace quotes all above rebuild cost ✅
+
+**Week 2 / needs env vars first:**
+- Connect Anthropic Claude API — Prompt E, needs ANTHROPIC_API_KEY in Vercel
+- Resend email (report delivery) — Prompt F, needs RESEND_API_KEY in Vercel
+- Report page polish — Prompt E
+- Settlement meeting language on agent dashboard — Prompt G
 
 ---
 
@@ -167,8 +195,3 @@ grep -n "search term" path/to/file.tsx
 - GitHub: https://github.com/ratherspicy/sanctury
 - Supabase: https://nfzesfwumjzkaigvnenc.supabase.co
 - Vercel dashboard: https://vercel.com
-### Next.js 16 JSX space-eating bug
-Next 16 eats spaces after inline JSX expressions at build time.
-"136days" and "Mitchellwithin" are symptoms of this.
-Always use explicit {" "} between inline expressions — never rely on source whitespace.
-Check rendered text on Vercel, not just source code.
