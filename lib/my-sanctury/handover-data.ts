@@ -60,6 +60,7 @@ export const HOUSEHOLD = {
     { name: "Lily Thompson", role: "Dependent", detail: "14" },
     { name: "Sam Thompson", role: "Dependent", detail: "9" },
   ],
+  pets: [{ name: "Archie", role: "Golden Retriever", detail: "3 years" }],
   photos: {
     jane: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
     david: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80",

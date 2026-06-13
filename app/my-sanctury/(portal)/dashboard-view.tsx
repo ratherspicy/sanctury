@@ -187,9 +187,13 @@ export function DashboardView({ firstName }: DashboardViewProps) {
             <p className="text-xs font-medium uppercase tracking-widest text-white/75">
               Welcome home{firstName !== "there" ? `, ${firstName}` : ""}
             </p>
-            <h1 className="!text-white mt-2 text-3xl font-black leading-tight tracking-tight sm:text-5xl">
+            <h1 className="!text-white mt-2 text-xl font-bold leading-tight tracking-tight sm:text-3xl">
               {PROPERTY.address}
             </h1>
+            <p className="mt-1.5 text-sm text-white/70">
+              {PROPERTY.floorArea}m² · Built {PROPERTY.yearBuilt} ·{" "}
+              {PROPERTY.buildQuality} · {PROPERTY.region}
+            </p>
             <p className="mt-2 text-sm text-white/85 sm:text-base">
               Handed over by {HANDOVER.agentName} · {HANDOVER.agency}
             </p>
@@ -208,6 +212,50 @@ export function DashboardView({ firstName }: DashboardViewProps) {
       </section>
 
       <div className="mx-auto max-w-4xl space-y-8 px-4 py-6 sm:px-6">
+        {/* Homeowner profile — the emotional anchor of the page */}
+        <section
+          aria-label="Household profile"
+          className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex shrink-0 -space-x-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HOUSEHOLD.photos.jane}
+                alt="Jane Thompson"
+                className="h-16 w-16 rounded-full border-2 border-surface object-cover shadow-sm sm:h-[68px] sm:w-[68px]"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HOUSEHOLD.photos.david}
+                alt="David Thompson"
+                className="h-16 w-16 rounded-full border-2 border-surface object-cover shadow-sm sm:h-[68px] sm:w-[68px]"
+              />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                {HOUSEHOLD.displayName}
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                {HOUSEHOLD.occupancyLabel}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 text-xs text-muted sm:text-right">
+            <p className="flex items-center gap-1.5 sm:justify-end">
+              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
+                <path
+                  d="M16 19v-1a4 4 0 00-4-4H6a4 4 0 00-4 4v1m20 0v-1a4 4 0 00-3-3.87M15 3.13a4 4 0 010 7.75M12 7a3 3 0 11-6 0 3 3 0 016 0z"
+                  {...strokeProps}
+                />
+              </svg>
+              {HOUSEHOLD.familyLabel}
+            </p>
+            <p>{HOUSEHOLD.kidsLabel}</p>
+            <p>{HOUSEHOLD.tenureLabel}</p>
+          </div>
+        </section>
+
         {/* Photo thumbnails */}
         <section aria-label="Property photos">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
@@ -227,56 +275,12 @@ export function DashboardView({ firstName }: DashboardViewProps) {
           </div>
         </section>
 
-        {/* Homeowner profile bar */}
-        <section
-          aria-label="Household profile"
-          className="card flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex shrink-0 -space-x-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={HOUSEHOLD.photos.jane}
-                alt="Jane Thompson"
-                className="h-12 w-12 rounded-full border-2 border-surface object-cover"
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={HOUSEHOLD.photos.david}
-                alt="David Thompson"
-                className="h-12 w-12 rounded-full border-2 border-surface object-cover"
-              />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-foreground">
-                {HOUSEHOLD.displayName}
-              </p>
-              <p className="mt-0.5 text-xs text-muted">
-                {HOUSEHOLD.occupancyLabel}
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1 border-t border-border pt-3 text-xs text-muted sm:border-t-0 sm:pt-0 sm:text-right">
-            <p className="flex items-center gap-1.5 sm:justify-end">
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden>
-                <path
-                  d="M16 19v-1a4 4 0 00-4-4H6a4 4 0 00-4 4v1m20 0v-1a4 4 0 00-3-3.87M15 3.13a4 4 0 010 7.75M12 7a3 3 0 11-6 0 3 3 0 016 0z"
-                  {...strokeProps}
-                />
-              </svg>
-              {HOUSEHOLD.familyLabel}
-            </p>
-            <p>{HOUSEHOLD.kidsLabel}</p>
-            <p>{HOUSEHOLD.tenureLabel}</p>
-          </div>
-        </section>
-
-        {/* Home health score */}
+        {/* Sanctury Score */}
         <section className="card flex flex-col items-center gap-5 p-6 sm:flex-row sm:gap-10 sm:p-8">
           <ScoreRing score={HOME_HEALTH_SCORE.overall} />
           <div className="flex w-full flex-1 flex-col items-center sm:items-start">
             <h2 className="text-lg font-bold text-foreground">
-              Your home health score
+              Your Sanctury Score
             </h2>
             <p className="mt-1 text-sm text-muted">
               {HOME_HEALTH_SCORE.attentionCount} things need your attention
@@ -332,6 +336,31 @@ export function DashboardView({ firstName }: DashboardViewProps) {
           </div>
         </section>
 
+        {/* Quick nav tiles */}
+        <section aria-label="Explore your home">
+          <div className="grid grid-cols-2 gap-3">
+            {QUICK_NAV.map((tile) => (
+              <Link
+                key={tile.href}
+                href={tile.href}
+                className="card flex flex-col gap-3 p-5 transition-colors hover:bg-violet-light/50"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-light text-violet">
+                  {tile.icon}
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-foreground">
+                    {tile.label}
+                  </span>
+                  <span className="mt-0.5 block text-xs text-muted">
+                    {tile.description}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* Your household */}
         <section aria-label="Your household" className="card p-4 sm:p-5">
           <div className="flex items-center justify-between">
@@ -378,6 +407,29 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                   </div>
                 </li>
               ))}
+              {HOUSEHOLD.pets.map((pet) => (
+                <li key={pet.name} className="flex items-center gap-3 py-2.5">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-light text-violet">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
+                      <circle cx="11" cy="4" r="2" {...strokeProps} />
+                      <circle cx="18" cy="8" r="2" {...strokeProps} />
+                      <circle cx="20" cy="16" r="2" {...strokeProps} />
+                      <path
+                        d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+                        {...strokeProps}
+                      />
+                    </svg>
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-foreground">
+                      {pet.name}
+                    </p>
+                    <p className="text-xs text-muted">
+                      {pet.role} · {pet.detail}
+                    </p>
+                  </div>
+                </li>
+              ))}
               <li className="flex items-center justify-between gap-3 py-2.5">
                 <div>
                   <p className="text-sm font-semibold text-muted">
@@ -405,31 +457,6 @@ export function DashboardView({ firstName }: DashboardViewProps) {
               Your household profile helps Sanctury surface the right services
               at the right time.
             </p>
-          </div>
-        </section>
-
-        {/* Quick nav tiles */}
-        <section aria-label="Explore your home">
-          <div className="grid grid-cols-2 gap-3">
-            {QUICK_NAV.map((tile) => (
-              <Link
-                key={tile.href}
-                href={tile.href}
-                className="card flex flex-col gap-3 p-5 transition-colors hover:bg-violet-light/50"
-              >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-light text-violet">
-                  {tile.icon}
-                </span>
-                <span>
-                  <span className="block text-sm font-bold text-foreground">
-                    {tile.label}
-                  </span>
-                  <span className="mt-0.5 block text-xs text-muted">
-                    {tile.description}
-                  </span>
-                </span>
-              </Link>
-            ))}
           </div>
         </section>
 
