@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { saveHealthCheckAndReport } from "@/lib/storage/health-check";
 import { saveHomeownerContact } from "@/lib/storage/homeowner";
+import { generateHealthCheckReport } from "@/lib/calculations/report";
 import { getAuthCallbackUrl } from "@/lib/auth/auth-callback-url";
 import type {
   FeatureKey,
@@ -153,6 +154,26 @@ export function HomeHealthCheckForm() {
       console.error("Lead save failed:", err);
     } finally {
       setIsSubmittingLead(false);
+    }
+
+    // Best-effort "your report is ready" email — never blocks the report.
+    try {
+      const report = generateHealthCheckReport(formData);
+      const firstName = fullName.trim().split(" ")[0] || "there";
+      void fetch("/api/report-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          email: email.trim().toLowerCase(),
+          address: formData.address,
+          insuranceGap: report.insurance.insuranceGap,
+          daysUntilRefix: report.mortgage.daysUntilRefix,
+          thirdFinding: `Maintenance: ${report.maintenance.alertTitle}`,
+        }),
+      }).catch(() => {});
+    } catch {
+      // Report generation/email dispatch is non-critical; ignore.
     }
 
     saveHomeownerContact(fullName, email, selectedGoals);
