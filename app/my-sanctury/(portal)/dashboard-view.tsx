@@ -157,6 +157,66 @@ const DETAIL_CHIPS = [
   { label: "Region", value: PROPERTY.region },
 ];
 
+// Phase 1 teaser — UI only, no functionality yet.
+const PHYSICAL_SAFETY = [
+  {
+    id: "structural",
+    label: "Structural",
+    status: "Last inspection unknown",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+        <path d="M4 10v10h16V10M2 11l10-8 10 8M9 20v-6h6v6" {...strokeProps} />
+      </svg>
+    ),
+  },
+  {
+    id: "mould",
+    label: "Mould & damp",
+    status: "No damp assessment on file",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+        <path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z" {...strokeProps} />
+      </svg>
+    ),
+  },
+  {
+    id: "warmth",
+    label: "Warmth",
+    status: "Heat pump service unknown",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+        <path
+          d="M12 2c1 3-1 4-1 6a3 3 0 006 0c0-1-.5-2-1-3 2 1 4 4 4 8a8 8 0 01-16 0c0-4 3-7 5-9 1 .5 2 1 3 1z"
+          {...strokeProps}
+        />
+      </svg>
+    ),
+  },
+  {
+    id: "electrical",
+    label: "Electrical",
+    status: "CoC from 2019 — 7 years ago",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+        <path d="M13 2L4.5 13.5H11L9.5 22 19 9.5h-6.5L13 2z" {...strokeProps} />
+      </svg>
+    ),
+  },
+  {
+    id: "plumbing",
+    label: "Plumbing",
+    status: "Pipe material unknown for 1998 build",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+        <path
+          d="M4 8h8a4 4 0 014 4v8M4 4v8m0-4h4m12-4v8m0-4h-4"
+          {...strokeProps}
+        />
+      </svg>
+    ),
+  },
+];
+
 export function DashboardView({ firstName }: DashboardViewProps) {
   const [householdOpen, setHouseholdOpen] = useState(false);
 
@@ -302,6 +362,41 @@ export function DashboardView({ firstName }: DashboardViewProps) {
                 </div>
               ))}
             </dl>
+          </div>
+        </section>
+
+        {/* Physical Safety — Phase 1 teaser */}
+        <section aria-label="Physical safety">
+          <div className="mb-3 flex items-center gap-2">
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+              Physical Safety
+            </h2>
+            <span className="rounded-full bg-bg-secondary px-2 py-0.5 text-[11px] font-medium text-muted">
+              Coming soon
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+            {PHYSICAL_SAFETY.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-col rounded-xl border-l-4 bg-surface p-4 shadow-sm"
+                style={{ borderLeftColor: "#D97706" }}
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-[#D97706]">
+                  {item.icon}
+                </span>
+                <p className="mt-2.5 text-sm font-bold text-foreground">
+                  {item.label}
+                </p>
+                <p className="mt-1 flex-1 text-xs text-muted">{item.status}</p>
+                <button
+                  type="button"
+                  className="mt-3 self-start text-sm font-semibold text-[#D97706] hover:underline"
+                >
+                  Assess →
+                </button>
+              </div>
+            ))}
           </div>
         </section>
 
