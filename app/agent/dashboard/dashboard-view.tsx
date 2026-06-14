@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import {
   AGENT_ALERTS,
@@ -45,16 +46,32 @@ export function AgentDashboardView() {
                 who need attention today.
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
-                {AGENT_STATS.totalClients} clients
-              </span>
-              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
-                {AGENT_STATS.healthChecksCompleted} health checks
-              </span>
-              <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
-                {formatCurrency(AGENT_STATS.estimatedReferralIncome)} earned
-              </span>
+            <div className="flex flex-col gap-4 lg:items-end">
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                  {AGENT_STATS.totalClients} clients
+                </span>
+                <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                  {AGENT_STATS.healthChecksCompleted} health checks
+                </span>
+                <span className="rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
+                  {formatCurrency(AGENT_STATS.estimatedReferralIncome)} earned
+                </span>
+              </div>
+              <Link
+                href="/agent/dashboard/properties/new"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#1a5c3a] shadow-sm transition-opacity hover:opacity-90"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
+                  <path
+                    d="M12 5v14M5 12h14"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                Prepare Handover
+              </Link>
             </div>
           </div>
         </section>
