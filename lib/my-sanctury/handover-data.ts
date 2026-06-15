@@ -41,10 +41,15 @@ export const FINANCES = {
 export const HOME_HEALTH_SCORE = {
   overall: 68,
   attentionCount: 2,
+  // Five pillars. Safety rolls up the physical-safety items (structural,
+  // mould, warmth, electrical, plumbing) and Planning is new — neither is
+  // assessed yet, so both read as quiet "unknown" with no number.
   subScores: [
-    { label: "Insurance", score: 45, tone: "danger" },
-    { label: "Mortgage", score: 82, tone: "accent" },
-    { label: "Documents", score: 78, tone: "warning" },
+    { key: "insurance", label: "Insurance", score: 45, status: "urgent" },
+    { key: "mortgage", label: "Mortgage", score: 82, status: "good" },
+    { key: "documents", label: "Documents", score: 78, status: "attention" },
+    { key: "safety", label: "Safety", score: null, status: "unknown" },
+    { key: "planning", label: "Planning", score: null, status: "unknown" },
   ],
 } as const;
 

@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { MAINTENANCE_EVENTS } from "@/lib/my-sanctury/vault-data";
 import { PROPERTY } from "@/lib/my-sanctury/handover-data";
+import { ICON_MAP } from "../components/icon-map";
+import { HorizontalScroll } from "../components/horizontal-scroll";
+import { StatusCard } from "../components/status-card";
+import { ListItem } from "../components/list-item";
+import type { StatusKey } from "../components/status-system";
 
 type UpcomingItem = {
   id: string;
@@ -10,7 +15,8 @@ type UpcomingItem = {
   cadence: string;
   detail: string;
   action: string;
-  tone: "warning" | "upcoming";
+  status: StatusKey;
+  icon: (typeof ICON_MAP)[keyof typeof ICON_MAP];
 };
 
 const UPCOMING: UpcomingItem[] = [
@@ -19,24 +25,27 @@ const UPCOMING: UpcomingItem[] = [
     title: "Heat pump service",
     cadence: "Recommended every 2 years",
     detail: "Last serviced: unknown",
-    action: "Book a tradie →",
-    tone: "warning",
+    action: "Book a tradie",
+    status: "attention",
+    icon: ICON_MAP.warmth,
   },
   {
     id: "gutter-clear",
     title: "Gutter clear",
     cadence: "Recommended annually",
     detail: "Best time: April–May",
-    action: "Schedule reminder →",
-    tone: "upcoming",
+    action: "Schedule reminder",
+    status: "unknown", // scheduled, not overdue — must read quiet
+    icon: ICON_MAP.structural,
   },
   {
     id: "roof-inspection",
     title: "Roof inspection",
     cadence: "Recommended every 5 years",
     detail: "Last inspected: unknown",
-    action: "Book a tradie →",
-    tone: "warning",
+    action: "Book a tradie",
+    status: "attention",
+    icon: ICON_MAP.structural,
   },
 ];
 
@@ -44,6 +53,7 @@ export function MaintenanceView() {
   // The March 2024 plumbing repair lives in the vault record — surface it
   // here so the maintenance story starts with what's already known.
   const recentRecord = MAINTENANCE_EVENTS.find((e) => e.id === "kitchen-leak");
+  const Droplet = ICON_MAP.plumbing;
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-6 sm:px-6">
@@ -63,10 +73,18 @@ export function MaintenanceView() {
             Most recent record
           </h2>
           <article className="card p-4 sm:p-5">
-            <div className="flex flex-wrap items-start justify-between gap-2">
-              <p className="text-sm font-bold text-foreground">
-                {recentRecord.date}
-              </p>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5">
+                <span
+                  className="flex h-9 w-9 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "#E0F2FE", color: "#0369A1" }}
+                >
+                  <Droplet className="h-[18px] w-[18px]" strokeWidth={1.8} />
+                </span>
+                <p className="text-sm font-bold text-foreground">
+                  {recentRecord.date}
+                </p>
+              </div>
               <span className="inline-flex rounded-full bg-sky-50 px-2.5 py-1 text-xs font-medium text-sky-700">
                 {recentRecord.category}
               </span>
@@ -110,45 +128,24 @@ export function MaintenanceView() {
         </section>
       )}
 
-      {/* Upcoming maintenance */}
+      {/* Upcoming maintenance — StatusCards */}
       <section aria-label="Upcoming maintenance">
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted">
           Coming up
         </h2>
-        <div className="space-y-3">
+        <HorizontalScroll smGridCols={3}>
           {UPCOMING.map((item) => (
-            <article
+            <StatusCard
               key={item.id}
-              className={`rounded-xl border-l-4 p-4 ${
-                item.tone === "warning"
-                  ? "border-amber-500 bg-amber-50"
-                  : "border-gray-300 bg-bg-secondary"
-              }`}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-sm font-bold text-foreground">{item.title}</h3>
-                <span
-                  className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    item.tone === "warning"
-                      ? "bg-white/70 text-warning"
-                      : "bg-white text-muted"
-                  }`}
-                >
-                  {item.tone === "warning" ? "Due" : "Upcoming"}
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-muted">
-                {item.cadence} · {item.detail}
-              </p>
-              <button
-                type="button"
-                className="mt-3 text-sm font-semibold text-foreground hover:text-violet"
-              >
-                {item.action}
-              </button>
-            </article>
+              compact
+              icon={item.icon}
+              label={item.title}
+              status={item.status}
+              detail={`${item.cadence} · ${item.detail}`}
+              cta={{ label: item.action }}
+            />
           ))}
-        </div>
+        </HorizontalScroll>
       </section>
 
       {/* Tradesperson contacts */}
@@ -156,23 +153,23 @@ export function MaintenanceView() {
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted">
           Your tradespeople
         </h2>
-        <div className="card flex items-start gap-4 p-4 sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-violet-light text-base font-bold text-violet">
-            MT
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-foreground">Mike Tauroa</p>
-            <p className="mt-0.5 text-xs text-muted">Tauranga Plumbing Co</p>
-            <a
-              href="tel:0274458821"
-              className="mt-0.5 inline-block text-xs font-medium text-violet hover:underline"
-            >
-              027 445 8821
-            </a>
-            <p className="mt-2 text-xs italic text-muted">
-              &ldquo;Knows the history of your wall&rdquo;
-            </p>
-          </div>
+        <div className="card p-4 sm:p-5">
+          <ListItem
+            initials="MT"
+            title="Mike Tauroa"
+            meta="Tauranga Plumbing Co"
+            action={
+              <a
+                href="tel:0274458821"
+                className="text-xs font-medium text-violet hover:underline"
+              >
+                027 445 8821
+              </a>
+            }
+          />
+          <p className="mt-1 pl-12 text-xs italic text-muted">
+            &ldquo;Knows the history of your wall&rdquo;
+          </p>
         </div>
         <button
           type="button"

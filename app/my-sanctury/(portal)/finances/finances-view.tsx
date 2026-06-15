@@ -6,6 +6,15 @@ import { formatCurrency } from "@/lib/format";
 import { generateLoanBalanceCurve } from "@/lib/calculations/loan-curves";
 import { MortgageBalanceChart } from "@/app/report/charts/mortgage-charts";
 import { FINANCES, PROPERTY } from "@/lib/my-sanctury/handover-data";
+import { ICON_MAP } from "../components/icon-map";
+
+function HeadingIcon({ icon: Icon }: { icon: (typeof ICON_MAP)[keyof typeof ICON_MAP] }) {
+  return (
+    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-light text-violet">
+      <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} />
+    </span>
+  );
+}
 
 /** Semi-circular LVR gauge. Low LVR = green zone (left), high = red (right). */
 function LvrGauge({ percent }: { percent: number }) {
@@ -70,9 +79,12 @@ export function FinancesView() {
       {/* Equity + LVR */}
       <section className="card flex flex-col items-center gap-6 p-6 sm:flex-row sm:justify-between sm:gap-10 sm:p-8">
         <div className="text-center sm:text-left">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Your equity
-          </p>
+          <div className="flex items-center justify-center gap-2 sm:justify-start">
+            <HeadingIcon icon={ICON_MAP.equity} />
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+              Your equity
+            </p>
+          </div>
           <p className="mt-2 text-4xl font-black tracking-tight text-[#6D5FD8] sm:text-5xl">
             {formatCurrency(FINANCES.equity)}
           </p>
@@ -87,9 +99,12 @@ export function FinancesView() {
       {/* Mortgage summary */}
       <section className="card p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-base font-bold text-foreground">Mortgage</h2>
-            <p className="mt-0.5 text-xs text-muted">Fixed rate</p>
+          <div className="flex items-center gap-2.5">
+            <HeadingIcon icon={ICON_MAP.mortgage} />
+            <div>
+              <h2 className="text-base font-bold text-foreground">Mortgage</h2>
+              <p className="mt-0.5 text-xs text-muted">Fixed rate</p>
+            </div>
           </div>
           <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-warning">
             Refix in {FINANCES.refixDays} days
@@ -170,11 +185,14 @@ export function FinancesView() {
         style={{ borderLeftColor: "#DC2626" }}
       >
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-base font-bold text-foreground">Insurance</h2>
-            <p className="mt-0.5 text-xs text-muted">
-              Sum insured vs estimated rebuild
-            </p>
+          <div className="flex items-center gap-2.5">
+            <HeadingIcon icon={ICON_MAP.insurance} />
+            <div>
+              <h2 className="text-base font-bold text-foreground">Insurance</h2>
+              <p className="mt-0.5 text-xs text-muted">
+                Sum insured vs estimated rebuild
+              </p>
+            </div>
           </div>
           <span className="rounded-full bg-danger-soft px-3 py-1 text-xs font-semibold text-danger">
             Underinsured
