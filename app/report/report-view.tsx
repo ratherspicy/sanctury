@@ -155,6 +155,23 @@ export function ReportView() {
         cta={{ label: "Review your sum insured", href: "/marketplace/insurance" }}
       >
         <TrafficLight status={insurance.status} />
+        {insurance.insuranceGap > 0 && (
+          <div className="rounded-2xl border border-danger/20 bg-danger-soft p-6 text-center sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-widest text-danger">
+              You may be underinsured
+            </p>
+            <p className="mt-3 text-5xl font-black tracking-tight text-[#DC2626] sm:text-6xl">
+              {formatCurrency(insurance.insuranceGap)}
+            </p>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-foreground">
+              Your rebuild cost is{" "}
+              {formatCurrency(insurance.estimatedRebuildCost)} but your current
+              cover is {formatCurrency(insurance.currentSumInsured)}. A total
+              loss would leave you {formatCurrency(insurance.insuranceGap)}{" "}
+              short.
+            </p>
+          </div>
+        )}
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-xl border border-border bg-background p-5 sm:p-6">
             <InsuranceCoverBarChart insurance={insurance} />

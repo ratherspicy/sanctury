@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sanctury — Your home, sorted",
+  title: "Sanctury — Home intelligence for New Zealand homeowners",
   description:
-"Owning a home is complicated. Sanctury makes it simpler — your insurance, mortgage, and maintenance, all in one place.",
+    "Peace of mind for New Zealand homeowners. Know your insurance, your mortgage timing, your property records and maintenance — and get the right help at the right moment. Right from day one.",
 };
 
 export default function RootLayout({

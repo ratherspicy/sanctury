@@ -24,7 +24,7 @@ export default async function AgentLoginPage() {
             Sanctury for agents
           </h1>
           <p className="mt-3 text-base leading-relaxed text-muted">
-            Your clients, sorted — all in one place.
+            Every client, every settlement — all in one place.
           </p>
 
           <div className="mt-8 card p-6 text-left sm:p-8">

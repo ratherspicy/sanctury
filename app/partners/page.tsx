@@ -24,7 +24,7 @@ const featureCards = [
   },
   {
     title: "Trusted introduction",
-    body: "Homeowners come to you through a platform they trust. They've already seen the problem. You arrive as the solution, not a cold call.",
+    body: "Homeowners come to you through a platform they trust. They've already seen the problem — quantified, down to the dollar. You arrive as the solution, not a cold call.",
   },
   {
     title: "Only pay when you win",

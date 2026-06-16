@@ -13,8 +13,9 @@ export default function ReportPage() {
             Here&apos;s your full picture.
           </h1>
           <p className="mt-3 max-w-2xl text-base text-muted">
-            Based on what you told us — here is what you need to know about
-            your home right now.
+            Based on what you told us. No jargon, no sales pitch — just a clear
+            picture of where your home stands today, and what&apos;s worth your
+            attention.
           </p>
 
           <div className="mt-10">

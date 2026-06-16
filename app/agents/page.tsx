@@ -186,7 +186,7 @@ export default function AgentsPage() {
         <section className="bg-[#2E8B57] py-24 text-center text-white">
           <div className="mx-auto max-w-6xl px-8">
             <h2 className="!text-white mb-4 text-[52px] font-black leading-tight max-sm:text-3xl">
-              Your clients, sorted.
+              Win the relationship, not just the sale.
             </h2>
             <p className="mx-auto mb-10 max-w-2xl text-lg text-white/70">
               Every alert. Every message. Every listing — earned before anyone

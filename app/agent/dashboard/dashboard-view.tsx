@@ -70,7 +70,7 @@ export function AgentDashboardView() {
                     strokeLinecap="round"
                   />
                 </svg>
-                Prepare Handover
+                Create Property Record
               </Link>
             </div>
           </div>

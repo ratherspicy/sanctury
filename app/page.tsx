@@ -115,8 +115,10 @@ export default function Home() {
                 <span className="italic">Right,</span> from day one.
               </h1>
               <p className="mx-auto mt-6 max-w-[560px] text-xl text-white/85 lg:mx-0">
-                The AI-powered marketplace that helps Kiwis get a fair deal on
-                everything their home needs — free, forever.
+                Peace of mind for New Zealand homeowners. Know where you stand
+                on your insurance, your mortgage, your documents and
+                maintenance — and get the right help at the right moment. Free,
+                forever.
               </p>
               <div
                 id="get-started"
@@ -165,7 +167,7 @@ export default function Home() {
                 For homeowners
               </p>
               <h2 className="mt-4 text-[44px] font-extrabold leading-[1.1] tracking-tight text-foreground max-sm:text-3xl">
-                Your home. Finally sorted.
+                Your home, finally understood.
               </h2>
               <p className="mt-6 max-w-[440px] text-base leading-[1.7] text-[#525252]">
                 Banks have the data. Insurers have the models. You had nothing.
@@ -200,8 +202,9 @@ export default function Home() {
                 Everything your home needs. Finally in one place.
               </h2>
               <p className="mt-5 text-base leading-relaxed text-[#525252]">
-                The AI decides when you need help. The marketplace puts
-                competing experts in front of you. You choose freely.
+                Sanctury keeps an eye on the things that matter — your cover,
+                your refix date, what maintenance is due — and brings you the
+                right help at the right moment. You always choose freely.
               </p>
             </div>
 
