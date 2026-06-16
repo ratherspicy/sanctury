@@ -4,6 +4,14 @@
  * values describe that handover, not the live health-check calculation
  * (which still comes from sessionStorage via the demo seed).
  */
+import { calculateDaysUntilRefix } from "@/lib/calculations/report";
+
+/**
+ * Single canonical refix date for Jane's mortgage. Both the seeded health
+ * check (/report) and the authenticated area compute days from this same
+ * value, so the day count stays consistent everywhere and current.
+ */
+export const REFIX_DATE = "2026-10-01";
 
 export const HANDOVER = {
   agentName: "Mark Williams",
@@ -26,7 +34,9 @@ export const PROPERTY = {
 export const FINANCES = {
   mortgage: 480_000,
   refixDateLabel: "1 Oct 2026",
-  refixDays: 115,
+  // Computed from the canonical REFIX_DATE so it matches /report and stays
+  // current as the pitch approaches (no stale hardcoded day count).
+  refixDays: calculateDaysUntilRefix(REFIX_DATE),
   equity: HANDOVER.purchasePrice - 480_000, // 805,000
   lvrPercent: 37.4, // 480 / 1285
   extraMonthly: 500,

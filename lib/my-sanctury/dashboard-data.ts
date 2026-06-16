@@ -48,7 +48,7 @@ export type DashboardData = {
 
 export const PLACEHOLDER_DASHBOARD: DashboardData = {
   property: {
-    address: "42 Mount Avenue, Tauranga",
+    address: "14 Cameron Road, Tauranga",
     estimatedCurrentValue: 875_000,
     purchasePrice: 620_000,
     equityAmount: 395_000,
@@ -102,14 +102,14 @@ export const PLACEHOLDER_DASHBOARD: DashboardData = {
     {
       id: "req-mortgage-1",
       type: "Mortgage",
-      title: "Refix comparison — 42 Mount Avenue",
+      title: "Refix comparison — 14 Cameron Road",
       status: "Pending",
       createdAt: "2026-05-18",
     },
   ],
   lastHealthCheckDate: "2026-05-14",
   propertyDetails: {
-    address: "42 Mount Avenue, Tauranga",
+    address: "14 Cameron Road, Tauranga",
     floorArea: 168,
     yearBuilt: 1998,
     buildQuality: "Above Standard",

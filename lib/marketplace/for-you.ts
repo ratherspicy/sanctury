@@ -1,3 +1,5 @@
+import { FINANCES } from "@/lib/my-sanctury/handover-data";
+
 export type ForYouTone = "urgent" | "timely" | "suggested" | "neutral";
 
 export type ForYouCard = {
@@ -31,7 +33,7 @@ export const FOR_YOU_CARDS: ForYouCard[] = [
   {
     id: "mortgage-refix",
     tag: "Mortgage",
-    headline: "Refix window opens in 115 days",
+    headline: `Refix window opens in ${FINANCES.refixDays} days`,
     reasoning:
       "Your mortgage refixes 1 October 2026. Bay of Plenty rates are moving — locking in early could save thousands.",
     provider: "Kahu Advisers · Refix specialists",

@@ -58,7 +58,7 @@ export default async function PersonalisedMarketplacePage() {
                 icon={FOR_YOU_ICON[card.id] ?? ICON_MAP.marketplace}
                 label={card.headline}
                 status={TONE_TO_STATUS[card.tone]}
-                detail={card.provider}
+                detail={card.reasoning}
                 cta={{
                   label: card.cta.replace(/\s*→\s*$/, ""),
                   href: card.href,

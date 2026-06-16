@@ -8,7 +8,7 @@ export function seedDemoDataIfEmpty(): void {
   if (existing) return;
 
   saveHealthCheckAndReport({
-    address: "42 Mount Avenue, Tauranga",
+    address: "14 Cameron Road, Tauranga",
     region: "Bay of Plenty",
     floorArea: "262",
     yearBuilt: "1998",
@@ -22,7 +22,7 @@ export function seedDemoDataIfEmpty(): void {
     },
     sumInsured: "900000",
     sumInsuredYear: "2022",
-    refixDate: "2026-07-18",
+    refixDate: "2026-10-01",
     loanAmount: "480000",
     interestRate: "6.5",
     fixedLoanAmount: "480000",
@@ -31,7 +31,7 @@ export function seedDemoDataIfEmpty(): void {
   });
 
   saveInsuranceJobPosting({
-    address: "42 Mount Avenue, Tauranga",
+    address: "14 Cameron Road, Tauranga",
     region: "Bay of Plenty",
     estimatedRebuildCost: 1063290,
     currentSumInsured: 900000,
