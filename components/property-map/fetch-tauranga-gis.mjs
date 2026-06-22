@@ -23,8 +23,8 @@ const OUT = join(__dirname, "mapData");
 mkdirSync(OUT, { recursive: true });
 
 // --- set this to your property's centroid (lat, lng) and a search radius (metres) ---
-const CENTER = { lat: -37.6878, lng: 176.1648 }; // 14 Cameron Road, Tauranga — ADJUST to the real parcel centroid
-const RADIUS_M = 220;
+const CENTER = { lat: -37.6973927, lng: 176.2614558 }; // 11 Clydesdale Close, Papamoa Beach
+const RADIUS_M = 150; // tighter radius for a single residential section
 
 const BASE = "https://gis.tauranga.govt.nz/server/rest/services/Utilities_Multiple/MapServer";
 

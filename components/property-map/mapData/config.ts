@@ -1,10 +1,12 @@
 // Demo property + map configuration for the Property Map preview.
 // Set PROPERTY_CENTER to the real parcel centroid before pulling live data.
 
-export const PROPERTY_LABEL = "14 Cameron Road, Tauranga";
+export const PROPERTY_LABEL = "11 Clydesdale Close, Papamoa Beach";
 
-// [latitude, longitude] — approximate; replace with the exact parcel centroid.
+// [latitude, longitude] — the residential parcel centroid.
 // Tip: right-click the property in Google Maps and the coordinates appear at the top.
-export const PROPERTY_CENTER: [number, number] = [-37.6878, 176.1648];
+export const PROPERTY_CENTER: [number, number] = [-37.6973927, 176.2614558];
 
-export const DEFAULT_ZOOM = 19;
+// Tight on one section so a single home + its boundary fill the frame.
+// Nudge to 19 or 21 to taste.
+export const DEFAULT_ZOOM = 20;

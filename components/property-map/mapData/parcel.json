@@ -5,18 +5,18 @@
       "type": "Feature",
       "properties": {
         "type": "Primary Parcel",
-        "appellation": "LOT 1 DP 00000",
-        "source": "Illustrative — replace with the real LINZ / TCC parcel"
+        "appellation": "11 Clydesdale Close, Papamoa Beach",
+        "source": "Illustrative ~686m² lot — refine against the LINZ parcel (layer 50772) or the aerial"
       },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
-            [176.164658, -37.687642],
-            [176.164942, -37.687642],
-            [176.164942, -37.687958],
-            [176.164658, -37.687958],
-            [176.164658, -37.687642]
+            [176.2613400, -37.6975100],
+            [176.2613400, -37.6972300],
+            [176.2615900, -37.6972300],
+            [176.2615900, -37.6975100],
+            [176.2613400, -37.6975100]
           ]
         ]
       }

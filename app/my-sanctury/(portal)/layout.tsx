@@ -8,7 +8,6 @@ const DESKTOP_NAV = [
   { label: "Finances", href: "/my-sanctury/finances" },
   { label: "Documents", href: "/my-sanctury/vault" },
   { label: "Maintenance", href: "/my-sanctury/maintenance" },
-  { label: "Property map", href: "/my-sanctury/property-map" },
   { label: "Marketplace", href: "/my-sanctury/marketplace" },
 ];
 

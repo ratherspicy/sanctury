@@ -26,6 +26,7 @@ import parcelJson from "./mapData/parcel.json";
 import stormwaterJson from "./mapData/stormwater.json";
 import wastewaterJson from "./mapData/wastewater.json";
 import waterJson from "./mapData/water.json";
+import homeownerJson from "./mapData/homeowner.json";
 
 const C = {
   navy: "#121A30",
@@ -44,7 +45,12 @@ const C = {
 
 const asFC = (x: unknown): FeatureCollection => x as unknown as FeatureCollection;
 
-type OverlayKey = "boundary" | "stormwater" | "wastewater" | "water";
+type OverlayKey = "boundary" | "stormwater" | "wastewater" | "water" | "additions";
+
+// The homeowner's own records (shed + private power cable) — infrastructure
+// the council has no record of. Pre-loaded and shown by default; the demo
+// adds more live with the draw tools.
+const HOMEOWNER_FC = asFC(homeownerJson);
 
 const OVERLAYS: {
   key: OverlayKey;
@@ -53,11 +59,13 @@ const OVERLAYS: {
   data: FeatureCollection;
   dash?: string;
   isArea?: boolean;
+  isAdditions?: boolean;
 }[] = [
   { key: "boundary", label: "Your boundary", color: C.indigo, data: asFC(parcelJson), dash: "6 5", isArea: true },
   { key: "stormwater", label: "Stormwater", color: C.stormwater, data: asFC(stormwaterJson) },
   { key: "wastewater", label: "Wastewater", color: C.wastewater, data: asFC(wastewaterJson) },
   { key: "water", label: "Water supply", color: C.water, data: asFC(waterJson) },
+  { key: "additions", label: "Your additions", color: C.indigo, data: HOMEOWNER_FC, isAdditions: true },
 ];
 
 // Minimal typing for the Geoman methods we use (Geoman augments L.Map at runtime).
@@ -87,6 +95,7 @@ export default function PropertyMapPreview({
     stormwater: true,
     wastewater: true,
     water: false,
+    additions: true,
   });
   const [drawn, setDrawn] = useState<FeatureCollection>({ type: "FeatureCollection", features: [] });
   const [fallbackBase, setFallbackBase] = useState(false);
@@ -130,15 +139,32 @@ export default function PropertyMapPreview({
       // --- council overlays (static, bundled) ---
       OVERLAYS.forEach((o) => {
         const layer = L.geoJSON(o.data, {
-          style: () => ({
-            color: o.color,
-            weight: o.isArea ? 2.5 : 3,
-            opacity: 0.95,
-            dashArray: o.dash,
-            fill: !!o.isArea,
-            fillColor: o.color,
-            fillOpacity: o.isArea ? 0.06 : 0,
-          }),
+          style: (feature) => {
+            // "Your additions" carries mixed geometry: the shed is a filled
+            // indigo polygon, the private cable a dashed indigo line.
+            if (o.isAdditions) {
+              const t = feature?.geometry?.type;
+              const isPoly = t === "Polygon" || t === "MultiPolygon";
+              return {
+                color: C.indigo,
+                weight: isPoly ? 2 : 3,
+                opacity: 0.95,
+                dashArray: isPoly ? undefined : "7 6",
+                fill: isPoly,
+                fillColor: C.indigo,
+                fillOpacity: isPoly ? 0.22 : 0,
+              };
+            }
+            return {
+              color: o.color,
+              weight: o.isArea ? 2.5 : 3,
+              opacity: 0.95,
+              dashArray: o.dash,
+              fill: !!o.isArea,
+              fillColor: o.color,
+              fillOpacity: o.isArea ? 0.06 : 0,
+            };
+          },
           onEachFeature: (feature, lyr) => {
             const props = (feature.properties ?? {}) as Record<string, unknown>;
             const rows = Object.entries(props)
@@ -229,17 +255,22 @@ export default function PropertyMapPreview({
     });
   }, []);
 
+  // "Your additions" = the pre-loaded homeowner records + anything drawn live.
+  const additionsCount = HOMEOWNER_FC.features.length + drawn.features.length;
+
   const copyDrawn = useCallback(async () => {
+    const combined: FeatureCollection = {
+      type: "FeatureCollection",
+      features: [...HOMEOWNER_FC.features, ...drawn.features],
+    };
     try {
-      await navigator.clipboard.writeText(JSON.stringify(drawn, null, 2));
+      await navigator.clipboard.writeText(JSON.stringify(combined, null, 2));
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch {
       /* clipboard unavailable */
     }
   }, [drawn]);
-
-  const drawnCount = drawn.features.length;
 
   return (
     <div className={`s-map-card ${className}`}>
@@ -276,12 +307,13 @@ export default function PropertyMapPreview({
         <div className="s-map-legend">
           <span className="s-map-dot s-map-dot--draw" aria-hidden="true" />
           <span>
-            <strong>Your additions</strong> — use the tools (top-right) to draw a planned build or a private drain.
+            <strong>Your additions</strong> — your shed and its private power cable, recorded by you. The council&apos;s
+            records stop at the boundary; use the tools (top-right) to add more.
           </span>
         </div>
         <div className="s-map-count">
-          <span className="s-map-badge">{drawnCount} added</span>
-          <button type="button" className="s-map-copy" onClick={copyDrawn} disabled={drawnCount === 0}>
+          <span className="s-map-badge">{additionsCount} added</span>
+          <button type="button" className="s-map-copy" onClick={copyDrawn} disabled={additionsCount === 0}>
             {copied ? "Copied" : "Copy GeoJSON"}
           </button>
         </div>

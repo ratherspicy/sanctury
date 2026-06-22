@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "type": "Shed (homeowner)", "added_by": "homeowner", "note": "New garden shed, 2026" },
+      "geometry": { "type": "Polygon", "coordinates": [[
+        [176.2614785, -37.6972534],
+        [176.2615239, -37.6972534],
+        [176.2615239, -37.6972804],
+        [176.2614785, -37.6972804],
+        [176.2614785, -37.6972534]
+      ]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "type": "Private power cable (homeowner)", "added_by": "homeowner", "note": "New underground supply to shed" },
+      "geometry": { "type": "LineString", "coordinates": [
+        [176.2614558, -37.6973927],
+        [176.2614800, -37.6973200],
+        [176.2615012, -37.6972804]
+      ] }
+    }
+  ]
+}

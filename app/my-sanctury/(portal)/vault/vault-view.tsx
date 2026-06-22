@@ -20,9 +20,23 @@ import {
   type MaintenanceCategory,
   type VaultDocument,
 } from "@/lib/my-sanctury/vault-data";
+import dynamic from "next/dynamic";
 import { DocumentModal } from "./document-modal";
 import { ListItem } from "../components/list-item";
 import { HorizontalScroll } from "../components/horizontal-scroll";
+
+// Leaflet touches `window`, so the map must be client-only (no SSR).
+const PropertyMapPreview = dynamic(
+  () => import("@/components/property-map/PropertyMapPreview"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[440px] items-center justify-center rounded-xl border border-border bg-bg-secondary text-sm text-muted">
+        Loading map…
+      </div>
+    ),
+  }
+);
 
 // Colour-coded tint + icon per document category.
 const DOC_STYLE: Record<
@@ -182,6 +196,19 @@ export function VaultView() {
               </div>
             )
           )}
+        </div>
+      </section>
+
+      {/* Property map — council 3-waters + the homeowner's own records */}
+      <section>
+        <h2 className="text-lg font-semibold text-foreground">Property map</h2>
+        <p className="mt-1 text-sm text-muted">
+          The council&apos;s water network around your home — and the shed and
+          private power cable you&apos;ve recorded yourself, which no council,
+          bank or insurer holds.
+        </p>
+        <div className="mt-4">
+          <PropertyMapPreview />
         </div>
       </section>
 
