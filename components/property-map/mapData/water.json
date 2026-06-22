@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "type": "Water Pipe", "diameter_mm": 150, "material": "PVC", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.16498, -37.68733], [176.16498, -37.68827]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "type": "Water Service Line", "diameter_mm": 20, "material": "PE", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.16498, -37.6877], [176.16488, -37.6877]] }
+    }
+  ]
+}

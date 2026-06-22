@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "type": "Stormwater Pipe", "diameter_mm": 300, "material": "Concrete", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.16501, -37.68735], [176.16501, -37.68825]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "type": "Stormwater lateral", "diameter_mm": 150, "material": "PVC", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.16501, -37.6879], [176.16482, -37.6879]] }
+    }
+  ]
+}

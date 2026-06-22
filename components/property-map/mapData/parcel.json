@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "Primary Parcel",
+        "appellation": "LOT 1 DP 00000",
+        "source": "Illustrative — replace with the real LINZ / TCC parcel"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [176.164658, -37.687642],
+            [176.164942, -37.687642],
+            [176.164942, -37.687958],
+            [176.164658, -37.687958],
+            [176.164658, -37.687642]
+          ]
+        ]
+      }
+    }
+  ]
+}

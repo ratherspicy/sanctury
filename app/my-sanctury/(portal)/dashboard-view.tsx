@@ -6,6 +6,7 @@ import {
   ShieldCheck,
   CalendarCheck,
   ChevronDown,
+  Map as MapIcon,
   type LucideIcon,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
@@ -72,6 +73,7 @@ const QUICK_NAV: { label: string; description: string; href: string; icon: Lucid
   { label: "Finances", description: "Equity, mortgage, insurance", href: "/my-sanctury/finances", icon: ICON_MAP.equity },
   { label: "Documents", description: "Your property record", href: "/my-sanctury/vault", icon: ICON_MAP.documents },
   { label: "Maintenance", description: "Record and planner", href: "/my-sanctury/maintenance", icon: ICON_MAP.maintenance },
+  { label: "Property map", description: "Pipes and boundaries", href: "/my-sanctury/property-map", icon: MapIcon },
   { label: "Marketplace", description: "Advisers and services", href: "/my-sanctury/marketplace", icon: ICON_MAP.marketplace },
 ];
 

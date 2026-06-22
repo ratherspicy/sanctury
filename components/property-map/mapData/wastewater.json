@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "type": "Wastewater Pipe", "diameter_mm": 225, "material": "PVC", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.165055, -37.68735], [176.165055, -37.68825]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "type": "Wastewater lateral", "diameter_mm": 100, "material": "PVC", "source": "Illustrative" },
+      "geometry": { "type": "LineString", "coordinates": [[176.165055, -37.68782], [176.1648, -37.68782]] }
+    }
+  ]
+}
